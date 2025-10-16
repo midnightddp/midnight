@@ -1,0 +1,42 @@
+import Image from "next/image";
+import React from "react";
+import { Button } from "../ui/button";
+
+function Hero() {
+	return (
+		<>
+			<section className="relative w-full overflow-hidden m-auto  sc-divider p-primary">
+				<div className="w-full grid lg:grid-cols-2 gap-10">
+					<div className="relative w-full lg:order-1">
+						<div className="relative flex justify-center w-full">
+							<img
+								src="/images/midnighthero.svg"
+								alt="midnight "
+								className="object-contain w-20 md:w-32 lg:w-48"
+							/>
+						</div>
+					</div>
+					<div className="flex flex-col gap-8 pb-16 md:py-28">
+						<div className="flex flex-col gap-4 text-center lg:text-start">
+							<p className="lg:text-xl">Midnight token distribution</p>
+							<h3 className="text-4xl md:text-5xl lg:text-6xl">
+								Glacier Drop claim is now Live
+							</h3>
+							<p className="text-lg lg:text-2xl">
+								Glacier Drop, the first claim phase of the NIGHT token
+								distribution, is now open to eligible participants. Claim now
+								and secure your place in the future of Midnight.
+							</p>
+						</div>
+						<div className="flex flex-col gap-4 lg:flex-row">
+							<Button className="button-primary">Click To Claim</Button>
+							<Button className="button-secondary">Learn How To CLaim</Button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</>
+	);
+}
+
+export default Hero;

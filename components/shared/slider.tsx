@@ -58,7 +58,7 @@ export default function Slider({
 								<CardHeader className="mb-auto">
 									<span className="w-10 h-10">{icon}</span>
 								</CardHeader>
-								<CardContent className="flex flex-col gap-8 mt-28">
+								<CardContent className="flex flex-col gap-4 mt-32">
 									<h5 className="text-lg">{contents.header}</h5>
 									<p className="opacity-70">{contents.context}</p>
 								</CardContent>

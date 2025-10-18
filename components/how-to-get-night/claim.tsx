@@ -32,8 +32,8 @@ function Claim() {
 		<>
 			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary">
 				<div className="flex flex-col gap-4 text-center justify-center lg:text-start w-full h-full mb-10">
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">
-						NIGHT distribution,step-by-step
+					<h3 className="text-4xl md:text-5xl lg:text-6xl text-center px-8 md:p-0">
+						NIGHT distribution, step-by-step
 					</h3>
 					<p className="lg:text-lg">
 						To complete the process and receive your tokens, you must follow

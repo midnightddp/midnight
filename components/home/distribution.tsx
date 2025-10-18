@@ -2,7 +2,8 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Dot } from "lucide-react";
+import LiveButton from "../shared/live-button";
 
 function Distribution() {
 	return (
@@ -25,14 +26,8 @@ function Distribution() {
 					<Card className="overflow-hidden rounded-xl border-0 bg-neutral-100 flex flex-col">
 						<CardHeader>
 							<div className="flex justify-between items-center">
-								<p className="text-3xl">Claims</p>
-								<Button
-									variant="outline"
-									size="sm"
-									className="py-2 px-4 text-sm rounded-xl "
-								>
-									Live
-								</Button>
+								<p className="text-4xl">Claims</p>
+								<LiveButton />
 							</div>
 						</CardHeader>
 						<CardContent className="flex flex-col gap-4">
@@ -43,7 +38,7 @@ function Distribution() {
 									className="object-fill w-full h-full"
 								/>
 							</div>
-							<p className="w-full text-center text-sm text-black/70">
+							<p className="w-full text-center text-xs text-black/60">
 								Participants claim their token allocations by demonstrating they
 								meet the eligibility criteria for each phase.
 							</p>
@@ -58,13 +53,7 @@ function Distribution() {
 						<CardHeader>
 							<div className="flex justify-between items-center">
 								<p className="text-3xl">Redemption</p>
-								<Button
-									variant="outline"
-									size="sm"
-									className="py-2 px-4 text-sm rounded-xl "
-								>
-									Live
-								</Button>
+								<LiveButton />
 							</div>
 						</CardHeader>
 						<CardContent className="flex flex-col gap-4">
@@ -75,7 +64,7 @@ function Distribution() {
 									className="object-fill w-full h-full"
 								/>
 							</div>
-							<p className="w-full text-center text-sm text-black/70">
+							<p className="w-full text-center text-xs text-black/60">
 								Participants claim their token allocations by demonstrating they
 								meet the eligibility criteria for each phase.
 							</p>
@@ -83,7 +72,7 @@ function Distribution() {
 					</Card>
 				</div>
 				<div className="w-full flex lg:justify-center items-center">
-					<Button className="button-primary w-full lg:w-fit lg:px-8 text-md">
+					<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
 						How To Claim
 					</Button>
 				</div>

@@ -16,7 +16,7 @@ function Allocations() {
 					</p>
 				</div>
 				<div>
-					<Card className="overflow-hidden rounded-xl border-0 bg-neutral-100 flex flex-col w-full">
+					<Card className="overflow-hidden rounded-xl border-0 bg-neutral-100 flex flex-col w-full shadow-none">
 						<CardContent className="grid lg:grid-cols-2 w-full lg:justify-center lg:items-center">
 							<div className="lg:order-1 w-full h-40 lg:h-[34rem] flex justify-center items-center">
 								<div className="w-full h-full p-8 lg:h-3/5">

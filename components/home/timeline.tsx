@@ -4,6 +4,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import LiveButton from "../shared/live-button";
 
 function Timeline() {
 	return (
@@ -37,7 +38,11 @@ function Timeline() {
 								>
 									<span className="flex flex-col gap-1">
 										<p className="text-sm text-black/60">Claim phase 1</p>
-										<p className="text-xl">Glacier Drop</p>
+										<span className="flex gap-2 justify-center items-center">
+											<LiveButton />
+											<p className="text-2xl">Glacier Drop</p>
+										</span>
+
 										<p className="text-sm text-black/60">Duration: 76 days</p>
 									</span>
 									<ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-180" />
@@ -90,7 +95,7 @@ function Timeline() {
 								>
 									<span className="flex flex-col gap-1">
 										<p className="text-sm text-black/60">Claim phase 2</p>
-										<p className="text-xl">Scavenger Mine</p>
+										<p className="text-2xl">Scavenger Mine</p>
 										<p className="text-sm text-black/60">Duration: 30 days</p>
 									</span>
 									<ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-180" />
@@ -144,7 +149,7 @@ function Timeline() {
 									)}
 								>
 									<span className="flex flex-col gap-1">
-										<p className="text-xl">Thawing & Redemption period</p>
+										<p className="text-2xl">Thawing & Redemption period</p>
 										<p className="text-sm text-black/60">Duration: 450 days</p>
 									</span>
 									<ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-180" />
@@ -200,7 +205,7 @@ function Timeline() {
 								>
 									<span className="flex flex-col gap-1">
 										<p className="text-sm text-black/60">Claim phase 3</p>
-										<p className="text-xl">Lost-and-Found</p>
+										<p className="text-2xl">Lost-and-Found</p>
 										<p className="text-sm text-black/60">Duration: 4 years</p>
 									</span>
 									<ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-180" />
@@ -244,7 +249,7 @@ function Timeline() {
 									)}
 								>
 									<span className="flex flex-col gap-1">
-										<p className="text-xl">NIGHT Claim Portal sunsetting</p>
+										<p className="text-2xl">NIGHT Claim Portal sunsetting</p>
 									</span>
 									<ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-180" />
 								</Accordion.Trigger>

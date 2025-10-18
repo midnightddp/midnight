@@ -2,6 +2,16 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 
+import { DM_Mono } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const dmMono = DM_Mono({
+	subsets: ["latin"],
+	weight: ["400", "500"],
+	// variable: "--font-dm-mono",
+	// display: "swap",
+});
+
 function Hero() {
 	return (
 		<>
@@ -18,8 +28,10 @@ function Hero() {
 					</div>
 					<div className="flex flex-col gap-8 pb-16 md:py-28">
 						<div className="flex flex-col gap-4 text-center lg:text-start">
-							<p className="lg:text-xl">Midnight token distribution</p>
-							<h3 className="text-4xl md:text-5xl lg:text-6xl">
+							<p className={cn(dmMono.className, "font-medium")}>
+								MIDNIGHT TOKEN DISTRIBUTION
+							</p>
+							<h3 className="text-4xl md:text-5xl lg:text-6xl font-medium">
 								Glacier Drop claim is now Live
 							</h3>
 							<p className="text-lg lg:text-2xl">

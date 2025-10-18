@@ -10,21 +10,23 @@ function MakeAClaim() {
 	const [phase, setPhase] = useState<number>(0);
 	return (
 		<>
-			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary bg-neutral-100">
+			<section className="relative w-full m-auto py-24 sc-divider p-primary bg-neutral-100">
 				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full mb-10">
 					<span className="w-16 aspect-square rounded-full bg-white flex justify-center items-center text-xl text-blue-700">
 						01
 					</span>
 					<h3 className="text-3xl md:text-5xl lg:text-6xl">Make a claim</h3>
-					<p className="lg:text-lg">
+					<p className="text-black/60">
 						Making a claim requires demonstrating you meet the eligibility
 						criteria for one (or more) of the three claim phases: Glacier Drop,
 						Scavenger Mine, and Lost-and-Found.
 					</p>
 				</div>
-				<div className="flex flex-col justify-center items-center gap-4">
-					<p>There are three claim phases:</p>
-					<div className="bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden">
+				<div className="flex flex-col justify-center items-center gap-4  bg-neutral-100 py-4">
+					<p className="text-lg text-black/60">There are three claim phases:</p>
+
+					{/* 4. Removed 'sticky' and 'z-50' from the button group div */}
+					<div className="bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden absolute top-0 z-50">
 						{["Glacier Drop", "Scavenger Mine", "Lost-and-Found"].map(
 							(link, idx) => {
 								return (

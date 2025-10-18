@@ -10,8 +10,8 @@ function Timeline() {
 	return (
 		<section className="bg-neutral-100 relative w-full overflow-hidden m-auto p-primary pt-16 md:pt-28 pb-20">
 			<div className="grid lg:grid-cols-2">
-				<div className="hidden lg:flex">
-					<h3 className="text-h3">Timeline</h3>
+				<div className="flex w-full mb-12 justify-center items-center lg:justify-start lg:items-start">
+					<h3 className="text-4xl lg:text-5xl">Timeline</h3>
 				</div>
 				<div>
 					<Accordion.Root

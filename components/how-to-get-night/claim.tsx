@@ -31,8 +31,8 @@ function Claim() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary">
-				<div className="flex flex-col gap-4 text-center justify-center lg:text-start w-full h-full mb-10">
-					<h3 className="text-4xl md:text-5xl lg:text-6xl text-center px-8 md:p-0">
+				<div className="flex flex-col gap-4 text-center justify-center w-full h-full mb-10">
+					<h3 className="text-4xl  text-center px-8 md:p-0 lg:px-60">
 						NIGHT distribution, step-by-step
 					</h3>
 					<p className="lg:text-lg">
@@ -50,16 +50,16 @@ function Claim() {
 								<React.Fragment key={step.id}>
 									<div className="overflow-hidden rounded-xl border-0 flex flex-col h-full w-full relative m-1 justify-end py-10">
 										<div className="flex justify-center items-center p-4">
-											<span className="w-16 aspect-square rounded-full bg-white flex justify-center items-center text-xl text-blue-700">
+											<span className="w-18 aspect-square rounded-full  bg-indigo-100 flex justify-center items-center text-2xl text-blue-700">
 												0{step.id}
 											</span>
 										</div>
 										<div className="flex flex-col gap-3.5 justify-center items-center text-center">
-											<h4 className="text-xl">{step.heading}</h4>
-											<p>{step.context}</p>
+											<h4 className="text-xl min-h-16">{step.heading}</h4>
+											<p className="min-h-20">{step.context}</p>
 											<Link
 												href={step.link}
-												className="text-blue-700 underline text-xs"
+												className="text-blue-700 underline text-xs lg:text-lg"
 											>
 												Read more
 											</Link>

@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import VideoEmbed from "../shared/video-embed";
 import MainAccordion from "../shared/main-accordion";
+import LiveButton from "../shared/live-button";
+import ComingSoonButton from "../shared/coming-soon";
 
 function MakeAClaim() {
 	const [phase, setPhase] = useState<number>(0);
@@ -14,7 +16,7 @@ function MakeAClaim() {
 	// State to manage whether the element should be sticky
 	const [isSticky, setIsSticky] = useState(false);
 	// State to hold the height of the sticky element for the placeholder
-	const [stickyHeight, setStickyHeight] = useState(0);
+	const [stickyHeight, setStickyHeight] = useState(4);
 	// State to hold the original top position (the trigger point)
 	const [triggerTop, setTriggerTop] = useState(0);
 
@@ -84,16 +86,18 @@ function MakeAClaim() {
 				ref={sectionRef}
 				className="relative w-full m-auto py-24 sc-divider p-primary bg-neutral-100"
 			>
-				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full mb-10">
-					<span className="w-16 aspect-square rounded-full bg-white flex justify-center items-center text-xl text-blue-700">
+				<div className="flex flex-col gap-4 lg:gap-0 text-center justify-center items-center lg:text-start w-full h-full mb-10 lg:grid lg:grid-cols-2">
+					<span className="w-18 aspect-square rounded-full bg-white flex justify-center items-center text-2xl lg:text-7xl text-blue-700 lg:justify-self-center lg:w-52">
 						01
 					</span>
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">Make a claim</h3>
-					<p className="text-black/60">
-						Making a claim requires demonstrating you meet the eligibility
-						criteria for one (or more) of the three claim phases: Glacier Drop,
-						Scavenger Mine, and Lost-and-Found.
-					</p>
+					<span className="flex  flex-col w-full text-center justify-center items-center lg:text-start lg:items-start">
+						<h3 className="text-4xl ">Make a claim</h3>
+						<p className="text-black/60">
+							Making a claim requires demonstrating you meet the eligibility
+							criteria for one (or more) of the three claim phases: Glacier
+							Drop, Scavenger Mine, and Lost-and-Found.
+						</p>
+					</span>
 				</div>
 				<div className="flex flex-col justify-center items-center gap-4 bg-neutral-100 py-4">
 					<p className="text-lg text-black/60">There are three claim phases:</p>
@@ -107,7 +111,7 @@ function MakeAClaim() {
 					<div
 						ref={buttonGroupRef}
 						className={cn(
-							"bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden", // 'relative' is the default
+							"bg-white w-fit rounded-4xl  lg:rounded-full flex justify-evenly items-center text-xs overflow-hidden lg:text-xl", // 'relative' is the default
 							isSticky && "fixed top-4 z-50 left-1/2 -translate-x-1/2" // When sticky, center it and add 'top-4' padding
 						)}
 					>
@@ -120,7 +124,7 @@ function MakeAClaim() {
 											setPhase(idx);
 										}}
 										className={cn(
-											"px-5 py-5 whitespace-nowrap",
+											"px-5 py-5 whitespace-nowrap lg:px-8 lg:py-6",
 											phase === idx
 												? "bg-black text-white rounded-4xl"
 												: "bg-white text-black"
@@ -171,21 +175,22 @@ function GlacierDrop() {
 		},
 		{
 			id: "d5",
-			header: "05. Sign your unique claim message and complete the claim",
+			header: "05.   your unique claim message and complete the claim",
 			content:
 				"For each Origin address, a unique claim message binds together the corresponding allocation size, Destination address, and a hash of terms and conditions into a bundle that a claimant must cryptographically sign, thus proving ownership over the Origin address and being allowed to complete the claim.",
 		},
 	];
 	return (
 		<section className="flex flex-col w-full gap-10 text-center ">
-			<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-				<h3 className="text-3xl md:text-5xl lg:text-6xl">Glacier Drop</h3>
+			<div className="flex flex-col gap-3 text-center justify-center items-center lg:text-start w-full h-full">
+				<LiveButton />
+				<h3 className="text-4xl md:text-5xl lg:text-6xl">Glacier Drop</h3>
 				<p className="lg:text-lg">
 					The first claim phase and the namesake of the NIGHT token
 					distribution.
 				</p>
 			</div>
-			<div className="flex flex-col justify-center items-center gap-4">
+			<div className="flex flex-col justify-center items-center gap-4 mt-6">
 				<span className="flex justify-center items-center gap-2">
 					<p>From</p>{" "}
 					<Button
@@ -210,7 +215,7 @@ function GlacierDrop() {
 					<ArrowDown />
 				</span>
 			</span>
-			<p className="mb-8">
+			<p className="mb-8 lg:text-lg lg:px-30">
 				If you held a minimum $100-equivalent balance in native tokens in an
 				address belonging to a participating network (ADA, BTC, ETH, SOL, XRP,
 				BNB, AVAX, or BAT) during the snapshot, you’re entitled to an
@@ -225,6 +230,11 @@ function GlacierDrop() {
 					thumbnailSrc="https://cdn.sanity.io/images/sf3fvyjf/production/376f4d6b2587b78a025587871dc3797fb8e8d7ba-1920x1080.png"
 					title="How to claim NIGHT"
 				/>
+				<span className="w-full flex justify-center items-center mt-2">
+					<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
+						CLAIM NOW
+					</Button>
+				</span>
 			</div>
 			<span className="w-full border-b border-black/20 relative"></span>
 			<div>
@@ -234,13 +244,13 @@ function GlacierDrop() {
 				/>
 			</div>
 			<span className="w-full border-b border-black/20 relative"></span>
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">
+			<div className="flex flex-col gap-8 lg:grid lg:grid-cols-2 ">
+				<div className="flex flex-col gap-4  justify-center items-center text-start w-full h-full lg:justify-start lg:items-start">
+					<h3 className="text-3xl md:text-4xl text-center">
 						What happens next
 					</h3>
 				</div>
-				<div className="flex flex-col gap-4 text-start">
+				<div className="flex flex-col gap-4">
 					<span className="bg-white rounded-lg p-4">
 						Unclaimed tokens carry over to Scavenger Mine, the second claim
 						phase
@@ -255,8 +265,9 @@ function GlacierDrop() {
 }
 function ScavengerMine() {
 	return (
-		<section className="flex flex-col w-full gap-10 text-center">
-			<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
+		<section className="flex flex-col w-full gap-10 text-center ">
+			<div className="flex flex-col gap-3 text-center justify-center items-center lg:text-start w-full h-full">
+				<ComingSoonButton />
 				<h3 className="text-3xl md:text-5xl lg:text-6xl">Scavenger Mine</h3>
 				<p className="lg:text-lg">
 					The second claim phase, opening up eligibility beyond the original
@@ -271,7 +282,7 @@ function ScavengerMine() {
 					<ArrowDown />
 				</span>
 			</span>
-			<p className="">
+			<p className="lg:px-30">
 				Scavenger Mine opens up eligibility beyond token holders and includes
 				anyone who provides computing power to solve computational tasks,
 				whether they participated in the previous claim phase or not. No special
@@ -279,18 +290,16 @@ function ScavengerMine() {
 				participate. If you participated in Glacier Drop, you can use the same
 				Destination address, so long as it remains unused.
 			</p>
-			<p className="mb-8">
+			<p className="mb-8  lg:px-30">
 				Successful claimants are entitled to a share of Glacier Drop-unclaimed
 				tokens in proportion to the computing power they contribute, with the
 				remaining share being apportioned to the core network constituents.
 			</p>
 
 			<span className="w-full border-b border-black/20 relative"></span>
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">
-						What happens next
-					</h3>
+			<div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
+				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full lg:justify-start lg:items-start">
+					<h3 className="text-3xl md:text-4xl">What happens next</h3>
 				</div>
 				<div className="flex flex-col gap-4 text-start">
 					<span className="bg-white rounded-lg p-4">
@@ -311,7 +320,7 @@ function LostAndFound() {
 	return (
 		<section className="flex flex-col w-full gap-10 text-center">
 			<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-				<h3 className="text-3xl md:text-5xl lg:text-6xl">Lost-and-Found</h3>
+				<h3 className="text-3xl md:text-5xl">Lost-and-Found</h3>
 				<p className="lg:text-lg">The third and last claim phase.</p>
 			</div>
 			<div className="flex flex-col justify-center items-center gap-4">
@@ -322,13 +331,13 @@ function LostAndFound() {
 					<ArrowDown />
 				</span>
 			</span>
-			<p className="">
+			<p className="lg:px-30">
 				Sometime after mainnet launches, participants who were originally
 				eligible to Glacier Drop, but who did not claim during the initial
 				60-day claim period, have another opportunity to claim a fraction of
 				their original allocations.
 			</p>
-			<span>
+			<span className="lg:px-30 flex flex-col gap-4">
 				<h3 className="text-h3">What you need to do</h3>
 				<p className="mb-8">
 					The NIGHT Claim Portal won’t support the Lost-and-Found phase. To make
@@ -339,11 +348,9 @@ function LostAndFound() {
 			</span>
 
 			<span className="w-full border-b border-black/20 relative"></span>
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">
-						What happens next
-					</h3>
+			<div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
+				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full lg:justify-start lg:items-start">
+					<h3 className="text-3xl md:text-4xl">What happens next</h3>
 				</div>
 				<div className="flex flex-col gap-4 text-start">
 					<span className="bg-white rounded-lg p-4">

@@ -34,38 +34,38 @@ function Redeem() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary bg-neutral-100 flex flex-col gap-8">
-				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full mb-10">
-					<span className="w-16 aspect-square rounded-full bg-white flex justify-center items-center text-xl text-blue-700">
+				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full mb-10 lg:grid lg:grid-cols-2">
+					<span className="w-18 aspect-square rounded-full bg-white flex justify-center items-center text-2xl lg:text-7xl text-blue-700 lg:justify-self-center lg:w-52">
 						03
 					</span>
-					<h3 className="text-3xl md:text-5xl lg:text-6xl">
-						Redeem your allocation
-					</h3>
-					<p className="lg:text-lg">
-						To complete the process and receive your NIGHT, you must redeem your
-						allocation after it thaws.
+					<span>
+						<h3 className="text-3xl md:text-4xl ">Redeem your allocation</h3>
+						<p className=" text-black/60">
+							To complete the process and receive your NIGHT, you must redeem
+							your allocation after it thaws.
+						</p>
+					</span>
+					<p className="text-black/60 col-span-2 text-center mt-12  text-lg">
+						During the redemption period (360 days)
 					</p>
-					<p className="lg:text-lg">Dates to be confirmed (360 days)</p>
 				</div>
 				<span className="w-full border-b-2 border-black/20 relative">
 					<span className="bg-neutral-100 flex justify-center items-center w-8 h-8 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 						<ArrowDown />
 					</span>
 				</span>
-				<p className="mb-8">
+				<p className="lg:px-30">
 					Redeeming is the act of transferring thawed tokens into your
 					Destination address during the Redemption period. It’s the final step
 					to complete the process and receive the tokens claimed during Glacier
 					Drop and/or Scavenger Mine.
 				</p>
-				<p className="mb-8">
+				<p className="mb-8 lg:px-30">
 					You may choose to redeem each share of your allotted tokens as they
 					thaw, or wait until they fully unlock to redeem the whole allocation
 					at once. Each redemption involves a Cardano transaction, requiring you
 					to cover the cost of the Cardano network transaction fee.
 				</p>
-
-				<span className="w-full border-b-2 border-black/20 relative"></span>
 
 				<div>
 					<MainAccordion
@@ -74,14 +74,12 @@ function Redeem() {
 					/>
 				</div>
 
-				<div className="flex flex-col gap-8">
-					<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full">
-						<h3 className="text-3xl md:text-5xl lg:text-6xl">
-							What happens next
-						</h3>
+				<div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
+					<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full lg:justify-start lg:items-start">
+						<h3 className="text-3xl">What happens next</h3>
 					</div>
 					<div className="flex flex-col gap-4 text-start">
-						<span className="bg-white rounded-lg p-4 text-sm">
+						<span className="bg-white rounded-lg p-4 sm:text-sm ">
 							After the Redemption period ends, the NIGHT Claim Portal may be
 							taken offline, and any un-redeemed allocations must be manually
 							redeemed by their owners.

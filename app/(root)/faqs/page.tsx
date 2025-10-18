@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Search, Tags } from "lucide-react";
+import { Search, Tags, X } from "lucide-react"; // Import X for the close icon
 import { useState } from "react";
 
 function FAQsPage() {
@@ -44,9 +44,9 @@ function FAQsPage() {
 				"What is the Scavenger Mine claim phase?The Scavenger Mine is the second phase of the Midnight token distribution, designed to be fair and...",
 			answer: `The Scavenger Mine is the second phase of the Midnight token distribution, designed to be fair and accessible to the general public. It expands the eligibility criteria of the token distribution and offers any prospective participant the opportunity to play a role in the process of originating and seeding Midnight’s core network constituents by solving computational tasks. Rewards are proportional to the computational effort contributed.
 
-         During Scavenger Mine, 100% of the tokens that were left unclaimed during Glacier Drop will be processed and apportioned. A share of the unclaimed Glacier Drop tokens will be allocated for claiming by Scavenger Mine participants, while the remainder will be apportioned to seed the core Midnight network ecosystem constituents, who are integral to the launch and operation of the network, and to the third claim phase.
+        During Scavenger Mine, 100% of the tokens that were left unclaimed during Glacier Drop will be processed and apportioned. A share of the unclaimed Glacier Drop tokens will be allocated for claiming by Scavenger Mine participants, while the remainder will be apportioned to seed the core Midnight network ecosystem constituents, who are integral to the launch and operation of the network, and to the third claim phase.
 
-         `,
+        `,
 			tags: ["GLOSSARY", "SCAVENGER MINE"],
 		},
 		{
@@ -55,7 +55,7 @@ function FAQsPage() {
 				"The Lost-and-Found phase is the third and final phase of the Midnight token distribution. It gives eligible participants from the Glacier Drop...",
 			answer: `The Lost-and-Found phase is the third and final phase of the Midnight token distribution. It gives eligible participants from the Glacier Drop another opportunity to claim a fraction of their originally allocated NIGHT tokens if they missed the first claim window.
 
-         Lost-and-Found will take place sometime after the Midnight mainnet launch. Lost-and-Found phase claimants must use their own means to interact with the relevant smart contracts and claim/redeem their allocations. Lost-and-Found will remain open for four years, after which remaining tokens will be reallocated to the Reserve.`,
+        Lost-and-Found will take place sometime after the Midnight mainnet launch. Lost-and-Found phase claimants must use their own means to interact with the relevant smart contracts and claim/redeem their allocations. Lost-and-Found will remain open for four years, after which remaining tokens will be reallocated to the Reserve.`,
 			tags: ["GLOSSARY", "LOST AND FOUND"],
 		},
 		{
@@ -88,9 +88,9 @@ function FAQsPage() {
 				"The first phase of the token distrubtion, the Glacier Drop, will run for 60 days. It will be followed by the second phase, Scavenger Mine, which will run...",
 			answer: `The first phase of the token distrubtion, the Glacier Drop, will run for 60 days. It will be followed by the second phase, Scavenger Mine, which will run for an additional 30 days.
 
-         After these two phases, the Midnight mainnet will launch, and the Redemption period will start. From there, you will have 450 days to use the NIGHT Claim Portal to redeem your tokens, as they thaw, into your Destination address. See "When will I be able to redeem my NIGHT tokens?" for more details.
+        After these two phases, the Midnight mainnet will launch, and the Redemption period will start. From there, you will have 450 days to use the NIGHT Claim Portal to redeem your tokens, as they thaw, into your Destination address. See "When will I be able to redeem my NIGHT tokens?" for more details.
 
-         If you're eligible for Glacier Drop but miss the first 60-day claim window, you may still be able to claim a share of your original entitled allocation during the third phase, Lost-and-Found, which will kick off after mainnet launches and run for four years. See "What is the Lost-and-Found claim phase? " for more information.`,
+        If you're eligible for Glacier Drop but miss the first 60-day claim window, you may still be able to claim a share of your original entitled allocation during the third phase, Lost-and-Found, which will kick off after mainnet launches and run for four years. See "What is the Lost-and-Found claim phase? " for more information.`,
 			tags: ["GENERAL"],
 		},
 		{
@@ -109,9 +109,9 @@ function FAQsPage() {
 				"The supply of 24 billion tokens is being distributed. For the duration of the first claim phase...",
 			answer: `The total supply of 24 billion tokens is being distributed.
 
-         For the duration of the first claim phase, 100% of the supply will remain claimable by eligible participants as per the criteria established for the Glacier Drop phase. See "What are the eligibility criteria for the Glacier Drop phase?" for more details.
+        For the duration of the first claim phase, 100% of the supply will remain claimable by eligible participants as per the criteria established for the Glacier Drop phase. See "What are the eligibility criteria for the Glacier Drop phase?" for more details.
 
-         Unclaimed tokens shall carry over to the next claim phase, Scavenger Mine, and be apportioned between that phase's claimants, the network's core constituents, and a potential third claim phase. See "What happens to unclaimed NIGHT tokens?" for more details`,
+        Unclaimed tokens shall carry over to the next claim phase, Scavenger Mine, and be apportioned between that phase's claimants, the network's core constituents, and a potential third claim phase. See "What happens to unclaimed NIGHT tokens?" for more details`,
 			tags: ["GENERAL"],
 		},
 		{
@@ -149,6 +149,20 @@ function FAQsPage() {
 		},
 	];
 
+	// --- START: Added for Modal ---
+	const [selectedFaq, setSelectedFaq] = useState<(typeof ALL_FAQS)[0] | null>(
+		null
+	);
+
+	const handleReadMore = (faq: (typeof ALL_FAQS)[0]) => {
+		setSelectedFaq(faq);
+	};
+
+	const closeModal = () => {
+		setSelectedFaq(null);
+	};
+	// --- END: Added for Modal ---
+
 	// basic client-side search (safe-guard each field)
 	const filteredFAQs = ALL_FAQS.filter((faq) => {
 		const term = searchTerm.trim().toLowerCase();
@@ -170,7 +184,7 @@ function FAQsPage() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary flex flex-col gap-8">
-				<div className="w-full flex justify-center items-center text-3xl font-bold">
+				<div className="w-full flex justify-center items-center text-3xl font-medium">
 					<h3>FAQs</h3>
 				</div>
 				<div className="flex flex-col gap-6">
@@ -191,8 +205,8 @@ function FAQsPage() {
 								variant="outline"
 								size="sm"
 								className={cn(
-									"p-4 bg-violet-200 border border-blue-700 rounded-3xl text-xs",
-									activeTag === idx && "bg-violet-300"
+									"p-4 bg-indigo-400/30 border border-indigo-400 rounded-3xl text-xs",
+									activeTag === idx && "bg-indigo-400/60"
 								)}
 								onClick={() => setActiveTag(idx)}
 							>
@@ -201,7 +215,7 @@ function FAQsPage() {
 						))}
 					</span>
 				</div>
-				<div className="flex flex-col gap-8">
+				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{filteredFAQs.map((faq, idx) => {
 						return (
 							<Card
@@ -215,6 +229,7 @@ function FAQsPage() {
 										<Button
 											variant="link"
 											className="p-0 underline text-blue-700"
+											onClick={() => handleReadMore(faq)} // <-- Updated onClick
 										>
 											Read more
 										</Button>
@@ -223,9 +238,10 @@ function FAQsPage() {
 										{faq.tags.map((tags, index) => {
 											return (
 												<Button
+													key={index * 88 + 1}
 													variant="outline"
 													size="sm"
-													className="border border-blue-700 bg-violet-200 rounded-3xl p-4 text-xs w-fit  font-normal"
+													className="border border-indigo-400 bg-indigo-400/40 rounded-3xl p-4 text-xs w-fit  font-normal"
 												>
 													{tags}
 												</Button>
@@ -238,6 +254,41 @@ function FAQsPage() {
 					})}
 				</div>
 			</section>
+
+			{/* --- START: Modal Component --- */}
+			{selectedFaq && (
+				<div
+					// Backdrop: covers the screen, click to close
+					className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+					onClick={closeModal}
+				>
+					<div
+						// Modal "white page"
+						className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col"
+						onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicked
+					>
+						{/* Modal Header */}
+						<div className="flex justify-between items-center p-6 shrink-0">
+							<h5 className="text-xl font-semibold">{selectedFaq.question}</h5>
+							<Button
+								variant="ghost"
+								size="icon"
+								onClick={closeModal}
+							>
+								<X className="h-4 w-4" />
+							</Button>
+						</div>
+
+						{/* Modal Content (scrollable) */}
+						<div className="p-6 overflow-y-auto">
+							<p className="text-gray-700 whitespace-pre-wrap">
+								{selectedFaq.answer}
+							</p>
+						</div>
+					</div>
+				</div>
+			)}
+			{/* --- END: Modal Component --- */}
 		</>
 	);
 }

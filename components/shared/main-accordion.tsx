@@ -21,9 +21,9 @@ type MainAccordionProps = {
 function MainAccordion({ items, title }: MainAccordionProps) {
 	return (
 		<section className="bg-transparent relative w-full overflow-hidden m-auto pt-12 pb-10">
-			<div className="grid lg:grid-cols-2">
+			<div className="grid lg:grid-cols-2 gap-8">
 				{title && (
-					<div className="hidden lg:flex">
+					<div className="flex w-full justify-center text-center items-center lg:items-start lg:justify-start lg:text-start">
 						<h3 className="text-h3">{title}</h3>
 					</div>
 				)}

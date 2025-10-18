@@ -9,7 +9,7 @@ function Distribution() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto p-primary pt-16 md:pt-28 pb-2">
-				<div className="text-center flex flex-col gap-6 text-lg pb-6">
+				<div className="text-center flex flex-col gap-6 text-lg mb-12 lg:mb-16 lg:px-30">
 					<h3 className="text-h3">Multi-phase token distribution</h3>
 					<p>
 						NIGHT token allocations will be granted for free to eligible

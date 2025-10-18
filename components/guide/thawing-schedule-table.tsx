@@ -19,16 +19,7 @@ const dayData = [
  */
 const ThawingScheduleTable = () => {
 	return (
-		<div className="w-full max-w-4xl mx-auto my-10 p-4 font-sans">
-			{/* Headings */}
-			<h2 className="text-3xl font-light text-center text-gray-900 mb-2">
-				Thawing schedule examples
-			</h2>
-			<p className="text-center text-gray-600 mb-8">
-				When would each share of an allocation unlock based on the day of the
-				first thaw.
-			</p>
-
+		<div className="w-full max-w-4xl mx-auto my-10 px-4">
 			{/* Table Wrapper */}
 			<div className="border border-blue-700 rounded-lg overflow-hidden">
 				<table className="w-full text-center table-fixed">
@@ -41,7 +32,7 @@ const ThawingScheduleTable = () => {
 									className={cn(
 										"py-5 px-4 border-r border-blue-700",
 
-										index % 2 == 0 && "bg-gray-200",
+										index % 2 == 0 && "bg-gray-50",
 										index === 0 ? "w-[20%] bg-indigo-50" : "w-[20%]"
 									)}
 								>
@@ -63,7 +54,7 @@ const ThawingScheduleTable = () => {
 									key={index}
 									className={cn(
 										"py-5 px-4 font-bold border-r border-blue-700 text-center",
-										index % 2 !== 0 && "bg-gray-200"
+										index % 2 !== 0 && "bg-gray-50"
 									)}
 								>
 									{value}
@@ -93,7 +84,7 @@ const ThawingScheduleTable = () => {
 										key={colIndex}
 										className={cn(
 											"py-5 px-4 align-middle border-r border-blue-700",
-											colIndex % 2 !== 0 && "bg-gray-200"
+											colIndex % 2 !== 0 && "bg-gray-50"
 										)}
 									>
 										{value}

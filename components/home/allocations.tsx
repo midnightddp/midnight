@@ -7,7 +7,7 @@ function Allocations() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto  sc-divider p-primary pt-16 md:pt-28 pb-16 md:py-28 sc-divider">
-				<div className="text-center flex flex-col gap-6 text-lg pb-6">
+				<div className="text-center flex flex-col gap-6 text-lg mb-12 lg:px-36">
 					<h3 className="text-h3">Token allocations</h3>
 					<p>
 						The allocation of the NIGHT token supply will follow the three claim

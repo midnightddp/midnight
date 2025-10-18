@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NightIcon from "../icons/night-icon";
 
 export default function Footer() {
 	return (
@@ -8,62 +9,24 @@ export default function Footer() {
 			<div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
 				{/* Column 1 - Brand */}
 				<div className="space-y-4">
-					<h2 className="text-xl font-bold">Midnight</h2>
-					<p className="text-sm opacity-80 max-w-xs">
-						Building the future of token distribution with transparency and
-						fairness.
-					</p>
-				</div>
-
-				{/* Column 2 - Links */}
-				<div>
-					<h3 className="text-sm font-semibold uppercase mb-4">Navigate</h3>
-					<ul className="space-y-2 text-sm">
-						<li>
-							<Link
-								href="#"
-								className="hover:underline"
-							>
-								Home
-							</Link>
-						</li>
-						<li>
-							<Link
-								href="#"
-								className="hover:underline"
-							>
-								About
-							</Link>
-						</li>
-						<li>
-							<Link
-								href="#"
-								className="hover:underline"
-							>
-								Claim
-							</Link>
-						</li>
-						<li>
-							<Link
-								href="#"
-								className="hover:underline"
-							>
-								Timeline
-							</Link>
-						</li>
-					</ul>
+					<span className="flex gap-2 justify-start items-center">
+						<div className="h-10">
+							<NightIcon />
+						</div>
+						<h2 className="text-3xl font-bold">midnight</h2>
+					</span>
 				</div>
 
 				{/* Column 3 - Resources */}
 				<div>
-					<h3 className="text-sm font-semibold uppercase mb-4">Resources</h3>
-					<ul className="space-y-2 text-sm">
+					<h3 className=" text-sm uppercase mb-4">WHITEPAPERS</h3>
+					<ul className="space-y-2 text-2xl">
 						<li>
 							<Link
 								href="#"
 								className="hover:underline"
 							>
-								Docs
+								MICA
 							</Link>
 						</li>
 						<li>
@@ -71,15 +34,7 @@ export default function Footer() {
 								href="#"
 								className="hover:underline"
 							>
-								FAQ
-							</Link>
-						</li>
-						<li>
-							<Link
-								href="#"
-								className="hover:underline"
-							>
-								Support
+								Tokenomics
 							</Link>
 						</li>
 					</ul>
@@ -88,9 +43,12 @@ export default function Footer() {
 				{/* Column 4 - Newsletter */}
 				<div>
 					<h3 className="text-sm font-semibold uppercase mb-4">
-						Stay in the loop
+						SIGN UP FOR UPDATES
 					</h3>
 					<form className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+						<p>
+							Email <span>*</span>
+						</p>
 						<input
 							type="email"
 							placeholder="Enter your email"

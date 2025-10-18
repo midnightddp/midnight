@@ -26,7 +26,7 @@ function MakeAClaim() {
 					<p className="text-lg text-black/60">There are three claim phases:</p>
 
 					{/* 4. Removed 'sticky' and 'z-50' from the button group div */}
-					<div className="bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden absolute top-0 z-50">
+					<div className="bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden ">
 						{["Glacier Drop", "Scavenger Mine", "Lost-and-Found"].map(
 							(link, idx) => {
 								return (

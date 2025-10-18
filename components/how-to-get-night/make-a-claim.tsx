@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import { ArrowDown } from "lucide-react";
 import VideoEmbed from "../shared/video-embed";
@@ -8,9 +8,82 @@ import MainAccordion from "../shared/main-accordion";
 
 function MakeAClaim() {
 	const [phase, setPhase] = useState<number>(0);
+
+	// --- Start of Tracker Logic ---
+
+	// State to manage whether the element should be sticky
+	const [isSticky, setIsSticky] = useState(false);
+	// State to hold the height of the sticky element for the placeholder
+	const [stickyHeight, setStickyHeight] = useState(0);
+	// State to hold the original top position (the trigger point)
+	const [triggerTop, setTriggerTop] = useState(0);
+
+	// Refs to track the DOM elements
+	const sectionRef = useRef<HTMLElement>(null);
+	const buttonGroupRef = useRef<HTMLDivElement>(null);
+
+	// 3. Use useLayoutEffect to measure the element's position and height
+	//    This runs before the browser paints, preventing flicker.
+	useLayoutEffect(() => {
+		if (buttonGroupRef.current) {
+			// Get the element's height
+			setStickyHeight(buttonGroupRef.current.offsetHeight);
+			// Get its initial top position relative to the whole document
+			setTriggerTop(
+				buttonGroupRef.current.getBoundingClientRect().top + window.scrollY
+			);
+		}
+	}, []); // Empty array means this runs only once on mount
+
+	// 4. Use useEffect to add the scroll event listener
+	useEffect(() => {
+		const sectionEl = sectionRef.current;
+
+		// Wait until we have the trigger position and section ref
+		if (!triggerTop || !sectionEl) return;
+
+		const handleScroll = () => {
+			const scrollY = window.scrollY;
+
+			// Get the section's bottom position relative to the viewport
+			const sectionBottomOnScreen = sectionEl.getBoundingClientRect().bottom;
+
+			// This is the pixel value for 'top-4' (1rem = 16px)
+			const topPadding = 16;
+
+			// Condition 1: Stick if we scroll past its original top position
+			// (minus the padding we'll give it)
+			const shouldBeFixed = scrollY >= triggerTop - topPadding;
+
+			// Condition 2: Unstick if the section's bottom is about to scroll
+			// past the sticky element's position (height + padding)
+			const sectionOutOfView =
+				sectionBottomOnScreen <= stickyHeight + topPadding;
+
+			// Apply the logic you requested
+			if (shouldBeFixed && !sectionOutOfView) {
+				setIsSticky(true); // "change from relative to fixed"
+			} else {
+				setIsSticky(false); // "go back to relative"
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		// Cleanup listener on unmount
+		return () => window.removeEventListener("scroll", handleScroll);
+
+		// Re-run this effect if these values change (they shouldn't, but it's good practice)
+	}, [triggerTop, stickyHeight, sectionRef]);
+
+	// --- End of Tracker Logic ---
+
 	return (
 		<>
-			<section className="relative w-full m-auto py-24 sc-divider p-primary bg-neutral-100">
+			{/* 2. Add the ref to the section */}
+			<section
+				ref={sectionRef}
+				className="relative w-full m-auto py-24 sc-divider p-primary bg-neutral-100"
+			>
 				<div className="flex flex-col gap-4 text-center justify-center items-center lg:text-start w-full h-full mb-10">
 					<span className="w-16 aspect-square rounded-full bg-white flex justify-center items-center text-xl text-blue-700">
 						01
@@ -22,11 +95,22 @@ function MakeAClaim() {
 						Scavenger Mine, and Lost-and-Found.
 					</p>
 				</div>
-				<div className="flex flex-col justify-center items-center gap-4  bg-neutral-100 py-4">
+				<div className="flex flex-col justify-center items-center gap-4 bg-neutral-100 py-4">
 					<p className="text-lg text-black/60">There are three claim phases:</p>
 
-					{/* 4. Removed 'sticky' and 'z-50' from the button group div */}
-					<div className="bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden ">
+					{/* 5. Add a placeholder div. 
+                It's invisible but will have the same height as the button group
+                ONLY when the button group is sticky, preventing a layout jump. */}
+					{isSticky && <div style={{ height: `${stickyHeight}px` }} />}
+
+					{/* 6. Add the ref to the button group and apply conditional classes */}
+					<div
+						ref={buttonGroupRef}
+						className={cn(
+							"bg-white w-fit rounded-4xl flex justify-evenly items-center text-xs overflow-hidden", // 'relative' is the default
+							isSticky && "fixed top-4 z-50 left-1/2 -translate-x-1/2" // When sticky, center it and add 'top-4' padding
+						)}
+					>
 						{["Glacier Drop", "Scavenger Mine", "Lost-and-Found"].map(
 							(link, idx) => {
 								return (
@@ -36,7 +120,7 @@ function MakeAClaim() {
 											setPhase(idx);
 										}}
 										className={cn(
-											"px-5 py-5",
+											"px-5 py-5 whitespace-nowrap",
 											phase === idx
 												? "bg-black text-white rounded-4xl"
 												: "bg-white text-black"
@@ -49,7 +133,7 @@ function MakeAClaim() {
 						)}
 					</div>
 				</div>
-				<div>
+				<div className="mt-12">
 					{phase === 0 && <GlacierDrop />}
 					{phase === 1 && <ScavengerMine />}
 					{phase === 2 && <LostAndFound />}

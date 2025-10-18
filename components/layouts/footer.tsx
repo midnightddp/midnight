@@ -2,24 +2,49 @@
 
 import Link from "next/link";
 import NightIcon from "../icons/night-icon";
+import { DM_Mono, Outfit } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Input } from "../ui/input";
+import { useState } from "react";
+import { Button } from "../ui/button";
+
+// DM Mono
+const dmMono = DM_Mono({
+	subsets: ["latin"],
+	weight: ["400", "500"],
+});
+
+// Outfit
+const outfit = Outfit({
+	subsets: ["latin"],
+	weight: ["400", "500", "600", "700"],
+});
 
 export default function Footer() {
+	const [searchTerm, setSearchTerm] = useState("");
 	return (
-		<footer className="bg-blue-700 text-white py-12 px-6 md:px-12 lg:px-24">
-			<div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+		<footer
+			className={cn(
+				"bg-blue-700 text-white py-12 px-6 md:px-12 lg:px-24 w-full",
+				outfit.className
+			)}
+		>
+			<div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
 				{/* Column 1 - Brand */}
 				<div className="space-y-4">
 					<span className="flex gap-2 justify-start items-center">
 						<div className="h-10">
 							<NightIcon />
 						</div>
-						<h2 className="text-3xl font-bold">midnight</h2>
+						<h2 className="text-3xl font-medium">midnight</h2>
 					</span>
 				</div>
 
 				{/* Column 3 - Resources */}
 				<div>
-					<h3 className=" text-sm uppercase mb-4">WHITEPAPERS</h3>
+					<h3 className={cn(" text-xs uppercase mb-4", dmMono.className)}>
+						WHITEPAPERS
+					</h3>
 					<ul className="space-y-2 text-2xl">
 						<li>
 							<Link
@@ -41,44 +66,65 @@ export default function Footer() {
 				</div>
 
 				{/* Column 4 - Newsletter */}
-				<div>
-					<h3 className="text-sm font-semibold uppercase mb-4">
+				<div className="w-full flex flex-col">
+					<h3 className={cn("text-sm uppercase mb-4", dmMono.className)}>
 						SIGN UP FOR UPDATES
 					</h3>
-					<form className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+					<form className="flex flex-col  items-start sm:items-center gap-3">
 						<p>
-							Email <span>*</span>
+							Email<span className="text-red-500">*</span>
 						</p>
-						<input
-							type="email"
-							placeholder="Enter your email"
-							className="px-3 py-2 rounded-md text-black w-full sm:flex-1 focus:outline-none"
+						<Input
+							id="search"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							className="py-6 rounded-sm border-white/20 w-full"
 						/>
-						<button
-							type="submit"
-							className="bg-white text-blue-700 font-semibold px-4 py-2 rounded-md hover:bg-gray-100 transition"
+
+						<Button
+							type="button"
+							onClick={() => {
+								setSearchTerm("");
+							}}
+							className="text-white bg-blue-900 p-6 rounded-md hover:bg-blue-900/50 transition self-start"
 						>
-							Subscribe
-						</button>
+							SUBMIT
+						</Button>
 					</form>
 				</div>
 			</div>
 
 			{/* Bottom section */}
-			<div className="border-t border-white/20 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-80 gap-4">
-				<p>© {new Date().getFullYear()} Midnight. All rights reserved.</p>
-				<div className="flex gap-4">
+			<div
+				className={cn(
+					"border-t border-black/60 mt-10 pt-8 gap-4 ",
+					dmMono.className
+				)}
+			>
+				<div className="flex flex-col md:flex-row gap-2 text-sm md:gap-4">
 					<Link
-						href="#"
-						className="hover:underline"
+						href="/privacy-policy"
+						className="hover:text-white/50"
 					>
-						Privacy Policy
+						PRIVACY POLICY
 					</Link>
 					<Link
-						href="#"
-						className="hover:underline"
+						href="/website-term-of-use"
+						className="hover:text-white/50"
 					>
-						Terms of Service
+						WEBSITE TERMS OF USE
+					</Link>
+					<Link
+						href="/cookie-policy"
+						className="hover:text-white/50"
+					>
+						COOKIES POLICY
+					</Link>
+					<Link
+						href="/token-end-user-terms"
+						className="hover:text-white/50"
+					>
+						TOKEN END USER TERMS
 					</Link>
 				</div>
 			</div>

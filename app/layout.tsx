@@ -25,10 +25,7 @@ export default function RootLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html
-			lang="en"
-			className={`${dmMono.className}`}
-		>
+		<html lang="en">
 			<body className="antialiased">
 				<Theme>{children}</Theme>
 			</body>

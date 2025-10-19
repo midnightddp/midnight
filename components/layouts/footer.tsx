@@ -56,10 +56,10 @@ export default function Footer() {
 						</li>
 						<li>
 							<Link
-								href="#"
+								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
 								className="hover:underline"
 							>
-								Tokenomics
+								TOKENOMICS
 							</Link>
 						</li>
 					</ul>

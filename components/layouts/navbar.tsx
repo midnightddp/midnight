@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react"; // using lucide icons
+import { Equal, Menu, X } from "lucide-react"; // using lucide icons
 import HomeIcon from "../icons/home-icon";
 import { DM_Mono, Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ export default function Navbar() {
 			{/* ───── Desktop Nav ───── */}
 			<nav
 				className={cn(
-					"fixed top-0 z-50 w-full sc-divider bg-background/30 backdrop-blur-xs supports-[backdrop-filter]:bg-background p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-12",
+					"fixed top-0 z-50 w-full sc-divider bg-background/30 backdrop-blur-xs supports-[backdrop-filter]:bg-background p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-14",
 					outfit.className
 				)}
 			>
@@ -96,7 +96,7 @@ export default function Navbar() {
 					onClick={() => setIsOpen(true)}
 					className="flex flex-col items-center"
 				>
-					<Menu className="w-6 h-6" />
+					<Equal className="w-6 h-6" />
 				</button>
 			</nav>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import TokenIcon from "../icons/token-icon";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 function Tokenomics() {
 	return (
@@ -25,13 +26,23 @@ function Tokenomics() {
 							holders can effectively transact on Midnight for free for as long
 							as they hold enough tokens to generate the minimum required DUST.
 						</p>
-						<div className="flex flex-col gap-4 lg:flex-row w-full">
-							<Button className="button-primary text-sm">
-								READ TOKENOMICS WHITEPAPER
-							</Button>
-							<Button className="button-secondary text-sm">
-								READ MICA WHITEPAPER
-							</Button>
+						<div className="flex flex-col gap-4 md:flex-row w-full">
+							<Link
+								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
+								className="w-full lg:w-auto"
+							>
+								<Button className="button-primary text-sm w-full">
+									READ TOKENOMICS WHITEPAPER
+								</Button>
+							</Link>
+							<Link
+								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/NIGHT%20MiCA%20White%20Paper.pdf"
+								className="w-full lg:w-auto"
+							>
+								<Button className="button-secondary text-sm w-full">
+									READ MICA WHITEPAPER
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</div>

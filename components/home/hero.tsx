@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 
 import { DM_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const dmMono = DM_Mono({
 	subsets: ["latin"],
@@ -41,8 +42,22 @@ function Hero() {
 							</p>
 						</div>
 						<div className="flex flex-col gap-4 lg:flex-row">
-							<Button className="button-primary">CLICK TO CLAIM</Button>
-							<Button className="button-secondary">LEARN HOW TO CLAIM</Button>
+							<Link
+								href="#"
+								className="w-full lg:w-auto"
+							>
+								<Button className="button-primary w-full">
+									CLICK TO CLAIM
+								</Button>
+							</Link>
+							<Link
+								href="how-to-get-night"
+								className="w-full lg:w-auto"
+							>
+								<Button className="button-secondary w-full">
+									LEARN HOW TO CLAIM
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</div>

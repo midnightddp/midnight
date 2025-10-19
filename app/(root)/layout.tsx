@@ -17,9 +17,7 @@ export default function RootLayout({
 			<div>
 				<Navbar />
 			</div>
-			<main className={`${outfit.className} relative pt-24 md:pt-20`}>
-				{children}
-			</main>
+			<main className={`${outfit.className} relative pt-28`}>{children}</main>
 			<div>
 				<Footer />
 			</div>

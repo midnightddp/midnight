@@ -16,7 +16,7 @@ function MakeAClaim() {
 	// State to manage whether the element should be sticky
 	const [isSticky, setIsSticky] = useState(false);
 	// State to hold the height of the sticky element for the placeholder
-	const [stickyHeight, setStickyHeight] = useState(4);
+	const [stickyHeight, setStickyHeight] = useState(24);
 	// State to hold the original top position (the trigger point)
 	const [triggerTop, setTriggerTop] = useState(0);
 
@@ -112,7 +112,7 @@ function MakeAClaim() {
 						ref={buttonGroupRef}
 						className={cn(
 							"bg-white w-fit rounded-4xl  lg:rounded-full flex justify-evenly items-center text-xs overflow-hidden lg:text-xl", // 'relative' is the default
-							isSticky && "fixed top-4 z-50 left-1/2 -translate-x-1/2" // When sticky, center it and add 'top-4' padding
+							isSticky && "fixed top-28 z-50 left-1/2 -translate-x-1/2" // When sticky, center it and add 'top-4' padding
 						)}
 					>
 						{["Glacier Drop", "Scavenger Mine", "Lost-and-Found"].map(

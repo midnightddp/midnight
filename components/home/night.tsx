@@ -4,6 +4,7 @@ import VideoEmbed from "../shared/video-embed";
 import NIGHT_INFO from "@/lib/data/night-info";
 import Slider from "../shared/slider";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 function Night() {
 	return (
@@ -61,9 +62,14 @@ function Night() {
 						/>
 					</div>
 					<div className="w-full flex lg:justify-center items-center">
-						<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
-							READ WHITEPAPER
-						</Button>
+						<Link
+							href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
+							className="w-full lg:w-auto"
+						>
+							<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
+								READ TOKENOMICS WHITEPAPER
+							</Button>
+						</Link>
 					</div>
 				</div>
 			</section>

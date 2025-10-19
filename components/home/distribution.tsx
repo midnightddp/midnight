@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { ArrowDown, Dot } from "lucide-react";
 import LiveButton from "../shared/live-button";
+import Link from "next/link";
 
 function Distribution() {
 	return (
@@ -72,9 +73,14 @@ function Distribution() {
 					</Card>
 				</div>
 				<div className="w-full flex lg:justify-center items-center">
-					<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
-						How To Claim
-					</Button>
+					<Link
+						href="/how-to-get-night"
+						className="w-full lg:w-auto"
+					>
+						<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
+							How To Claim
+						</Button>
+					</Link>
 				</div>
 			</section>
 		</>

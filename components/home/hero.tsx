@@ -22,7 +22,7 @@ function Hero() {
 							<img
 								src="/images/midnighthero.svg"
 								alt="midnight "
-								className="object-contain w-24 md:w-32 lg:w-48"
+								className="object-contain w-20 md:w-32 lg:w-48"
 							/>
 						</div>
 					</div>
@@ -41,8 +41,8 @@ function Hero() {
 							</p>
 						</div>
 						<div className="flex flex-col gap-4 lg:flex-row">
-							<Button className="button-primary">Click To Claim</Button>
-							<Button className="button-secondary">Learn How To CLaim</Button>
+							<Button className="button-primary">CLICK TO CLAIM</Button>
+							<Button className="button-secondary">LEARN HOW TO CLAIM</Button>
 						</div>
 					</div>
 				</div>

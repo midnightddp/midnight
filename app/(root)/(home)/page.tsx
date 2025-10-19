@@ -50,7 +50,7 @@ export default function Home() {
 			{/* Sticky Sub-Nav */}
 			<nav
 				className={cn(
-					"fixed top-16 md:top-14 lg:top-14 bg-white/30 flex items-center left-0 right-0 z-50 backdrop-blur px-6 h-12 text-xs sc-divider",
+					"fixed top-16 md:top-14 lg:top-14 bg-white/80 flex items-center left-0 right-0 z-50 backdrop-blur px-6 h-12 text-xs sc-divider",
 					dmMono.className
 				)}
 			>

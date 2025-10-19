@@ -38,7 +38,7 @@ export default function Navbar() {
 			{/* ───── Desktop Nav ───── */}
 			<nav
 				className={cn(
-					"fixed top-0 z-50 w-full sc-divider bg-background/30 backdrop-blur-xs supports-[backdrop-filter]:bg-background p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-14",
+					"fixed top-0 z-50 w-full sc-divider bg-white/80 backdrop-blur-xs supports-[backdrop-filter]:bg-background p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-14",
 					outfit.className
 				)}
 			>
@@ -84,7 +84,7 @@ export default function Navbar() {
 			</nav>
 
 			{/* ───── Mobile Top Bar ───── */}
-			<nav className="fixed top-0 left-0 right-0 z-50 bg-background backdrop-blur border-b border-gray-200 flex items-center justify-between px-6 py-3 md:hidden h-16">
+			<nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200 flex items-center justify-between px-6 py-3 md:hidden h-16">
 				<Link
 					href="/"
 					className="flex flex-col items-center "

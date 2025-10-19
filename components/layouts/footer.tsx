@@ -101,7 +101,7 @@ export default function Footer() {
 					dmMono.className
 				)}
 			>
-				<div className="flex flex-col md:flex-row gap-2 text-sm md:gap-4">
+				<div className="flex flex-col md:flex-row gap-4 text-sm">
 					<Link
 						href="/privacy-policy"
 						className="hover:text-white/50"

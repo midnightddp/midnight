@@ -22,7 +22,7 @@ function Hero() {
 							<img
 								src="/images/midnighthero.svg"
 								alt="midnight "
-								className="object-contain w-20 md:w-32 lg:w-48"
+								className="object-contain w-24 md:w-32 lg:w-48"
 							/>
 						</div>
 					</div>

@@ -12,7 +12,6 @@ function DestinationAddress({
 	onPrevious,
 }: DestinationAddressStepProps) {
 	const [destinationAddress, setDestinationAddress] = useState("");
-	const [searchTerm, setSearchTerm] = useState("");
 
 	return (
 		<div>

@@ -7,23 +7,23 @@ import AcceptTerms from "./accept-terms";
 import Sign from "./sign";
 
 function ChooseNetwork() {
-	let [currentStep, setSurrentStep] = useState(3);
+	let [currentStep, setCurrentStep] = useState(0);
 
 	const handleNext = () => {
 		if (currentStep < 4) {
-			setSurrentStep(currentStep + 1);
+			setCurrentStep(currentStep + 1);
 		}
 	};
 
 	const handlePrevious = () => {
 		if (currentStep >= 1) {
-			setSurrentStep(currentStep - 1);
+			setCurrentStep(currentStep - 1);
 		}
 	};
 	return (
 		<section className="w-full lg:h-screen grid lg:grid-cols-5 py-8 px-8 md:px-16 lg:px-40 xl:px-72 gap-4 bg-neutral-100">
 			<div className="flex flex-col justify-between w-full h-full lg:col-span-3 bg-white p-6 rounded-lg lg:order-1">
-				{currentStep == 0 && <OriginAddress />}
+				{currentStep == 0 && <OriginAddress onNext={handleNext} />}
 				{currentStep == 1 && (
 					<DestinationAddress
 						onNext={handleNext}
@@ -44,7 +44,7 @@ function ChooseNetwork() {
 						<h3 className="text-blue-700 text-3xl font-semibold  mb-8">
 							GlacierDrop
 						</h3>
-						<div className="flex flex-col gap-2 text-black/70">
+						<div className="flex flex-col gap-8 text-black/70">
 							{
 								/* currentStep */
 								[
@@ -81,7 +81,14 @@ function ChooseNetwork() {
 				</div>
 				<span className="w-full border-b border-black/20 relative"></span>
 				<div className="w-full flex">
-					<Button className="button-secondary w-full">Start over</Button>
+					<Button
+						onClick={() => {
+							setCurrentStep(0);
+						}}
+						className="button-secondary w-full"
+					>
+						Start over
+					</Button>
 				</div>
 			</div>
 		</section>

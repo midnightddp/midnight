@@ -8,6 +8,7 @@ import Sign from "./sign";
 
 function ChooseNetwork() {
 	let [currentStep, setSurrentStep] = useState(3);
+
 	const handleNext = () => {
 		if (currentStep < 4) {
 			setSurrentStep(currentStep + 1);
@@ -15,7 +16,7 @@ function ChooseNetwork() {
 	};
 
 	const handlePrevious = () => {
-		if (currentStep > 1) {
+		if (currentStep >= 1) {
 			setSurrentStep(currentStep - 1);
 		}
 	};
@@ -23,7 +24,12 @@ function ChooseNetwork() {
 		<section className="w-full lg:h-screen grid lg:grid-cols-5 py-8 px-8 md:px-16 lg:px-40 xl:px-72 gap-4 bg-neutral-100">
 			<div className="flex flex-col justify-between w-full h-full lg:col-span-3 bg-white p-6 rounded-lg lg:order-1">
 				{currentStep == 0 && <OriginAddress />}
-				{currentStep == 1 && <DestinationAddress />}
+				{currentStep == 1 && (
+					<DestinationAddress
+						onNext={handleNext}
+						onPrevious={handlePrevious}
+					/>
+				)}
 				{currentStep == 2 && (
 					<AcceptTerms
 						onNext={handleNext}

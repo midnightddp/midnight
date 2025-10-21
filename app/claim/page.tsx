@@ -4,8 +4,10 @@ import VideoEmbed from "@/components/shared/video-embed";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChooseNetwork from "@/components/start-claim/choose-network";
+import ViewClaimedAllocation from "@/components/start-claim/view-claimed-allocation";
 function ClaimPage() {
 	const [process, setProcess] = useState(false);
+	let [viewingAllocations, setViewingAllocations] = useState(false);
 	if (!process) {
 		return (
 			<section className="w-full h-full grid lg:grid-cols-3">
@@ -37,6 +39,9 @@ function ClaimPage() {
 					<div className="w-full flex flex-col justify-center items-center">
 						<p>Already made a Glacier Drop claim</p>
 						<Button
+							onClick={() => {
+								setViewingAllocations((p) => !p);
+							}}
 							variant="link"
 							className="underline text-sm"
 						>
@@ -98,6 +103,7 @@ function ClaimPage() {
 						<div></div>
 					</div>
 				</div>
+				{viewingAllocations && <ViewClaimedAllocation />}
 			</section>
 		);
 	} else {

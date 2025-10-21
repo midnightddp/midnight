@@ -22,6 +22,10 @@ const NETWORKS: Network[] = [
 	{ value: "bitcoin", label: "BITCOIN" },
 	{ value: "eth", label: "ETH" },
 	{ value: "avax", label: "AVAX" },
+	{ value: "bnb", label: "BNB" },
+	{ value: "matic", label: "MATIC" },
+	{ value: "tron", label: "TRX" },
+	{ value: "solana", label: "SOL" },
 ];
 
 interface SelectNetworkProps {
@@ -325,7 +329,7 @@ function ChooseAddress({
 							<motion.p
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-white text-center"
+								className="text-red-700 text-center bg-white p-8 rounded-sm"
 							>
 								Connection failed — switched to manual entry.
 							</motion.p>

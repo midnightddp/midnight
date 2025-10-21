@@ -8,6 +8,9 @@ import ViewClaimedAllocation from "@/components/start-claim/view-claimed-allocat
 function ClaimPage() {
 	const [process, setProcess] = useState(false);
 	let [viewingAllocations, setViewingAllocations] = useState(false);
+	const handleCancel = () => {
+		setViewingAllocations(false);
+	};
 	if (!process) {
 		return (
 			<section className="w-full h-full grid lg:grid-cols-3">
@@ -103,7 +106,9 @@ function ClaimPage() {
 						<div></div>
 					</div>
 				</div>
-				{viewingAllocations && <ViewClaimedAllocation />}
+				{viewingAllocations && (
+					<ViewClaimedAllocation onCancel={handleCancel} />
+				)}
 			</section>
 		);
 	} else {

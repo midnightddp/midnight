@@ -98,7 +98,7 @@ function DestinationAddress({
 							className={cn(
 								"p-6 rounded-sm text-lg  ",
 								!isTyping && !isValid && destinationAddress
-									? "bg-orange-400/30 border border-orange-600"
+									? "bg-orange-100 border border-orange-600"
 									: ""
 							)}
 						/>

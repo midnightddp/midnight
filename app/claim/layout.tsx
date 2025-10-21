@@ -10,15 +10,7 @@ const outfit = Outfit({
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<>
-			<div>
-				<Navbar />
-			</div>
-			<main className={`${outfit.className} relative pt-28 md:pt-26`}>
-				{children}
-			</main>
-			<div>
-				<Footer />
-			</div>
+			<main className={`${outfit.className} relative`}>{children}</main>
 		</>
 	);
 }

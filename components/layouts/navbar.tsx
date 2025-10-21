@@ -38,7 +38,7 @@ export default function Navbar() {
 			{/* ───── Desktop Nav ───── */}
 			<nav
 				className={cn(
-					"fixed top-0 z-50 w-full sc-divider bg-white/80 backdrop-blur-xs supports-[backdrop-filter]:bg-background p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-14",
+					"fixed top-0 z-50 w-full sc-divider bg-white/80 backdrop-blur p-primary hidden md:flex items-center md:gap-10 lg:gap-12 h-14",
 					outfit.className
 				)}
 			>

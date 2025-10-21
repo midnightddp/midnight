@@ -31,10 +31,10 @@ function DestinationAddress({
 			</h2>
 			<div className="mb-6">
 				<div className="flex flex-col gap-4">
-					<div className="flex flex-col gap-8">
+					<div className="flex flex-col gap-6">
 						<div>
 							<p className="mb-2">Blockchain network</p>
-							<span className="text-lg  flex gap-2  justify-star items-center border border-black rounded-md p-4 text-black/50">
+							<span className="text-lg  flex gap-2  justify-star items-center border border-black rounded-md p-3 text-black/50">
 								<i className="w-6 h-6">
 									<img
 										src="/images/cardanoIcon.svg"
@@ -47,14 +47,14 @@ function DestinationAddress({
 						<div>
 							<label className="mb-2 flex items-center gap-2">
 								<span>Destination adress </span>
-								<CircleQuestionMark />
+								<CircleQuestionMark className="text-black/65 w-4" />
 							</label>
 							<Input
 								type="text"
 								placeholder="Please enter a destination address"
 								value={destinationAddress}
 								onChange={(e) => setDestinationAddress(e.target.value)}
-								className="p-8 rounded-sm text-lg"
+								className="p-6 rounded-sm text-lg"
 							/>
 						</div>
 					</div>

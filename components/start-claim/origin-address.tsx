@@ -19,13 +19,33 @@ type Network = {
 };
 
 const NETWORKS: Network[] = [
-	{ value: "bitcoin", label: "BITCOIN" },
-	{ value: "eth", label: "ETH" },
-	{ value: "avax", label: "AVAX" },
-	{ value: "bnb", label: "BNB" },
-	{ value: "matic", label: "MATIC" },
-	{ value: "tron", label: "TRX" },
-	{ value: "solana", label: "SOL" },
+	{
+		value: "bitcoin",
+		label: "BITCOIN",
+		icon: "/images/crypto/bitcoin-btc-logo.svg",
+	},
+	{ value: "eth", label: "ETH", icon: "/images/crypto/ethereum-eth-logo.svg" },
+	{
+		value: "avax",
+		label: "AVAX",
+		icon: "/images/crypto/avalanche-avax-logo.svg",
+	},
+	{
+		value: "bnb",
+		label: "BNB",
+		icon: "/images/crypto/bnb-bnb-logo.svg",
+	},
+	{
+		value: "matic",
+		label: "MATIC",
+		icon: "/images/crypto/polygon-matic-logo.svg",
+	},
+	{
+		value: "tron",
+		label: "TRX",
+		icon: "/images/crypto/tron-trx-logo.svg",
+	},
+	{ value: "solana", label: "SOL", icon: "/images/crypto/solana-sol-logo.svg" },
 ];
 
 interface SelectNetworkProps {
@@ -142,7 +162,16 @@ const SelectNetwork: React.FC<SelectNetworkProps> = ({
 									key={network.value}
 									value={network.value}
 								>
-									<div className="font-medium">{network.label}</div>
+									<div className="flex justify-center items-center gap-4 text-black/80 py-2 font-medium">
+										<i className="w-4 h-4">
+											<img
+												src={network.icon}
+												alt={network.value}
+											/>
+										</i>
+										{network.label}
+									</div>
+									{/* <div className="font-medium">{network.label}</div> */}
 								</SelectItem>
 							))}
 						</SelectContent>
@@ -285,7 +314,7 @@ function ChooseAddress({
 									key={wallet.value}
 									value={wallet.value}
 								>
-									{wallet.label}
+									<p className="font-medium text-black/80">{wallet.label}</p>
 								</SelectItem>
 							))}
 						</SelectContent>
@@ -329,7 +358,7 @@ function ChooseAddress({
 							<motion.p
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-red-700 text-center bg-white p-8 rounded-sm"
+								className="text-red-700 text-center bg-white/60 backdrop-blur p-8 rounded-sm"
 							>
 								Connection failed — switched to manual entry.
 							</motion.p>

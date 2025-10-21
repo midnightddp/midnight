@@ -10,7 +10,7 @@ function Night() {
 	return (
 		<>
 			<section className="relative w-full overflow-hidden m-auto p-primary pt-16 md:pt-28 pb-2 text-white bg-black lg:bg-white">
-				<div className=" bg-black p-2 lg:p-16 rounded-2xl mb-8 h-auto">
+				<div className=" bg-black p-2 lg:p-16 rounded-2xl mb-8 h-auto flex flex-col gap-8">
 					<div className="grid lg:grid-cols-2 gap-4">
 						<div className="flex flex-col gap-12">
 							<div className="flex flex-col gap-6 text-lg pb-6 justify-center items-center lg:items-start  text-center lg:text-start">

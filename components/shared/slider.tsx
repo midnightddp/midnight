@@ -36,7 +36,7 @@ export default function Slider({
 	}, [emblaApi]);
 
 	return (
-		<div className="overflow-hidden">
+		<div className="overflow-hidden mb-4">
 			{/* Embla viewport */}
 			<div
 				className="overflow-hidden h-[60vh] md:h-[60vh] lg:h-[65vh]"
@@ -47,7 +47,7 @@ export default function Slider({
 					{slidercontents.map((contents: any, idx: number) => (
 						<div
 							key={idx}
-							className="relative flex-[0_0_80%] md:flex-[0_0_50%] lg:flex-[0_0_30%] flex"
+							className="relative flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_30%] flex"
 						>
 							<Card
 								className={cn(

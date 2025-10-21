@@ -134,7 +134,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 
 			{/* ───── Mobile ───── */}
 			<div className="bg-black/75 flex items-end justify-center md:hidden fixed bottom-0 left-0 w-dvw h-screen">
-				<div className="bg-white w-full h-5/6 rounded-t-lg flex flex-col">
+				<div className="bg-white w-full h-11/12 rounded-t-lg flex flex-col">
 					<div className="flex justify-between items-center px-8 py-6">
 						<h4 className="font-bold text-xl">View claimed allocations</h4>
 						<button onClick={onCancel}>

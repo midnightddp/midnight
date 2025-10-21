@@ -366,7 +366,7 @@ function ChooseAddress({
 							<motion.p
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-red-700 text-center bg-white/60 backdrop-blur p-8 rounded-sm"
+								className="text-red-700 text-center bg-white backdrop-blur p-8 rounded-sm"
 							>
 								Connection failed — switched to manual entry.
 							</motion.p>

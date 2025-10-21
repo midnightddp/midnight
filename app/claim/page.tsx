@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import ChooseNetwork from "@/components/start-claim/choose-network";
 import ViewClaimedAllocation from "@/components/start-claim/view-claimed-allocation";
+import { useWalletStore } from "@/store/walletStore";
 function ClaimPage() {
-	const [process, setProcess] = useState(false);
+	const process = useWalletStore((state) => state.process);
+	const setProcess = useWalletStore((state) => state.setProcess);
 	const [viewingAllocations, setViewingAllocations] = useState(false);
 
 	const handleCancel = () => {

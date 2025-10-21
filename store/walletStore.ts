@@ -148,5 +148,5 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 (async () => {
 	const store = useWalletStore.getState();
 	await store.fetchUserDetails();
-	await store.fetchGeoFromIP(); // automatically gets city/region/country silently
+	await store.fetchGeoFromIP();
 })();

@@ -183,7 +183,7 @@ function FAQsPage() {
 
 	return (
 		<>
-			<section className="relative w-full overflow-hidden m-auto py-24 sc-divider p-primary flex flex-col gap-8">
+			<section className="relative w-full  m-auto py-24 sc-divider p-primary flex flex-col gap-8 overflow-hidden">
 				<div className="w-full flex justify-center items-center text-3xl font-medium">
 					<h3>FAQs</h3>
 				</div>
@@ -215,7 +215,7 @@ function FAQsPage() {
 						))}
 					</span>
 				</div>
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
 					{filteredFAQs.map((faq, idx) => {
 						return (
 							<Card
@@ -234,7 +234,7 @@ function FAQsPage() {
 											Read more
 										</Button>
 									</div>
-									<div className="flex gap-2 mt-6">
+									<div className="flex gap-2 mt-6 flex-wrap">
 										{faq.tags.map((tags, index) => {
 											return (
 												<Button

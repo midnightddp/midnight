@@ -7,7 +7,8 @@ import ChooseNetwork from "@/components/start-claim/choose-network";
 import ViewClaimedAllocation from "@/components/start-claim/view-claimed-allocation";
 function ClaimPage() {
 	const [process, setProcess] = useState(false);
-	let [viewingAllocations, setViewingAllocations] = useState(false);
+	const [viewingAllocations, setViewingAllocations] = useState(false);
+
 	const handleCancel = () => {
 		setViewingAllocations(false);
 	};

@@ -8,13 +8,14 @@ export default function TermsOfUsePage() {
 
 			<div className="space-y-8 leading-relaxed">
 				<p>
-					These Terms of Use (“Terms”) set forth the binding legal agreement
-					between you and Midnight TGE Ltd., a company registered in the British
-					Virgin Islands with its registered address at Craigmuir Chambers, Road
-					Town, Tortola, VG, 1110, BVI (“Midnight,” "we," or "us"). These Terms
-					govern your use of this website and the NIGHT portal (the “Website”)
-					and all of the related products and services offered by us via the
-					Website (the “Services”).
+					These Terms of Use (&ldquo;Terms&rdquo;) set forth the binding legal
+					agreement between you and Midnight TGE Ltd., a company registered in
+					the British Virgin Islands with its registered address at Craigmuir
+					Chambers, Road Town, Tortola, VG, 1110, BVI (&ldquo;Midnight,&rdquo;
+					&quot;we,&quot; or &quot;us&quot;). These Terms govern your use of
+					this website and the NIGHT portal (the &ldquo;Website&rdquo;) and all
+					of the related products and services offered by us via the Website
+					(the &ldquo;Services&rdquo;).
 				</p>
 
 				<p>

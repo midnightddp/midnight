@@ -7,7 +7,7 @@ import AcceptTerms from "./accept-terms";
 import Sign from "./sign";
 
 function ChooseNetwork() {
-	let [currentStep, setCurrentStep] = useState(0);
+	const [currentStep, setCurrentStep] = useState(0);
 
 	const handleNext = () => {
 		if (currentStep < 4) {

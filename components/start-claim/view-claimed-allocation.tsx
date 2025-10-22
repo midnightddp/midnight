@@ -27,7 +27,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 	const [activeAllocations, setActiveAllocations] = useState(false);
 
 	const [balance, setBalance] = useState<BalanceData | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const isValidCardanoAddress = (addr: string): boolean => {
@@ -85,8 +85,8 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 	};
 
 	const RenderLoading = () => (
-		<div className="w-full h-full flex flex-col justify-center items-center text-center">
-			<div className="mb-4 animate-spin border-4 border-blue-500 border-t-transparent rounded-full w-12 h-12"></div>
+		<div className="w-full h-full flex flex-col justify-center items-center text-center p-20 gap-2">
+			<div className="mb-4 animate-spin border-4 border-blue-500 border-t-transparent rounded-full w-10 h-10"></div>
 			<p className="text-lg font-medium">Loading your claims</p>
 			<p>Please do not close your browser or navigate from this page</p>
 		</div>
@@ -257,7 +257,9 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 
 						{/* Body */}
 
-						{!activeAllocations && (
+						{loading && <RenderLoading />}
+
+						{!activeAllocations && !loading && (
 							<React.Fragment>
 								<div className="border-y border-black/20 p-8 flex flex-col gap-4">
 									<p className="text-sm font-medium">
@@ -314,9 +316,10 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 								<X />
 							</button>
 						</div>
+						{loading && <RenderLoading />}
 
 						{/* Body */}
-						{!activeAllocations && (
+						{!activeAllocations && !loading && (
 							<React.Fragment>
 								<div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
 									<p className="text-center text-base">
@@ -353,8 +356,6 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 								searchTerm={searchTerm}
 							/>
 						)}
-
-						{/* Footer */}
 					</div>
 				</div>
 			</>

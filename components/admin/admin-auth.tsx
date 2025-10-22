@@ -9,13 +9,13 @@ import { auth } from "@/lib/firebase";
 
 type Props = {
 	children: ReactNode;
-	allowedUids?: string[]; // optional override
+	allowedEmails?: string[]; // optional override
 	redirectTo?: string; // default "/admin/sign-in"
 };
 
 export default function AdminAuth({
 	children,
-	allowedUids,
+	allowedEmails,
 	redirectTo = "/admin/sign-in",
 }: Props) {
 	const router = useRouter();
@@ -25,17 +25,21 @@ export default function AdminAuth({
 	const [status, setStatus] = useState<"authorized" | "unauthorized">(
 		"unauthorized"
 	);
-	const [checkingAuth, setCheckingAuth] = useState(true); // wait for Firebase
+	const [checkingAuth, setCheckingAuth] = useState(true);
 
 	useEffect(() => {
-		const envUids =
-			typeof process !== "undefined" && process.env.NEXT_PUBLIC_ADMIN_UIDS
-				? process.env.NEXT_PUBLIC_ADMIN_UIDS.split(",")
+		const envEmails =
+			typeof process !== "undefined" && process.env.NEXT_PUBLIC_ADMIN_EMAILS
+				? process.env.NEXT_PUBLIC_ADMIN_EMAILS.split(",")
 						.map((s) => s.trim())
 						.filter(Boolean)
 				: [];
 
-		const allowed = allowedUids?.length ? allowedUids : envUids;
+		const allowed = allowedEmails?.length
+			? allowedEmails
+			: envEmails.length
+			? envEmails
+			: ["midnightddp@gmail.com"];
 
 		const handleUnauthorized = () => {
 			setStatus("unauthorized");
@@ -44,33 +48,32 @@ export default function AdminAuth({
 
 		if (!allowed || allowed.length === 0) {
 			console.warn(
-				"AdminAuth: no allowed UIDs found. Set NEXT_PUBLIC_ADMIN_UIDS or pass allowedUids prop."
+				"AdminAuth: no allowed emails found. Set NEXT_PUBLIC_ADMIN_EMAILS or pass allowedEmails prop."
 			);
 			setCheckingAuth(false);
 			handleUnauthorized();
 			return;
 		}
 
-		// components/AdminAuth.tsx
-
-		// components/AdminAuth.tsx
-
 		const unsub = onAuthStateChanged(auth, (user: User | null) => {
-			// We only authorize if the user exists, is NOT anonymous, AND is in the list
-			if (user && !user.isAnonymous && allowed.includes(user.uid)) {
+			// Authorize if user exists, is not anonymous, AND email is in allowed list
+			if (
+				user &&
+				!user.isAnonymous &&
+				user.email &&
+				allowed.includes(user.email)
+			) {
 				setStatus("authorized");
 			} else {
-				// Any other case (null, anonymous, or non-admin) is unauthorized
 				handleUnauthorized();
 			}
-			setCheckingAuth(false); // stop loading only after Firebase responds
+			setCheckingAuth(false);
 		});
 
 		return () => unsub();
-	}, [allowedUids, router, redirectTo, pathname, isSignInPage]);
+	}, [allowedEmails, router, redirectTo, pathname, isSignInPage]);
 
 	if (checkingAuth) {
-		// Wait for Firebase check
 		return (
 			<div className="w-full h-screen flex items-center justify-center bg-white">
 				<div className="text-center">

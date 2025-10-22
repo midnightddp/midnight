@@ -106,8 +106,13 @@ export default function SignInPage() {
 	const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
 	return (
-		<div className={cn("bg-white p-8 ", outfit.className)}>
-			<div className="flex items-center justify-center p-8 border rounded-sm">
+		<div
+			className={cn(
+				"bg-white p-8 flex justify-center items-center",
+				outfit.className
+			)}
+		>
+			<div className="flex items-center justify-center p-8 border rounded-sm w-full md:max-w-1/2">
 				<div className="w-full max-w-md space-y-8">
 					<div className="text-center">
 						<h1 className={cn("text-4xl font-semibold", dmMono.className)}>

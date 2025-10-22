@@ -1,25 +1,37 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Equal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { auth } from "@/lib/firebase"; // your firebase config
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
 	{ href: "/", label: "Dashboard" },
 	{ href: "/sign-in", label: "Sign In" },
 ];
 
-interface NavbarProps {
-	isAuthenticated?: boolean;
-	onSignOut?: () => void;
-}
-
-export default function Navbar({
-	isAuthenticated = false,
-	onSignOut,
-}: NavbarProps) {
+export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [user, setUser] = useState<User | null>(null);
+	const router = useRouter();
+	// Listen for auth state changes
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+			setUser(currentUser);
+		});
+		return unsubscribe;
+	}, []);
+
+	const handleSignOut = async () => {
+		await signOut(auth);
+		router.push("/");
+		setIsOpen(false);
+	};
 
 	return (
 		<>
@@ -31,9 +43,11 @@ export default function Navbar({
 			>
 				<div className="flex items-center space-x-6 text-sm font-dm-mono">
 					{navLinks.map((link) => {
-						if (link.href === "/sign-in" && isAuthenticated) return null;
-						const isActive = location.pathname === link.href;
+						// Only show "Sign In" if user is not logged in
+						if (link.href === "/sign-in" && user) return null;
 
+						const isActive =
+							typeof window !== "undefined" && location.pathname === link.href;
 						return (
 							<Link
 								key={link.href}
@@ -47,15 +61,18 @@ export default function Navbar({
 							</Link>
 						);
 					})}
-					{isAuthenticated && (
+
+					{/* Show Sign Out if user is logged in */}
+					{user && (
 						<button
-							onClick={onSignOut}
+							onClick={handleSignOut}
 							className="transition-colors hover:text-black/50 h-full py-4"
 						>
 							Sign Out
 						</button>
 					)}
 				</div>
+
 				<div className="ml-auto">
 					<Button
 						variant="default"
@@ -71,7 +88,7 @@ export default function Navbar({
 			<nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 py-3 md:hidden h-16">
 				<Button
 					onClick={() => setIsOpen(true)}
-					className="flex flex-col items-center"
+					className="flex flex-col items-center ml-auto"
 				>
 					<Equal className="w-6 h-6" />
 				</Button>
@@ -89,7 +106,7 @@ export default function Navbar({
 					>
 						<button
 							onClick={() => setIsOpen(false)}
-							className="absolute top-2 right-5 p-2"
+							className="absolute top-3 right-6 p-2"
 						>
 							<X className="w-6 h-6" />
 						</button>
@@ -109,7 +126,7 @@ export default function Navbar({
 							className="space-y-4 text-start w-full"
 						>
 							{navLinks.map((link) => {
-								if (link.href === "/sign-in" && isAuthenticated) return null;
+								if (link.href === "/sign-in" && user) return null;
 								return (
 									<motion.li
 										key={link.href}
@@ -129,7 +146,8 @@ export default function Navbar({
 									</motion.li>
 								);
 							})}
-							{isAuthenticated && (
+
+							{user && (
 								<motion.li
 									variants={{
 										hidden: { opacity: 0, y: 20 },
@@ -138,11 +156,8 @@ export default function Navbar({
 									className="border-b border-black/20 flex items-center w-full pb-4"
 								>
 									<button
-										onClick={() => {
-											onSignOut?.();
-											setIsOpen(false);
-										}}
-										className="text-2xl font-medium hover:text-primary transition-colors hover:text-black/60"
+										onClick={handleSignOut}
+										className="text-2xl font-medium text-red-700 transition-colors hover:text-red-700/60 hover:underline"
 									>
 										Sign Out
 									</button>

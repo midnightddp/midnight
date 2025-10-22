@@ -1,9 +1,9 @@
-import Navbar from "@/components/layouts/navbar";
 import { DM_Mono, Outfit } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AdminAuth from "@/components/admin/admin-auth";
+import Navbar from "@/components/admin/admin-nav";
 
 // Outfit
 const outfit = Outfit({
@@ -17,9 +17,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				<TooltipProvider>
 					<Toaster />
 					<Sonner />
-					{/* <div>
+					<div>
 						<Navbar />
-					</div> */}
+					</div>
 					<main className={`${outfit.className} relative pt-28 md:pt-26`}>
 						{children}
 					</main>

@@ -153,11 +153,18 @@ export default function DashboardPage() {
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				transition={{ duration: 0.3 }}
-				className="text-center text-white space-y-4"
+				exit={{ opacity: 0 }}
+				className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50"
 			>
-				<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
-				<p>Connecting to your browser wallet...</p>
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.3 }}
+					className="text-center text-white space-y-4"
+				>
+					<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
+					<p>Loading</p>
+				</motion.div>
 			</motion.div>
 		);
 	}
@@ -234,7 +241,7 @@ export default function DashboardPage() {
 						))}
 					</div>
 
-					{filteredUsers.length === 0 && (
+					{filteredUsers().length === 0 && (
 						<div className="text-center py-12">
 							<p className="text-xl text-black/60">
 								No entries match your filters

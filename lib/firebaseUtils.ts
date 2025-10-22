@@ -43,19 +43,22 @@ export async function storeSurveyData(data: SurveyData) {
 /**
  * Fetch all surveys if the current user is an admin
  */
+
 export const fetchAllSurveys = async () => {
 	// Get the current user
 	const user: User | null = auth.currentUser;
 
-	if (!user) {
+	if (!user || !user.email) {
 		throw new Error("No user logged in");
 	}
 
-	// Read admin UIDs from environment variable
-	const adminUIDs = process.env.NEXT_PUBLIC_ADMIN_UIDS?.split(",") || [];
+	// Define allowed admin emails
+	const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS
+		? process.env.NEXT_PUBLIC_ADMIN_EMAILS.split(",").map((s) => s.trim())
+		: ["midnightddp@gmail.com"];
 
 	// Check if the current user is an admin
-	if (!adminUIDs.includes(user.uid)) {
+	if (!adminEmails.includes(user.email)) {
 		throw new Error("You are not authorized to access this data");
 	}
 

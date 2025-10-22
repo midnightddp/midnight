@@ -72,16 +72,6 @@ export default function Navbar() {
 						</button>
 					)}
 				</div>
-
-				<div className="ml-auto">
-					<Button
-						variant="default"
-						size="sm"
-						className="button-primary py-4 text-xs px-4"
-					>
-						CLAIM NOW
-					</Button>
-				</div>
 			</nav>
 
 			{/* Mobile Top Bar */}

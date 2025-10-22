@@ -30,6 +30,12 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
+	const formatAddress = (address: string): string => {
+		if (!address) return "";
+		if (address.length <= 10) return address;
+		return `${address.slice(0, 50)}...${address.slice(-3)}`;
+	};
+
 	const isValidCardanoAddress = (addr: string): boolean => {
 		if (/^(addr1|addr_test1)[0-9a-z]{20,}$/i.test(addr)) return true;
 		if (/^(Ae2|DdzFF)[A-Za-z0-9]{20,}$/i.test(addr)) return true;
@@ -133,13 +139,17 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 
 					<div className="flex gap-2 flex-col mb-4">
 						<p className="text-xs">Destination address:</p>
-						<span className="text-xs break-all">{searchTerm}</span>
-						<button onClick={() => navigator.clipboard.writeText(searchTerm)}>
-							<Copy size={14} />
-						</button>
+						<span className="flex justify-between">
+							<span className="text-xs break-all">
+								{formatAddress(searchTerm)}
+							</span>
+							<button onClick={() => navigator.clipboard.writeText(searchTerm)}>
+								<Copy size={16} />
+							</button>
+						</span>
 					</div>
 
-					{balance.tokens.length > 0 && (
+					{/* {balance.tokens.length > 0 && (
 						<div className="mt-2 w-full max-h-28 overflow-scroll">
 							<p className="font-semibold text-sm">Other Tokens:</p>
 							<ul className="list-disc list-inside text-xs">
@@ -150,7 +160,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 								))}
 							</ul>
 						</div>
-					)}
+					)} */}
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 px-6 py-4">

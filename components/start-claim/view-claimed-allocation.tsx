@@ -47,7 +47,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 		}
 
 		const timer = setTimeout(() => {
-			const lengthValid = searchTerm.length === 103;
+			const lengthValid = searchTerm.length >= 58;
 			const validFormat = isValidCardanoAddress(searchTerm);
 			const isValidNow = validFormat && lengthValid;
 
@@ -140,7 +140,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 					</div>
 
 					{balance.tokens.length > 0 && (
-						<div className="mt-2">
+						<div className="mt-2 w-full max-h-28 overflow-scroll">
 							<p className="font-semibold text-sm">Other Tokens:</p>
 							<ul className="list-disc list-inside text-xs">
 								{balance.tokens.map((t, i) => (

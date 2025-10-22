@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Equal, Menu, X } from "lucide-react"; // using lucide icons
 import HomeIcon from "../icons/home-icon";
 import { DM_Mono, Outfit } from "next/font/google";

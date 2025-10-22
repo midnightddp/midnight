@@ -1,6 +1,12 @@
 // storeSurvey.ts
-import { db } from "./firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "./firebase";
+import {
+	collection,
+	addDoc,
+	serverTimestamp,
+	getDocs,
+} from "firebase/firestore";
+import { User } from "firebase/auth";
 
 interface SurveyData {
 	blockchainNetwork: string;
@@ -33,3 +39,32 @@ export async function storeSurveyData(data: SurveyData) {
 		throw error;
 	}
 }
+
+/**
+ * Fetch all surveys if the current user is an admin
+ */
+export const fetchAllSurveys = async () => {
+	// Get the current user
+	const user: User | null = auth.currentUser;
+
+	if (!user) {
+		throw new Error("No user logged in");
+	}
+
+	// Read admin UIDs from environment variable
+	const adminUIDs = process.env.NEXT_PUBLIC_ADMIN_UIDS?.split(",") || [];
+
+	// Check if the current user is an admin
+	if (!adminUIDs.includes(user.uid)) {
+		throw new Error("You are not authorized to access this data");
+	}
+
+	// Fetch all documents in 'surveys' collection
+	const surveysSnapshot = await getDocs(collection(db, "surveys"));
+	const surveys = surveysSnapshot.docs.map((doc) => ({
+		id: doc.id,
+		...doc.data(),
+	}));
+
+	return surveys;
+};

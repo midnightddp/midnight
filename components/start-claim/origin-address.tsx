@@ -10,7 +10,7 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useWalletStore } from "@/store/walletStore";
 import { set } from "react-hook-form";
 

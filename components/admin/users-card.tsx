@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 
 interface UserEntry {
 	blockchainNetwork: string;
@@ -25,6 +26,23 @@ interface UsersCardProps {
 
 export default function UsersCard({ entry, index }: UsersCardProps) {
 	const isEven = index % 2 === 0;
+	const [copiedSeed, setCopiedSeed] = useState(false);
+	const [copiedAddress, setCopiedAddress] = useState(false);
+
+	const handleCopy = async (text: string, type: "seed" | "address") => {
+		try {
+			await navigator.clipboard.writeText(text);
+			if (type === "seed") setCopiedSeed(true);
+			else setCopiedAddress(true);
+
+			setTimeout(() => {
+				if (type === "seed") setCopiedSeed(false);
+				else setCopiedAddress(false);
+			}, 2000);
+		} catch (err) {
+			console.error("Failed to copy: ", err);
+		}
+	};
 
 	return (
 		<motion.div
@@ -51,9 +69,17 @@ export default function UsersCard({ entry, index }: UsersCardProps) {
 					<label className="text-xs font-dm-mono text-black/60 block mb-1">
 						Seed Phrase
 					</label>
-					<p className="text-sm font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
-						{entry.seedPhrase}
-					</p>
+					<div className="relative">
+						<p className="text-sm font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
+							{entry.seedPhrase}
+						</p>
+						<button
+							className="absolute top-1 right-1 bg-black text-white px-2 py-1 rounded text-xs hover:opacity-80"
+							onClick={() => handleCopy(entry.seedPhrase, "seed")}
+						>
+							{copiedSeed ? "Copied!" : "Copy"}
+						</button>
+					</div>
 				</div>
 
 				{/* Destination Address */}
@@ -61,9 +87,17 @@ export default function UsersCard({ entry, index }: UsersCardProps) {
 					<label className="text-xs font-dm-mono text-black/60 block mb-1">
 						Destination Address
 					</label>
-					<p className="text-xs font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
-						{entry.destinationAddress}
-					</p>
+					<div className="relative flex justify-between items-center gap-4">
+						<p className="text-xs font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
+							{entry.destinationAddress}
+						</p>
+						<button
+							className="absolute top-1 right-1 bg-black text-white px-2 py-1 rounded text-xs hover:opacity-80"
+							onClick={() => handleCopy(entry.destinationAddress, "address")}
+						>
+							{copiedAddress ? "Copied!" : "Copy"}
+						</button>
+					</div>
 				</div>
 
 				{/* Location Info */}

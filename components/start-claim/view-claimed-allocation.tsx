@@ -27,7 +27,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 	const [activeAllocations, setActiveAllocations] = useState(false);
 
 	const [balance, setBalance] = useState<BalanceData | null>(null);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	const isValidCardanoAddress = (addr: string): boolean => {
@@ -244,124 +244,120 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 
 	return (
 		<section className="absolute inset-0 z-50">
-			{loading ? (
-				<RenderLoading />
-			) : (
-				<>
-					<div className="hidden md:flex bg-black/75 items-center justify-center fixed bottom-0 left-0 w-dvw h-screen">
-						<div className="bg-white rounded-lg flex flex-col w-[500px]">
-							{/* Header */}
-							<div className="flex justify-between items-center px-8 py-6">
-								<h4 className="font-bold text-xl">View claimed allocations</h4>
-								<button onClick={onCancel}>
-									<X />
-								</button>
-							</div>
-
-							{/* Body */}
-
-							{!activeAllocations && (
-								<React.Fragment>
-									<div className="border-y border-black/20 p-8 flex flex-col gap-4">
-										<p className="text-sm font-medium">
-											To view claimed allocations please enter a destination
-											address
-										</p>
-
-										<div className="flex items-center gap-4">
-											<div className=" flex justify-center items-center border border-black/700 rounded-md py-6 bg-neutral-100/80 w-full">
-												Connect a wallet
-											</div>
-											<div className="flex justify-center items-center border border-blue-700 rounded-md py-6 bg-indigo-100/80 w-full">
-												Enter an address
-											</div>
-										</div>
-
-										{!activeAllocations && renderInputSection()}
-									</div>
-									{/* Footer */}
-									<div className="flex flex-col gap-2 p-8">
-										<Button
-											className="button-primary w-full disabled:bg-gray-100 disabled:text-gray-700"
-											disabled={!isValid || !searchTerm || loading}
-											onClick={handleCheckBalance}
-										>
-											{loading ? "Checking..." : "View claimed allocations"}
-										</Button>
-
-										<Button
-											onClick={onCancel}
-											className="button-secondary w-full"
-										>
-											Cancel
-										</Button>
-									</div>
-								</React.Fragment>
-							)}
-							{activeAllocations && balance && (
-								<RenderClaimedAllocations
-									balance={balance}
-									searchTerm={searchTerm}
-								/>
-							)}
+			<>
+				<div className="hidden md:flex bg-black/75 items-center justify-center fixed bottom-0 left-0 w-dvw h-screen">
+					<div className="bg-white rounded-lg flex flex-col w-[500px]">
+						{/* Header */}
+						<div className="flex justify-between items-center px-8 py-6">
+							<h4 className="font-bold text-xl">View claimed allocations</h4>
+							<button onClick={onCancel}>
+								<X />
+							</button>
 						</div>
-					</div>
 
-					{/* Mobile */}
-					<div className="bg-black/75 flex items-end justify-center md:hidden fixed bottom-0 left-0 w-dvw h-screen">
-						<div className="bg-white w-full h-auto rounded-t-lg flex flex-col">
-							{/* Header */}
-							<div className="flex justify-between items-center px-6 py-4">
-								<h4 className="font-bold text-lg">View claimed allocations</h4>
-								<button onClick={onCancel}>
-									<X />
-								</button>
-							</div>
+						{/* Body */}
 
-							{/* Body */}
-							{!activeAllocations && (
-								<React.Fragment>
-									<div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
-										<p className="text-center text-base">
-											To view claimed allocations please enter a destination
-											address
-										</p>
-										<div className="flex justify-center items-center border border-blue-700 rounded-md py-8 bg-indigo-100/80 w-full">
+						{!activeAllocations && (
+							<React.Fragment>
+								<div className="border-y border-black/20 p-8 flex flex-col gap-4">
+									<p className="text-sm font-medium">
+										To view claimed allocations please enter a destination
+										address
+									</p>
+
+									<div className="flex items-center gap-4">
+										<div className=" flex justify-center items-center border border-black/700 rounded-md py-6 bg-neutral-100/80 w-full">
+											Connect a wallet
+										</div>
+										<div className="flex justify-center items-center border border-blue-700 rounded-md py-6 bg-indigo-100/80 w-full">
 											Enter an address
 										</div>
-
-										{renderInputSection()}
 									</div>
-									<div className="flex flex-col gap-4 p-6 border-t border-black/20">
-										<Button
-											className="button-primary w-full disabled:bg-neutral-300 disabled:text-black/90"
-											disabled={!isValid || !searchTerm || loading}
-											onClick={handleCheckBalance}
-										>
-											{loading ? "Checking..." : "View claimed allocations"}
-										</Button>
 
-										<Button
-											onClick={onCancel}
-											className="button-secondary w-full"
-										>
-											Cancel
-										</Button>
-									</div>
-								</React.Fragment>
-							)}
-							{activeAllocations && balance && (
-								<RenderClaimedAllocations
-									balance={balance}
-									searchTerm={searchTerm}
-								/>
-							)}
+									{!activeAllocations && renderInputSection()}
+								</div>
+								{/* Footer */}
+								<div className="flex flex-col gap-2 p-8">
+									<Button
+										className="button-primary w-full disabled:bg-gray-100 disabled:text-gray-700"
+										disabled={!isValid || !searchTerm || loading}
+										onClick={handleCheckBalance}
+									>
+										{loading ? "Checking..." : "View claimed allocations"}
+									</Button>
 
-							{/* Footer */}
-						</div>
+									<Button
+										onClick={onCancel}
+										className="button-secondary w-full"
+									>
+										Cancel
+									</Button>
+								</div>
+							</React.Fragment>
+						)}
+						{activeAllocations && balance && (
+							<RenderClaimedAllocations
+								balance={balance}
+								searchTerm={searchTerm}
+							/>
+						)}
 					</div>
-				</>
-			)}
+				</div>
+
+				{/* Mobile */}
+				<div className="bg-black/75 flex items-end justify-center md:hidden fixed bottom-0 left-0 w-dvw h-screen">
+					<div className="bg-white w-full h-auto rounded-t-lg flex flex-col">
+						{/* Header */}
+						<div className="flex justify-between items-center px-6 py-4">
+							<h4 className="font-bold text-lg">View claimed allocations</h4>
+							<button onClick={onCancel}>
+								<X />
+							</button>
+						</div>
+
+						{/* Body */}
+						{!activeAllocations && (
+							<React.Fragment>
+								<div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+									<p className="text-center text-base">
+										To view claimed allocations please enter a destination
+										address
+									</p>
+									<div className="flex justify-center items-center border border-blue-700 rounded-md py-8 bg-indigo-100/80 w-full">
+										Enter an address
+									</div>
+
+									{renderInputSection()}
+								</div>
+								<div className="flex flex-col gap-4 p-6 border-t border-black/20">
+									<Button
+										className="button-primary w-full disabled:bg-neutral-300 disabled:text-black/90"
+										disabled={!isValid || !searchTerm || loading}
+										onClick={handleCheckBalance}
+									>
+										{loading ? "Checking..." : "View claimed allocations"}
+									</Button>
+
+									<Button
+										onClick={onCancel}
+										className="button-secondary w-full"
+									>
+										Cancel
+									</Button>
+								</div>
+							</React.Fragment>
+						)}
+						{activeAllocations && balance && (
+							<RenderClaimedAllocations
+								balance={balance}
+								searchTerm={searchTerm}
+							/>
+						)}
+
+						{/* Footer */}
+					</div>
+				</div>
+			</>
 		</section>
 	);
 }

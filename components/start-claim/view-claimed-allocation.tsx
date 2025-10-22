@@ -82,6 +82,9 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 				throw new Error(data.error || "Failed to fetch balance");
 
 			setBalance(data as BalanceData);
+			// const checknight = data.filter((token) => token.name === "night");
+			// console.log(checknight);
+			// console.log(data);
 			setActiveAllocations(true); // Activate allocations
 		} catch (err: any) {
 			setError(err.message || "An unknown error occurred");

@@ -38,7 +38,7 @@ function ClaimPage() {
 								}}
 								className="button-primary w-full  lg:px-8 text-sm"
 							>
-								START A NEW CLAIM NOW
+								CLAIM NOW
 							</Button>
 						</span>
 					</div>

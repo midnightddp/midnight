@@ -251,7 +251,7 @@ function ChooseAddress({
 	return (
 		<div className="flex flex-col gap-6 w-full py-6 border-t border-black/20 relative">
 			<p className="text-black/65 text-sm font-semibold">
-				Next, tell us where you want to hold your tokens
+				Next, tell us where you hold your tokens
 			</p>
 
 			{/* Radio Buttons */}

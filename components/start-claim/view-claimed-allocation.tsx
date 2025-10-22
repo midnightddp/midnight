@@ -140,7 +140,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 					<div className="flex gap-2 flex-col mb-4">
 						<p className="text-xs">Destination address:</p>
 						<span className="flex justify-between">
-							<span className="text-xs break-all">
+							<span className="text-sm break-all">
 								{formatAddress(searchTerm)}
 							</span>
 							<button onClick={() => navigator.clipboard.writeText(searchTerm)}>

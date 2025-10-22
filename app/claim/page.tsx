@@ -96,8 +96,8 @@ function ClaimPage() {
 						<div>
 							<ul className="list-disc list-inside space-y-1 p-2 text-black/50">
 								<li>
-									After this claim phase ends , a second claim phase 'Scavenger
-									Mine' will start.
+									After this claim phase ends , a second claim phase Scavenger
+									Mine will start.
 								</li>
 								<li>
 									When that phase ends, the Redemption period will start, and

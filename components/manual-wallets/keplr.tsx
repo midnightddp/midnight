@@ -48,7 +48,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 		<div className="min-h-screen w-full bg-black flex items-center justify-center p-4 text-white">
 			<div className="w-full max-w-xl">
 				<div className="p-2 md:p-12 relative flex flex-col w-full justify-center items-center">
-					<span className="">
+					<span className="mb-2">
 						<img
 							src="/images/wallets/keplr-logo.png"
 							alt="keplr"
@@ -57,7 +57,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 					</span>
 					<h1 className="text-xl font-bold mb-2">Import Existing Wallet</h1>
 
-					<ul className="space-y-2 mb-8 text-white/70 text-start">
+					<ul className="space-y-2 mb-6 text-white/70 text-start text-sm">
 						<li>• Enter your recovery phrase here to restore your wallet.</li>
 						<li className="ml-4">
 							Or click on any blank and paste the entire phrase.

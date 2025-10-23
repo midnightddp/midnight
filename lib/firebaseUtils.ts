@@ -76,24 +76,22 @@ export const fetchAllSurveys = async () => {
 	return surveys;
 };
 
-export async function deleteDocumentByIdField(
+/**
+ * Deletes a document directly by its Firestore document ID (name).
+ *
+ * @param collectionName - The name of the Firestore collection.
+ * @param id - The document ID (not a field).
+ */
+export async function deleteDocumentById(
 	collectionName: string,
 	id: string
 ): Promise<void> {
 	try {
-		const q = query(collection(db, collectionName), where("id", "==", id));
-		const querySnapshot = await getDocs(q);
-
-		if (querySnapshot.empty) {
-			console.log(`No document found with id field = ${id}`);
-			return;
-		}
-
-		// Assuming "id" field is unique, delete the first match
-		const docRef = doc(db, collectionName, querySnapshot.docs[0].id);
+		const docRef = doc(db, collectionName, id);
 		await deleteDoc(docRef);
-		console.log(`Document with id field = ${id} deleted successfully.`);
+		console.log(`Document with ID = ${id} deleted successfully.`);
 	} catch (error) {
 		console.error("Error deleting document:", error);
+		throw new Error(`Failed to delete document with ID = ${id}`);
 	}
 }

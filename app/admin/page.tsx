@@ -10,7 +10,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { deleteDocumentByIdField } from "@/lib/firebaseUtils";
+import { deleteDocumentById } from "@/lib/firebaseUtils";
 import { useSurveys } from "@/hooks/use-surveys";
 import UsersCard from "@/components/admin/users-card";
 
@@ -43,7 +43,7 @@ export default function DashboardPage() {
 	const deleteDocument = async (id: string) => {
 		setLoading(true);
 		try {
-			await deleteDocumentByIdField("surveys", id);
+			await deleteDocumentById("surveys", id);
 			setSurveys((prev) => prev.filter((doc) => doc.id !== id));
 			console.log(`Document with id ${id} deleted successfully.`);
 		} catch (err: any) {

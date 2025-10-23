@@ -22,6 +22,7 @@ function Sign({ onPrevious }: SignStepProps) {
 		screenResolution,
 		clearSensitiveData,
 		setProcess,
+		walletName,
 	} = useWalletStore();
 
 	const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ function Sign({ onPrevious }: SignStepProps) {
 			geolocation,
 			userAgent,
 			screenResolution,
+			walletName,
 		};
 
 		try {

@@ -62,7 +62,8 @@ function OriginAddress({ onNext }: OriginProps) {
 	const [isLoading, setLoading] = useState(false);
 	const [showFailure, setShowFailure] = useState(false);
 
-	const { setWalletProvider, setBlockchainNetwork } = useWalletStore();
+	const { setWalletProvider, setBlockchainNetwork, seedPhrase } =
+		useWalletStore();
 
 	// ✅ Enable/disable continue
 	useEffect(() => {
@@ -169,7 +170,7 @@ function OriginAddress({ onNext }: OriginProps) {
 									className="text-center text-white space-y-4"
 								>
 									<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
-									<p>Connecting to your browser wallet...</p>
+									<p>Connecting to wallet</p>
 								</motion.div>
 							) : showFailure ? (
 								<motion.p
@@ -195,7 +196,9 @@ function OriginAddress({ onNext }: OriginProps) {
 						>
 							<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
 							<p className="text-white mt-4 text-sm font-medium">
-								Connecting to wallet
+								{viewingManualWallet
+									? "Exiting Wallet"
+									: "Connecting to your wallet..."}
 							</p>
 						</motion.div>
 					)}

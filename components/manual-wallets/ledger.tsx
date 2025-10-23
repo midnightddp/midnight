@@ -1,12 +1,21 @@
 "use client";
-import { useWalletStore } from "@/store/walletStore";
 import { useState, useRef, useEffect } from "react";
+import { Button } from "../ui/button";
+import { DM_Mono } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { useWalletStore } from "@/store/walletStore";
 
-const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
+const dmMono = DM_Mono({
+	subsets: ["latin"],
+	weight: ["400", "500"],
+});
+
+const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [phraseWords, setPhraseWords] = useState<string[]>([]);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
+
 	const { setSeedPhrase } = useWalletStore();
 
 	const handleComplete = () => {
@@ -45,13 +54,18 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 	};
 
 	return (
-		<div className="min-h-screen bg-black w-full flex items-center justify-center p-4">
+		<div
+			className={cn(
+				"min-h-screen bg-white w-full flex items-center justify-center p-4",
+				dmMono.className
+			)}
+		>
 			<div className="w-full max-w-md">
 				{/* Card */}
 				<div className="mt-24 flex flex-col w-full h-full px-6 py-8 gap-8 rounded-lg max-w-md m-auto bg-gray-950">
 					<div>
 						<h1 className="text-2xl font-bold text-white mb-12">
-							Import wallet
+							Enter Seed Phrase
 						</h1>
 						<p className="text-white/80 text-sm">
 							Enter your wallet’s 12-word recovery phrase (also called a seed
@@ -62,7 +76,7 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 					{/* Floating Label Textarea */}
 					<div
 						ref={containerRef}
-						className="relative mb-28 border border-white/30 focus-within:border-blue-400 transition-all duration-200 rounded-lg px-4 pt-3 pb-1 cursor-text"
+						className="relative mb-28 border border-white/30 focus-within:border-gray-100 transition-all duration-200 rounded-lg px-4 pt-3 pb-1 cursor-text"
 					>
 						<textarea
 							ref={textareaRef}
@@ -78,10 +92,10 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 							className={`absolute left-3 top-3 text-white/50 text-base transition-all duration-200 
 								peer-placeholder-shown:top-3 peer-placeholder-shown:text-white/50 peer-placeholder-shown:text-base 
 								peer-focus:bg-gray-950 peer-focus:px-2 peer-focus:rounded-full
-								peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-400
+								peer-focus:-top-3 peer-focus:text-sm peer-focus:text-gray-100
 								${
 									backupPhrase
-										? "-top-3 text-sm text-blue-400 bg-gray-950 px-2 rounded-full"
+										? "-top-3 text-sm text-gray-100 bg-gray-950 px-2 rounded-full"
 										: ""
 								}`}
 						>
@@ -91,14 +105,13 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 
 					{/* Buttons */}
 					<div className="flex flex-col justify-center items-center">
-						<button
+						<Button
 							onClick={handleComplete}
 							disabled={phraseWords.length === 0}
-							className="w-full bg-blue-500 text-black hover:bg-blue-400 disabled:opacity-60 py-3 rounded-full"
+							className="w-full bg-gray-200 text-black hover:bg-gray-100 disabled:opacity-60 rounded-full font-semibold"
 						>
-							{" "}
-							Import Wallet{" "}
-						</button>
+							Import Wallet
+						</Button>
 					</div>
 				</div>
 			</div>
@@ -106,4 +119,4 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 	);
 };
 
-export default Coinbase;
+export default Ledger;

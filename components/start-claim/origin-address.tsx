@@ -315,7 +315,9 @@ function ChooseAddress({
 								className="accent-black"
 							/>
 							<Label className="text-black font-medium capitalize">
-								{mode === "automatic" ? "Browser Wallet" : "Manual"}
+								{mode === "automatic"
+									? "Connect To Browser Wallet"
+									: "Connect Manually"}
 							</Label>
 						</div>
 						<span className="text-xs text-black/60">

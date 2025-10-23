@@ -117,6 +117,21 @@ function OriginAddress({ onNext }: OriginProps) {
 		}, 1500);
 	};
 
+	useEffect(() => {
+		if (viewingManualWallet) {
+			// Disable background scroll
+			document.body.style.overflow = "hidden";
+		} else {
+			// Re-enable scroll when closed
+			document.body.style.overflow = "";
+		}
+
+		// Cleanup in case the component unmounts
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [viewingManualWallet]);
+
 	return (
 		<>
 			<section className="h-full min-h-[50dvh] flex flex-col relative">

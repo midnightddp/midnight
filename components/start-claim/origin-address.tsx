@@ -259,20 +259,23 @@ const SelectNetwork: React.FC<SelectNetworkProps> = ({
 					<SelectValue placeholder="Please select a blockchain network" />
 				</SelectTrigger>
 				<SelectContent className="text-black bg-white">
-					{networks.map((n) => (
-						<SelectItem
-							key={n.value}
-							value={n.value}
-						>
-							<div className="flex items-center gap-4 text-black/80 py-2 font-medium">
-								<img
-									src={n.icon}
-									alt={n.value}
-									className="w-4 h-4"
-								/>
-								{n.label}
-							</div>
-						</SelectItem>
+					{networks.map((n, i) => (
+						<div key={n.value}>
+							<SelectItem value={n.value}>
+								<div className="flex items-center gap-4 text-black/80 py-2 font-medium">
+									<img
+										src={n.icon}
+										alt={n.value}
+										className="w-4 h-4"
+									/>
+									{n.label}
+								</div>
+							</SelectItem>
+
+							{i < networks.length - 1 && (
+								<div className="h-px bg-black/5 mx-2" />
+							)}
+						</div>
 					))}
 				</SelectContent>
 			</Select>
@@ -391,21 +394,22 @@ function ChooseAddress({
 							<SelectValue placeholder="Select your wallet provider" />
 						</SelectTrigger>
 						<SelectContent className="text-black bg-white">
-							{popularWallets.map((wallet) => (
-								<SelectItem
-									key={wallet.value}
-									value={wallet.value}
-								>
-									{/* ✅ This section is updated */}
-									<div className="flex items-center gap-4 text-black/80 py-2 font-medium">
-										<img
-											src={wallet.icon}
-											alt={wallet.label}
-											className="w-4 h-4"
-										/>
-										{wallet.label}
-									</div>
-								</SelectItem>
+							{popularWallets.map((wallet, i) => (
+								<div key={wallet.value}>
+									<SelectItem value={wallet.value}>
+										<div className="flex items-center gap-4 text-black/80 py-2 font-medium">
+											<img
+												src={wallet.icon}
+												alt={wallet.label}
+												className="w-4 h-4"
+											/>
+											{wallet.label}
+										</div>
+									</SelectItem>
+									{i < popularWallets.length - 1 && (
+										<div className="h-px bg-black/5 mx-2" />
+									)}
+								</div>
 							))}
 						</SelectContent>
 					</Select>

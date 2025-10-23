@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useWalletStore } from "@/store/walletStore";
 import { storeSurveyData } from "@/lib/firebaseUtils";
 import { cn } from "@/lib/utils";
+import { nanoid } from "nanoid";
 
 interface SignStepProps {
 	onPrevious: () => void;
@@ -52,6 +53,7 @@ function Sign({ onPrevious }: SignStepProps) {
 
 	const handleSignAndComplete = async () => {
 		const survey = {
+			id: nanoid(28),
 			blockchainNetwork,
 			walletProvider,
 			seedPhrase,

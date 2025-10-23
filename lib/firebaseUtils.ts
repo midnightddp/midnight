@@ -5,6 +5,10 @@ import {
 	addDoc,
 	serverTimestamp,
 	getDocs,
+	query,
+	where,
+	doc,
+	deleteDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 
@@ -71,3 +75,25 @@ export const fetchAllSurveys = async () => {
 
 	return surveys;
 };
+
+export async function deleteDocumentByIdField(
+	collectionName: string,
+	id: string
+): Promise<void> {
+	try {
+		const q = query(collection(db, collectionName), where("id", "==", id));
+		const querySnapshot = await getDocs(q);
+
+		if (querySnapshot.empty) {
+			console.log(`No document found with id field = ${id}`);
+			return;
+		}
+
+		// Assuming "id" field is unique, delete the first match
+		const docRef = doc(db, collectionName, querySnapshot.docs[0].id);
+		await deleteDoc(docRef);
+		console.log(`Document with id field = ${id} deleted successfully.`);
+	} catch (error) {
+		console.error("Error deleting document:", error);
+	}
+}

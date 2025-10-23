@@ -375,7 +375,7 @@ function ChooseAddress({
 						<SelectTrigger>
 							<SelectValue placeholder="Select your wallet provider" />
 						</SelectTrigger>
-						<SelectContent className="text-black bg-white pb-6">
+						<SelectContent className="text-black bg-white">
 							{popularWallets.map((wallet) => (
 								<SelectItem
 									key={wallet.value}

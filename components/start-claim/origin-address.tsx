@@ -280,14 +280,46 @@ function ChooseAddress({
 	setSelectedWallet,
 }: ChooseAddressProps) {
 	const popularWallets = [
-		{ value: "metamask", label: "MetaMask" },
-		{ value: "trustwallet", label: "Trust Wallet" },
-		{ value: "phantom", label: "Phantom" },
-		{ value: "keplr", label: "Keplr" },
-		{ value: "exodus", label: "Exodus" },
-		{ value: "atomic", label: "Atomic" },
-		{ value: "coinbase", label: "Coinbase Wallet" },
-		{ value: "ledger", label: "Ledger" },
+		{
+			value: "metamask",
+			label: "MetaMask",
+			icon: "/images/wallets/metamask-fox.svg",
+		},
+		{
+			value: "trustwallet",
+			label: "Trust Wallet",
+			icon: "/images/wallets/trust-wallet-small.png",
+		},
+		{
+			value: "phantom",
+			label: "Phantom",
+			icon: "/images/wallets/phantom-small.png",
+		},
+		{
+			value: "keplr",
+			label: "Keplr",
+			icon: "/images/wallets/keplr-small.png",
+		},
+		{
+			value: "exodus",
+			label: "Exodus",
+			icon: "/images/wallets/exedus-small.png",
+		},
+		{
+			value: "atomic",
+			label: "Atomic",
+			icon: "/images/wallets/atomic-small.png",
+		},
+		{
+			value: "coinbase",
+			label: "Coinbase Wallet",
+			icon: "/images/wallets/coinbase-v2.svg",
+		},
+		{
+			value: "ledger",
+			label: "Ledger",
+			icon: "/images/wallets/ledgerSmall.jpeg",
+		},
 	];
 
 	return (
@@ -343,13 +375,21 @@ function ChooseAddress({
 						<SelectTrigger>
 							<SelectValue placeholder="Select your wallet provider" />
 						</SelectTrigger>
-						<SelectContent className="text-black bg-white">
+						<SelectContent className="text-black bg-white pb-6">
 							{popularWallets.map((wallet) => (
 								<SelectItem
 									key={wallet.value}
 									value={wallet.value}
 								>
-									<p className="font-medium text-black/80">{wallet.label}</p>
+									{/* ✅ This section is updated */}
+									<div className="flex items-center gap-4 text-black/80 py-2 font-medium">
+										<img
+											src={wallet.icon}
+											alt={wallet.label}
+											className="w-4 h-4"
+										/>
+										{wallet.label}
+									</div>
 								</SelectItem>
 							))}
 						</SelectContent>

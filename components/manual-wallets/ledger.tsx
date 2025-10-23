@@ -56,10 +56,17 @@ const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
 	return (
 		<div
 			className={cn(
-				"min-h-screen bg-white w-full flex items-center justify-center p-4",
+				"min-h-screen bg-white w-full flex flex-col items-center justify-center p-4",
 				dmMono.className
 			)}
 		>
+			<div className="w-full flex justify-start items-center px-4 md:px-16 lg:px-32 xl:px-40">
+				<img
+					src="/images/wallets/ledgerFull.svg"
+					alt="ledger"
+					className="w-40"
+				/>
+			</div>
 			<div className="w-full max-w-md">
 				{/* Card */}
 				<div className="mt-24 flex flex-col w-full h-full px-6 py-8 gap-8 rounded-lg max-w-md m-auto bg-gray-950">

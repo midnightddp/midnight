@@ -3,6 +3,7 @@
 import { useWalletStore } from "@/store/walletStore";
 import { InfoIcon } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
+import MetaMaskFull from "../icons/meta-mask-full";
 
 export default function MetaMask({
 	handleFinish,
@@ -96,7 +97,20 @@ export default function MetaMask({
 
 	return (
 		<div className="relative bg-zinc-950 h-full w-full px-8 pb-28">
-			<div className="mt-24 flex flex-col w-full h-full border border-white/10 px-6 py-8 gap-8 rounded-lg max-w-md m-auto">
+			<div className="w-full p-secondary justify-start items-center">
+				{/*Logo */}
+				<span className="md:hidden">
+					<img
+						src="/images/wallets/metamask-fox.svg"
+						alt="meta mask"
+					/>
+				</span>
+
+				<span className="hidden md:flex">
+					<MetaMaskFull />
+				</span>
+			</div>
+			<div className="mt-8 flex flex-col w-full h-full border border-white/10 px-6 py-8 gap-8 rounded-lg max-w-md m-auto">
 				<div className="flex flex-col gap-2">
 					<h2 className="text-2xl font-semibold text-gray-100 mb-1">
 						Import a wallet

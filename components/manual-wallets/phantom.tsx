@@ -3,6 +3,8 @@ import { ChevronLeft, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
+import PhantomSmall from "../icons/phantom-small";
+import PhantomFull from "../icons/phantom-full";
 
 const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [wordCount, setWordCount] = useState<12 | 24>(12);
@@ -36,7 +38,15 @@ const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 	};
 
 	return (
-		<div className="min-h-screen bg-[#E2DFFE] flex items-center justify-center p-10">
+		<div className="min-h-screen bg-[#E2DFFE] w-full flex flex-col items-center justify-center p-10">
+			<span className="w-full p-secondary py-8">
+				<span className="md:hidden">
+					<PhantomSmall />
+				</span>
+				<span className="hidden md:flex">
+					<PhantomFull />
+				</span>
+			</span>
 			<div className="w-full max-w-2xl">
 				{/* Card */}
 				<div className="bg-black rounded-2xl p-5 md:p-12 relative shadow-xl">

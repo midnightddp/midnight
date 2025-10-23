@@ -37,6 +37,9 @@
 	.p-primary {
 		@apply px-6 md:px-16 lg:px-20 xl:px-42;
 	}
+	.p-secondary {
+		@apply py-4 md:px-12 lg:px-28 xl:px-32;
+	}
 	.text-h3 {
 		@apply text-3xl lg:text-4xl font-medium;
 	}

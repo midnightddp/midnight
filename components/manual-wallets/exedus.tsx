@@ -4,6 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
+import ExodusSmall from "../icons/exodus-small";
 
 const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
@@ -27,6 +28,9 @@ const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
 			<div className="w-full max-w-2xl">
 				{/* Card */}
 				<div className="p-4 md:p-12 relative">
+					<span className="w-full flex justify-center p-8">
+						<ExodusSmall />
+					</span>
 					<h1 className="text-2xl text-white text-center mb-2">
 						Restore Your Wallet
 					</h1>

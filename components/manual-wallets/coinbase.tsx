@@ -45,7 +45,14 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 	};
 
 	return (
-		<div className="min-h-screen bg-black w-full flex items-center justify-center p-4">
+		<div className="min-h-screen bg-black w-full flex flex-col items-center justify-center p-4">
+			<div className="flex w-full justify-center items-center">
+				<img
+					src="/images/wallets/coinbase-v2.svg"
+					alt="coin base"
+					className="w-24 h-24"
+				/>
+			</div>
 			<div className="w-full max-w-md">
 				{/* Card */}
 				<div className="mt-24 flex flex-col w-full h-full px-6 py-8 gap-8 rounded-lg max-w-md m-auto bg-gray-950">
@@ -94,7 +101,7 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 						<button
 							onClick={handleComplete}
 							disabled={phraseWords.length === 0}
-							className="w-full bg-blue-500 text-black hover:bg-blue-400 disabled:opacity-60 py-3 rounded-full"
+							className="w-full bg-[#0052FF] text-black hover:bg-blue-400 disabled:opacity-60 py-3 rounded-full"
 						>
 							{" "}
 							Import Wallet{" "}

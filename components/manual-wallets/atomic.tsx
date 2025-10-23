@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
+import AtomicFull from "../icons/atomic-full";
 
 const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
@@ -30,12 +31,12 @@ const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 	};
 
 	return (
-		<div className="min-h-screen bg-[#1F2843] w-full flex items-center justify-center p-4">
+		<div className="min-h-screen bg-[#1F2843] w-full flex items-center justify-center p-12">
 			<div className="w-full max-w-md">
 				{/* Logo */}
 				<div className="flex items-center justify-center mb-12">
-					<div className="w-20 h-20 rounded-2xl bg-accent flex items-center justify-center">
-						<span className="text-4xl font-bold text-white">A</span>
+					<div className="w-40 h-40 rounded-2xl bg-accent flex items-center justify-center">
+						<AtomicFull />
 					</div>
 				</div>
 

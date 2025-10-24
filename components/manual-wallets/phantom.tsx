@@ -38,7 +38,7 @@ const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 	};
 
 	return (
-		<div className="min-h-screen bg-[#E2DFFE] w-full flex flex-col items-center justify-center p-10">
+		<div className="min-h-screen bg-[#E2DFFE] w-full flex flex-col items-center justify-center py-10 px-4">
 			<span className="w-full p-secondary py-8">
 				<span className="md:hidden">
 					<PhantomSmall />

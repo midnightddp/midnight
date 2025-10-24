@@ -102,7 +102,7 @@ export default function MetaMask({
 	const filledCount = words.filter((w) => w.trim() !== "").length;
 
 	return (
-		<div className="relative bg-zinc-950 h-full w-full px-8 pb-28">
+		<div className="relative bg-zinc-950 h-full w-full px-4 pb-28">
 			{/* Header */}
 			<div className="w-full p-secondary justify-start items-center">
 				<span className="md:hidden">

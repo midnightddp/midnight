@@ -45,7 +45,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 	const allWords24Filled = words24.every((word) => word.length > 0);
 
 	return (
-		<div className="min-h-screen w-full bg-black flex items-center justify-center p-4 text-white">
+		<div className="min-h-screen w-full bg-black flex items-center justify-center py-4 px-2 text-white">
 			<div className="w-full max-w-xl">
 				<div className="p-2 md:p-12 relative flex flex-col w-full justify-center items-center">
 					<span className="mb-2">

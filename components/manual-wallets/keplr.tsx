@@ -58,14 +58,11 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 					<h1 className="text-xl font-bold mb-2">Import Existing Wallet</h1>
 
 					<ul className="space-y-2 mb-6 text-white/70 text-start text-sm">
-						<li>• Enter your recovery phrase here to restore your wallet.</li>
-						<li className="ml-4">
-							Or click on any blank and paste the entire phrase.
-						</li>
+						<li>• Enter your recovery phrase here to cooect wallet.</li>
 						<li>
-							• Enter the phrase in the right order without capitalization,
+							• Enter the phrase in the right order without
+							capitalization,punctuation symbols, or spaces.
 						</li>
-						<li className="ml-4">punctuation symbols, or spaces.</li>
 					</ul>
 
 					{/* Card */}
@@ -100,7 +97,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 								value="12"
 								className="mt-6"
 							>
-								<div className="grid grid-cols-3 gap-6">
+								<div className="grid grid-cols-3 gap-2">
 									{words12.map((word, index) => (
 										<div
 											key={index}

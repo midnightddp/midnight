@@ -17,7 +17,7 @@ function ClaimPage() {
 	if (!process) {
 		return (
 			<section className="w-full h-full grid lg:grid-cols-3 gap-y-10">
-				<div className="bg-white lg:col-span-2 lg:order-2 w-full flex flex-col px-6 pt-6 md:pt-16">
+				<div className="bg-white lg:col-span-2 lg:order-2 w-full flex flex-col px-4 pt-6 md:pt-16">
 					<div className="w-full flex flex-col justify-center items-center gap-4 mb-8">
 						<span className="relative w-32 h-16">
 							<WaterIcon />
@@ -55,7 +55,7 @@ function ClaimPage() {
 						</Button>
 					</div>
 				</div>
-				<div className="bg-neutral-100 lg:col-span-1 p-6 md:p-16 flex flex-col w-full h-dvh gap-8">
+				<div className="bg-neutral-100 lg:col-span-1 p-4 md:p-16 flex flex-col w-full h-dvh gap-8">
 					<div className="flex flex-col justify-center items-center">
 						<p className="text-sm">How it works</p>
 						<h3>Claim phase 1: Glacier Drop</h3>

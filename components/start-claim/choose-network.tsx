@@ -21,7 +21,7 @@ function ChooseNetwork() {
 		}
 	};
 	return (
-		<section className="w-full lg:h-screen grid lg:grid-cols-5 py-8 px-8 md:px-16 lg:px-40 xl:px-72 gap-4 bg-neutral-100">
+		<section className="w-full lg:h-screen grid lg:grid-cols-5 py-8 px-6 md:px-16 lg:px-40 xl:px-72 gap-4 bg-neutral-100">
 			<div className="flex flex-col justify-between w-full h-full lg:col-span-3 bg-white p-6 rounded-lg lg:order-1">
 				{currentStep == 0 && <OriginAddress onNext={handleNext} />}
 				{currentStep == 1 && (

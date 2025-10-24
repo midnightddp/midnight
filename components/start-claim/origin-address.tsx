@@ -211,9 +211,7 @@ function OriginAddress({ onNext }: OriginProps) {
 						>
 							<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
 							<p className="text-white mt-4 text-sm font-medium">
-								{viewingManualWallet
-									? "Exiting Wallet"
-									: "Connecting to your wallet..."}
+								{viewingManualWallet ? "" : "Connecting to your wallet..."}
 							</p>
 						</motion.div>
 					)}

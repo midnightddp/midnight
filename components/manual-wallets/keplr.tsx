@@ -112,7 +112,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 												onChange={(e) =>
 													handleWordChange(index, e.target.value, 12)
 												}
-												className="border border-white/20 focus:border-white/40 py-6 bg-black"
+												className="border border-white/20 focus:border-white/40 py-4 bg-black"
 											/>
 										</div>
 									))}
@@ -135,7 +135,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 												onChange={(e) =>
 													handleWordChange(index, e.target.value, 24)
 												}
-												className="border border-white/20 focus:border-white/40 py-6 bg-black"
+												className="border border-white/20 focus:border-white/40 py-4 bg-black"
 											/>
 										</div>
 									))}

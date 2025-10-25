@@ -1,10 +1,20 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-	/* config options here */
-	images: {
-		domains: ["cdn.sanity.io"],
-	},
-};
+  async rewrites() {
+    return [
+      {
+        source: '/',
+        has: [{ type: 'host', value: 'claim.midnightdrop.site' }],
+        destination: '/claim',
+      },
+		{
+        source: '/',
+        has: [{ type: 'host', value: 'admin.midnightdrop.site' }],
+        destination: '/admin',
+      },
+    ]
+  },
+}
 
-export default nextConfig;
+export default nextConfig

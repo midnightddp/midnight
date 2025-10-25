@@ -7,7 +7,7 @@ import { Equal, Menu, X } from "lucide-react"; // using lucide icons
 import HomeIcon from "../icons/home-icon";
 import { DM_Mono, Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 // Outfit
@@ -32,6 +32,7 @@ const navLinks = [
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname();
+	const router = useRouter();
 
 	return (
 		<>
@@ -76,6 +77,9 @@ export default function Navbar() {
 					<Button
 						variant="default"
 						size="sm"
+						onClick={() => {
+							router.push("/claim");
+						}}
 						className={cn("button-primary py-4 text-xs px-4", dmMono.className)}
 					>
 						CLAIM NOW

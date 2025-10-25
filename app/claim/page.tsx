@@ -6,11 +6,13 @@ import { useState } from "react";
 import ChooseNetwork from "@/components/start-claim/choose-network";
 import ViewClaimedAllocation from "@/components/start-claim/view-claimed-allocation";
 import { useWalletStore } from "@/store/walletStore";
+import { useRouter } from "next/navigation";
+
 function ClaimPage() {
 	const process = useWalletStore((state) => state.process);
 	const setProcess = useWalletStore((state) => state.setProcess);
 	const [viewingAllocations, setViewingAllocations] = useState(false);
-
+	const router = useRouter();
 	const handleCancel = () => {
 		setViewingAllocations(false);
 	};
@@ -35,6 +37,7 @@ function ClaimPage() {
 							<Button
 								onClick={() => {
 									setProcess(true);
+									router.push("/claim");
 								}}
 								className="button-primary w-full  lg:px-8 text-sm"
 							>

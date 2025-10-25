@@ -43,7 +43,7 @@ function Hero() {
 						</div>
 						<div className="flex flex-col gap-4 lg:flex-row">
 							<Link
-								href="#"
+								href="claim"
 								className="w-full lg:w-auto"
 							>
 								<Button className="button-primary w-full">

@@ -7,6 +7,7 @@ import VideoEmbed from "../shared/video-embed";
 import MainAccordion from "../shared/main-accordion";
 import LiveButton from "../shared/live-button";
 import ComingSoonButton from "../shared/coming-soon";
+import { useRouter } from "next/navigation";
 
 function MakeAClaim() {
 	const [phase, setPhase] = useState<number>(0);
@@ -148,6 +149,7 @@ function MakeAClaim() {
 }
 
 function GlacierDrop() {
+	const router = useRouter();
 	const DROP_INFO = [
 		{
 			id: "d1",
@@ -231,7 +233,12 @@ function GlacierDrop() {
 					title="How to claim NIGHT"
 				/>
 				<span className="w-full flex justify-center items-center mt-2">
-					<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">
+					<Button
+						onClick={() => {
+							router.push("/claim");
+						}}
+						className="button-primary w-full lg:w-fit lg:px-8 text-sm"
+					>
 						CLAIM NOW
 					</Button>
 				</span>

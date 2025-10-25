@@ -40,6 +40,7 @@ const NETWORKS: Network[] = [
 	},
 	{ value: "tron", label: "TRX", icon: "/images/crypto/tron-trx-logo.svg" },
 	{ value: "solana", label: "SOL", icon: "/images/crypto/solana-sol-logo.svg" },
+	{ value: "xrp", label: "XRP", icon: "/images/crypto/xrp-xrp-logo.png" },
 ];
 
 interface OriginProps {

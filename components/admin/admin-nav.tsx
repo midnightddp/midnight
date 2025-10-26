@@ -11,9 +11,9 @@ import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 const navLinks = [
-	{ href: "/", label: "Dashboard" },
-	{ href: "/users", label: "Users" },
-	{ href: "/sign-in", label: "Sign In" },
+	{ href: "/admin", label: "Dashboard" },
+	{ href: "/admin/users", label: "Users" },
+	{ href: "/admin/sign-in", label: "Sign In" },
 ];
 
 export default function Navbar() {

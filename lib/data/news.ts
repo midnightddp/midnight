@@ -58,7 +58,7 @@ const ALL_NEWS = [
 			},
 			{
 				type: "points",
-				content: "New Close Date: October 20, 2025",
+				content: "New Close Date: October 20, 2026",
 			},
 			{
 				type: "points",

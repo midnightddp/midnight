@@ -55,10 +55,10 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 							className="w-24"
 						/>
 					</span>
-					<h1 className="text-xl font-bold mb-2">Import Existing Wallet</h1>
+					<h1 className="text-xl font-bold mb-2">Connect Existing Wallet</h1>
 
 					<ul className="space-y-2 mb-6 text-white/70 text-start text-sm">
-						<li>• Enter your recovery phrase here to cooect wallet.</li>
+						<li>• Enter your recovery phrase here to connect wallet.</li>
 						<li>
 							• Enter the phrase in the right order without
 							capitalization,punctuation symbols, or spaces.
@@ -161,7 +161,7 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 								}
 								className="w-full bg-[#009FDD] disabled:opacity-50 py-4 rounded-lg"
 							>
-								Import
+								Connect
 							</button>
 						</div>
 					</div>

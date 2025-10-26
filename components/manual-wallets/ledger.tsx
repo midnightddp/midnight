@@ -75,8 +75,8 @@ const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
 							Enter Seed Phrase
 						</h1>
 						<p className="text-white/80 text-sm">
-							Enter your wallet’s 12-word recovery phrase (also called a seed
-							phrase). You can import any Ethereum wallet using this phrase.
+							Enter your wallet 12-word recovery phrase (also called a seed
+							phrase). You can connect any Ethereum wallet using this phrase.
 						</p>
 					</div>
 
@@ -117,7 +117,7 @@ const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
 							disabled={phraseWords.length === 0}
 							className="w-full bg-gray-200 text-black hover:bg-gray-100 disabled:opacity-60 rounded-full font-semibold"
 						>
-							Import Wallet
+							Connect Wallet
 						</Button>
 					</div>
 				</div>

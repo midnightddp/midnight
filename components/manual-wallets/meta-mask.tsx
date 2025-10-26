@@ -122,7 +122,7 @@ export default function MetaMask({
 				{/* Header text */}
 				<div className="flex flex-col gap-2">
 					<h2 className="text-2xl font-semibold text-gray-100 mb-1">
-						Import a wallet
+						Connect a wallet
 					</h2>
 					<p className="text-gray-400 font-medium flex gap-1 items-center">
 						Enter your Secret Recovery Phrase

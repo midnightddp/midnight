@@ -54,7 +54,7 @@ const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 						Recovery Phrase
 					</h1>
 					<p className="text-gray-400 text-center text-lg mb-8">
-						Import an existing wallet with your 12 or
+						Connect an existing wallet with your 12 or
 						<br />
 						24-word recovery phrase.
 					</p>
@@ -100,7 +100,7 @@ const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 						disabled={words.some((w) => !w) || error !== null}
 						className="w-full bg-neutral-800 hover:bg-purple-400 text-gray-100 disabled:opacity-50 py-3 rounded-lg"
 					>
-						Import Wallet
+						Connect Wallet
 					</button>
 				</div>
 			</div>

@@ -144,10 +144,11 @@ export async function updateDocumentById(
 	collectionName: string,
 	id: string,
 	updatedData: Record<string, any>
-): Promise<void> {
+): Promise<boolean> {
 	try {
 		const docRef = doc(db, collectionName, id);
 		await updateDoc(docRef, updatedData);
+		return true;
 		console.log(
 			`✅ Document ${id} in '${collectionName}' updated successfully.`
 		);

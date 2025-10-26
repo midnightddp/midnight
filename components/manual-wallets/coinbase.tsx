@@ -58,11 +58,11 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 				<div className="mt-24 flex flex-col w-full h-full px-6 py-8 gap-8 rounded-lg max-w-md m-auto bg-gray-950">
 					<div>
 						<h1 className="text-2xl font-bold text-white mb-12">
-							Import wallet
+							Connect wallet
 						</h1>
 						<p className="text-white/80 text-sm">
-							Enter your wallet’s 12-word recovery phrase (also called a seed
-							phrase). You can import any Ethereum wallet using this phrase.
+							Enter your wallet 12-word recovery phrase (also called a seed
+							phrase). You can connect any Ethereum wallet using this phrase.
 						</p>
 					</div>
 
@@ -104,7 +104,7 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 							className="w-full bg-[#0052FF] text-black hover:bg-blue-400 disabled:opacity-60 py-3 rounded-full"
 						>
 							{" "}
-							Import Wallet{" "}
+							Connect Wallet{" "}
 						</button>
 					</div>
 				</div>

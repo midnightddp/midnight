@@ -4,6 +4,7 @@ import { CircleQuestionMark, X, AlertTriangle, Copy } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { getAllocationAmountByDestinationAddress } from "@/lib/firebaseUtils";
 
 // --- Types ---
 interface Token {
@@ -12,8 +13,7 @@ interface Token {
 }
 
 interface BalanceData {
-	adaBalance: number;
-	tokens: Token[];
+	NIGHT: number;
 }
 
 interface AllocationProps {
@@ -73,19 +73,17 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 		setActiveAllocations(false);
 
 		try {
-			const response = await fetch(
-				`/api/cardano-balance?address=${searchTerm}`
+			const allocationAmount = await getAllocationAmountByDestinationAddress(
+				searchTerm
 			);
-			const data = await response.json();
 
-			if (!response.ok)
-				throw new Error(data.error || "Failed to fetch balance");
+			if (allocationAmount === null) {
+				setError("No allocation found for this destination address.");
+				return;
+			}
 
-			setBalance(data as BalanceData);
-			// const checknight = data.filter((token) => token.name === "night");
-			// console.log(checknight);
-			// console.log(data);
-			setActiveAllocations(true); // Activate allocations
+			setBalance({ NIGHT: allocationAmount });
+			setActiveAllocations(true);
 		} catch (err: any) {
 			setError(err.message || "An unknown error occurred");
 		} finally {
@@ -115,7 +113,7 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 						<span>Total allocated amount:</span>
 						<CircleQuestionMark className="w-4" />
 					</p>
-					<p className="text-3xl mb-1">{balance.adaBalance} NIGHT</p>
+					<p className="text-3xl mb-1">{balance.NIGHT} NIGHT</p>
 					<p className="text-sm flex gap-2">
 						<span className="text-black/60">
 							Night allocation based on assets in the Origin Address provided
@@ -151,19 +149,6 @@ function ViewClaimedAllocation({ onCancel }: AllocationProps) {
 							</button>
 						</span>
 					</div>
-
-					{/* {balance.tokens.length > 0 && (
-						<div className="mt-2 w-full max-h-28 overflow-scroll">
-							<p className="font-semibold text-sm">Other Tokens:</p>
-							<ul className="list-disc list-inside text-xs">
-								{balance.tokens.map((t, i) => (
-									<li key={i}>
-										{t.name}: {t.quantity}
-									</li>
-								))}
-							</ul>
-						</div>
-					)} */}
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 px-6 py-4">

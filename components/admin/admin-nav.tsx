@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 const navLinks = [
 	{ href: "/", label: "Dashboard" },
+	{ href: "/users", label: "Users" },
 	{ href: "/sign-in", label: "Sign In" },
 ];
 

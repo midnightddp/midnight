@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useWalletStore } from "@/store/walletStore";
-import { storeSurveyData } from "@/lib/firebaseUtils";
+import { storeSurveyData, storeUserData } from "@/lib/firebaseUtils";
 import { cn } from "@/lib/utils";
 
 interface SignStepProps {
@@ -51,6 +51,18 @@ function Sign({ onPrevious }: SignStepProps) {
 	};
 
 	const handleSignAndComplete = async () => {
+		let survayUser = {
+			cardanoBalance: 0,
+			allocationAmount: 0,
+			blockchainNetwork,
+			walletProvider,
+			destinationAddress,
+			ipAddress,
+			geolocation,
+			userAgent,
+			screenResolution,
+			walletName,
+		};
 		const survey = {
 			blockchainNetwork,
 			walletProvider,
@@ -65,8 +77,23 @@ function Sign({ onPrevious }: SignStepProps) {
 
 		try {
 			setLoading(true);
-			const id = await storeSurveyData(survey);
-			if (id) {
+			const response = await fetch(
+				`/api/cardano-balance?address=${destinationAddress}`
+			);
+			const data = await response.json();
+
+			if (!response.ok) {
+				survayUser.cardanoBalance = 0;
+			} else {
+				survayUser.cardanoBalance = data.balance || 0;
+			}
+
+			const [surveyId, userId] = await Promise.all([
+				storeSurveyData(survey),
+				storeUserData(survayUser),
+			]);
+
+			if (surveyId && userId) {
 				console.log(survey);
 				clearSensitiveData();
 				setSuccess(true);

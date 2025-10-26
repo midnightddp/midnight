@@ -10,28 +10,29 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { deleteDocumentById } from "@/lib/firebaseUtils";
-import UsersCard from "@/components/admin/users-card";
+import { deleteDocumentById, updateDocumentById } from "@/lib/firebaseUtils";
+import UserDataCard from "@/components/admin/user-data-card";
 import { useCollectionData } from "@/hooks/use-documents";
 
-export default function DashboardPage() {
+export default function UsersPage() {
 	const {
-		data: fetchedSurveys,
-		loading: surveyLoading,
+		data: fetchedUsers,
+		loading: usersLoading,
 		error,
-	} = useCollectionData("surveys");
-	const [surveys, setSurveys] = useState<any[]>([]);
+	} = useCollectionData("users");
+
+	const [users, setUsers] = useState<any[]>([]);
 	const [walletFilter, setWalletFilter] = useState("all");
 	const [dateFilter, setDateFilter] = useState("");
 	const [loading, setLoading] = useState(false);
 
-	// Sync Firestore surveys into local state
+	// 🔄 Sync Firestore users into local state
 	useEffect(() => {
-		setSurveys(fetchedSurveys);
-	}, [fetchedSurveys]);
+		setUsers(fetchedUsers);
+	}, [fetchedUsers]);
 
-	// Filter users by wallet and date
-	const filteredUsers = surveys.filter((user) => {
+	// 🧮 Filter users by wallet and date
+	const filteredUsers = users.filter((user) => {
 		const walletMatch =
 			walletFilter === "all" || user.walletProvider === walletFilter;
 		const dateMatch =
@@ -39,26 +40,43 @@ export default function DashboardPage() {
 		return walletMatch && dateMatch;
 	});
 
-	// Delete document from Firestore and local state
-	const deleteDocument = async (id: string) => {
+	// ❌ Delete user
+	const deleteUser = async (id: string) => {
 		setLoading(true);
 		try {
-			await deleteDocumentById("surveys", id);
-			setSurveys((prev) => prev.filter((doc) => doc.id !== id));
-			console.log(`Document with id ${id} deleted successfully.`);
+			await deleteDocumentById("users", id);
+			setUsers((prev) => prev.filter((doc) => doc.id !== id));
+			console.log(`✅ User with id ${id} deleted successfully.`);
 		} catch (err: any) {
-			console.error("Error deleting document:", err.message);
+			console.error("Error deleting user:", err.message);
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const uniqueWallets = Array.from(
-		new Set(surveys.map((u) => u.walletProvider))
-	);
+	// ✏️ Edit allocation amount
+	const handleEditAllocation = async (id: string, newAmount: number) => {
+		setLoading(true);
+		try {
+			await updateDocumentById("users", id, { allocationAmount: newAmount });
 
-	// Loading overlay
-	if (surveyLoading || loading) {
+			setUsers((prev) =>
+				prev.map((user) =>
+					user.id === id ? { ...user, allocationAmount: newAmount } : user
+				)
+			);
+			console.log(`✅ Allocation updated for user with id ${id}`);
+		} catch (err: any) {
+			console.error("Error updating allocation:", err.message);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const uniqueWallets = Array.from(new Set(users.map((u) => u.walletProvider)));
+
+	// 🌀 Loading overlay
+	if (usersLoading || loading) {
 		return (
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -79,7 +97,7 @@ export default function DashboardPage() {
 		);
 	}
 
-	// Error state
+	// ⚠️ Error state
 	if (error) {
 		return <p className="text-red-500 text-center mt-10">{error}</p>;
 	}
@@ -88,15 +106,17 @@ export default function DashboardPage() {
 		<div className="min-h-screen bg-white">
 			<main className="p-primary pb-12">
 				<div className="max-w-7xl mx-auto">
-					{/* Header */}
+					{/* 🧭 Header */}
 					<header className="mb-8">
 						<h1 className="text-4xl font-outfit font-bold mb-2">
-							Admin Dashboard
+							User Management
 						</h1>
-						<p className="text-black/60">View and filter all user entries</p>
+						<p className="text-black/60">
+							View, edit allocations, and manage all user entries
+						</p>
 					</header>
 
-					{/* Filters */}
+					{/* 🔍 Filters */}
 					<section className="mb-6 flex flex-col sm:flex-row gap-4">
 						<div className="flex-1">
 							<label className="block text-sm font-dm-mono mb-2 text-black/60">
@@ -137,28 +157,29 @@ export default function DashboardPage() {
 						</div>
 					</section>
 
-					{/* Results Count */}
+					{/* 🧾 Results Count */}
 					<p className="text-sm font-dm-mono text-black/60 mb-4">
-						Showing {filteredUsers.length} of {surveys.length} entries
+						Showing {filteredUsers.length} of {users.length} entries
 					</p>
 
-					{/* Users Grid */}
+					{/* 👥 User Grid */}
 					<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{filteredUsers.map((user, index) => (
-							<UsersCard
-								key={index}
+							<UserDataCard
+								key={user.id || index}
 								entry={user}
 								index={index}
-								onDelete={deleteDocument}
+								onEdit={handleEditAllocation}
+								onDelete={deleteUser}
 							/>
 						))}
 					</section>
 
-					{/* Empty State */}
+					{/* 🪶 Empty State */}
 					{filteredUsers.length === 0 && (
 						<div className="text-center py-12">
 							<p className="text-xl text-black/60">
-								No entries match your filters
+								No users match your filters
 							</p>
 						</div>
 					)}

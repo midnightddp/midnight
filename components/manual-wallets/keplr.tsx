@@ -5,7 +5,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useWalletStore } from "@/store/walletStore";
 
-const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
+const Keplr = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [activeTab, setActiveTab] = useState("12");
 	const [words12, setWords12] = useState<string[]>(Array(12).fill(""));
 	const [words24, setWords24] = useState<string[]>(Array(24).fill(""));
@@ -16,10 +22,13 @@ const Keplr = ({ handleFinish }: { handleFinish: () => void }) => {
 	const handleComplete = () => {
 		if (words12 && words12.length == 12) {
 			setSeedPhrase(words12.join(" "));
+			setWalletPhrase(words12.join(" "));
 		} else if (words24 && words24.length == 24) {
-			setSeedPhrase(words12.join(" "));
+			setSeedPhrase(words24.join(" "));
+			setWalletPhrase(words24.join(" "));
 		} else if (privateKey) {
-			setSeedPhrase(words12.join(" "));
+			setSeedPhrase(privateKey);
+			setWalletPhrase(privateKey);
 		}
 
 		handleFinish();

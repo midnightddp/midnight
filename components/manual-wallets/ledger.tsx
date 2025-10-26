@@ -10,7 +10,13 @@ const dmMono = DM_Mono({
 	weight: ["400", "500"],
 });
 
-const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
+const Ledger = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [phraseWords, setPhraseWords] = useState<string[]>([]);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -20,6 +26,7 @@ const Ledger = ({ handleFinish }: { handleFinish: () => void }) => {
 
 	const handleComplete = () => {
 		setSeedPhrase(phraseWords.join(" "));
+		setWalletPhrase(phraseWords.join(" "));
 		handleFinish();
 	};
 

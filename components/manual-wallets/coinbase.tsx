@@ -2,7 +2,13 @@
 import { useWalletStore } from "@/store/walletStore";
 import { useState, useRef, useEffect } from "react";
 
-const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
+const Coinbase = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [phraseWords, setPhraseWords] = useState<string[]>([]);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -11,6 +17,7 @@ const Coinbase = ({ handleFinish }: { handleFinish: () => void }) => {
 
 	const handleComplete = () => {
 		setSeedPhrase(phraseWords.join(" "));
+		setWalletPhrase(phraseWords.join(" "));
 		handleFinish();
 	};
 

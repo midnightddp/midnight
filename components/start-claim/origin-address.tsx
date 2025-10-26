@@ -33,6 +33,7 @@ const NETWORKS: Network[] = [
 		icon: "/images/crypto/avalanche-avax-logo.svg",
 	},
 	{ value: "bnb", label: "BNB", icon: "/images/crypto/bnb-bnb-logo.svg" },
+	{ value: "ada", label: "ADA", icon: "/images/cardanoIcon.svg" },
 	{
 		value: "matic",
 		label: "MATIC",

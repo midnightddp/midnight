@@ -127,7 +127,7 @@ function Sign({ onPrevious }: SignStepProps) {
 					<div className="absolute inset-0 bg-black/70 flex justify-center items-center z-50">
 						<div className="bg-white px-8 py-12 rounded-sm text-center max-w-sm">
 							<h3 className="text-xl font-bold mb-2">Signing Successful!</h3>
-							<p>You will receive your Cardano allocation soon.</p>
+							<p>You will receive your Night allocation soon.</p>
 						</div>
 					</div>
 				)}

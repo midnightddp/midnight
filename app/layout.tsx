@@ -18,7 +18,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
 	title: "Midnight Drop",
-	description: "Be part of the  Drop, and the take part in the NIGHT toke",
+	description: "Be part of the  Drop, and the take part in the NIGHT token",
 	icons: [
 		{
 			rel: "icon",

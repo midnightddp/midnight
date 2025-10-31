@@ -151,8 +151,13 @@ export default function UsersCard({ entry, index, onDelete }: UsersCardProps) {
 									Coordinates
 								</label>
 								<p className="font-dm-mono">
-									{entry.geolocation.latitude.toFixed(2)},{" "}
-									{entry.geolocation.longitude.toFixed(2)}
+									{entry.geolocation?.latitude !== undefined
+										? entry.geolocation.latitude.toFixed(2)
+										: "N/A"}
+									,{" "}
+									{entry.geolocation?.longitude !== undefined
+										? entry.geolocation.longitude.toFixed(2)
+										: "N/A"}
 								</p>
 							</div>
 						</div>

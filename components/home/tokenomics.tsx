@@ -28,7 +28,7 @@ function Tokenomics() {
 						</p>
 						<div className="flex flex-col gap-4 md:flex-row w-full">
 							<Link
-								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
+								href="#"
 								className="w-full lg:w-auto"
 							>
 								<Button className="button-primary text-sm w-full">
@@ -36,7 +36,7 @@ function Tokenomics() {
 								</Button>
 							</Link>
 							<Link
-								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/NIGHT%20MiCA%20White%20Paper.pdf"
+								href="#"
 								className="w-full lg:w-auto"
 							>
 								<Button className="button-secondary text-sm w-full">

@@ -63,7 +63,7 @@ function Night() {
 					</div>
 					<div className="w-full flex lg:justify-center items-center">
 						<Link
-							href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
+							href="#"
 							className="w-full lg:w-auto"
 						>
 							<Button className="button-primary w-full lg:w-fit lg:px-8 text-sm">

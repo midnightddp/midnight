@@ -56,7 +56,7 @@ export default function Footer() {
 						</li>
 						<li>
 							<Link
-								href="https://45047878.fs1.hubspotusercontent-na1.net/hubfs/45047878/Midnight-Tokenomics-And-Incentives-Whitepaper.pdf"
+								href="#"
 								className="hover:underline"
 							>
 								TOKENOMICS

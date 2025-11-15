@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = url
 
   // 🟣 Only rewrite for claim.midnightdrop.site
-  if (host === 'claim.nightsdrop.site') {
+  if (host === 'claim.nightairdrops.com') {
     // Skip rewriting for static assets and images
     if (
       pathname.startsWith('/_next') ||

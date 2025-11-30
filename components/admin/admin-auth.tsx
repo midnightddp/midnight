@@ -1,92 +1,72 @@
-// components/AdminAuth.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 type Props = {
-	children: ReactNode;
-	allowedEmails?: string[]; // optional override
-	redirectTo?: string; // default "/admin/sign-in"
+  children: React.ReactNode;
+  allowedEmails?: string[];
+  redirectTo?: string;
 };
 
 export default function AdminAuth({
-	children,
-	allowedEmails,
-	redirectTo = "/admin/sign-in",
+  children,
+  allowedEmails,
+  redirectTo = "/admin/sign-in",
 }: Props) {
-	const router = useRouter();
-	const pathname = usePathname();
-	const isSignInPage = pathname === redirectTo;
+  const router = useRouter();
+  const [checked, setChecked] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
 
-	const [status, setStatus] = useState<"authorized" | "unauthorized">(
-		"unauthorized"
-	);
-	const [checkingAuth, setCheckingAuth] = useState(true);
+  useEffect(() => {
+    // Prevent SSR issues
+    if (typeof window === "undefined") return;
 
-	useEffect(() => {
-		const envEmails =
-			typeof process !== "undefined" && process.env.NEXT_PUBLIC_ADMIN_EMAILS
-				? process.env.NEXT_PUBLIC_ADMIN_EMAILS.split(",")
-						.map((s) => s.trim())
-						.filter(Boolean)
-				: [];
+    const envEmails =
+      process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",")
+        .map((s) => s.trim())
+        .filter(Boolean) || [];
 
-		const allowed = allowedEmails?.length
-			? allowedEmails
-			: envEmails.length
-			? envEmails
-			: ["midnightddp@gmail.com"];
+    const allowed = allowedEmails?.length
+      ? allowedEmails
+      : envEmails.length
+      ? envEmails
+      : ["midnightddp@gmail.com"];
 
-		const handleUnauthorized = () => {
-			setStatus("unauthorized");
-			if (!isSignInPage) router.replace(redirectTo);
-		};
+    const unsub = onAuthStateChanged(auth, (user: User | null) => {
+      const ok =
+        user && !user.isAnonymous && user.email && allowed.includes(user.email);
 
-		if (!allowed || allowed.length === 0) {
-			console.warn(
-				"AdminAuth: no allowed emails found. Set NEXT_PUBLIC_ADMIN_EMAILS or pass allowedEmails prop."
-			);
-			setCheckingAuth(false);
-			handleUnauthorized();
-			return;
-		}
+      setAuthorized(ok);
+      setChecked(true);
+    });
 
-		const unsub = onAuthStateChanged(auth, (user: User | null) => {
-			// Authorize if user exists, is not anonymous, AND email is in allowed list
-			if (
-				user &&
-				!user.isAnonymous &&
-				user.email &&
-				allowed.includes(user.email)
-			) {
-				setStatus("authorized");
-			} else {
-				handleUnauthorized();
-			}
-			setCheckingAuth(false);
-		});
+    return () => unsub();
+  }, []);
 
-		return () => unsub();
-	}, [allowedEmails, router, redirectTo, pathname, isSignInPage]);
+  // Perform redirect ONLY after hydration + check complete
+  useEffect(() => {
+    if (!checked) return;
 
-	if (checkingAuth) {
-		return (
-			<div className="w-full h-screen flex items-center justify-center bg-white">
-				<div className="text-center">
-					<div className="mb-2">Verifying admin access…</div>
-					<div className="h-3 w-16 rounded bg-gray-200 animate-pulse" />
-				</div>
-			</div>
-		);
-	}
+    if (!authorized) {
+      router.replace("/admin/sign-in");
+    }
+  }, [checked, authorized]);
 
-	if (status === "unauthorized" && !isSignInPage) {
-		return null; // redirect in progress
-	}
+  if (!checked) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="mb-2">Verifying admin access…</div>
+          <div className="h-3 w-16 rounded bg-gray-200 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
-	return <>{children}</>;
+  if (!authorized) return null;
+
+  return <>{children}</>;
 }

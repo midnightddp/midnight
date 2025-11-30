@@ -9,12 +9,12 @@ export function middleware(request: NextRequest) {
   const TARGET_DOMAIN = "claim.nightairdrops.com";
   const DESTINATION = "/claim";
 
-  // 0️⃣ HARD EXCLUSION — Protect admin route
+  // 1️⃣ Do NOT touch admin pages
   if (pathname.startsWith("/admin")) {
     return NextResponse.next();
   }
 
-  // Ignore assets
+  // 2️⃣ Skip static files & assets
   const isAsset =
     pathname.startsWith("/_next") ||
     pathname.startsWith("/static") ||
@@ -22,26 +22,29 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/favicon") ||
     pathname.match(/\.(png|jpe?g|gif|svg|ico|webp|avif|txt|xml|json)$/);
 
-  if (isAsset) return NextResponse.next();
+  if (isAsset) {
+    return NextResponse.next();
+  }
 
-  // Domain rewrite only for claim subdomain
+  // 3️⃣ Rewrite ONLY the claim subdomain
   if (host === TARGET_DOMAIN) {
+    // If already inside /claim, let it pass
     if (pathname === DESTINATION || pathname.startsWith(DESTINATION + "/")) {
       return NextResponse.next();
     }
 
+    // Rewrite everything to /claim
     url.pathname = DESTINATION;
-    const response = NextResponse.rewrite(url);
-    response.headers.set("Cache-Control", "no-store, max-age=0");
-
-    return response;
+    const res = NextResponse.rewrite(url);
+    res.headers.set("Cache-Control", "no-store, max-age=0");
+    return res;
   }
 
+  // 4️⃣ Default – do nothing
   return NextResponse.next();
 }
 
+// ✔ Safe, simple matcher — avoids regex & avoids build errors
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(png|jpg|jpeg|gif|svg|ico|webp|avif)$).*)",
-  ],
+  matcher: ["/:path*"],
 };

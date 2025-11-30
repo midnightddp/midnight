@@ -108,7 +108,7 @@ export default function SignInPage() {
 	return (
 		<div
 			className={cn(
-				"bg-white p-8 flex justify-center items-center",
+				"bg-white p-8 flex justify-center items-center h-screen w-full",
 				outfit.className
 			)}
 		>

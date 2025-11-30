@@ -14,7 +14,7 @@ type Props = {
 export default function AdminAuth({
   children,
   allowedEmails,
-  redirectTo = "/admin/sign-in",
+  redirectTo = "/sign-in",
 }: Props) {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
@@ -51,7 +51,7 @@ export default function AdminAuth({
     if (!checked) return;
 
     if (!authorized) {
-      router.replace("/admin/sign-in");
+      router.replace("/sign-in");
     }
   }, [checked, authorized]);
 
@@ -66,7 +66,7 @@ export default function AdminAuth({
     );
   }
 
-  if (!authorized) return null;
+  if (!authorized) return <h1>un authorized</h1>;
 
   return <>{children}</>;
 }

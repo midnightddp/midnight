@@ -13,7 +13,7 @@ import Night from "@/components/home/night";
 import Dust from "@/components/home/dust";
 import Timeline from "@/components/home/timeline";
 
-// DM Mono
+// DM Mono fonts
 const dmMono = DM_Mono({
 	subsets: ["latin"],
 	weight: ["400", "500"],
